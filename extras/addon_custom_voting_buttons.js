@@ -41,17 +41,22 @@ function createCustomVotingButtons() {
       i < correspondingCustomQuestion.arButtonLabels.length;
       i++
     ) {
-      if (
-        correspondingCustomQuestion.treat2ndAnd3rdOptionLikeSkipped &&
-        correspondingCustomQuestion.arPositionValues[i] === 0
-      ) {
-        // For such questions, the button with value -1 functions as a "Don't care button", which is why it is created (even though the user can't actually answer with -1)
-        // The 0 button, however, is not required at all -  and therefore not created
-        continue;
-      }
       const newBtn = document.createElement("div");
       newBtn.classList.add("col");
       newBtn.innerHTML = `<button type="button" class="btn btn-lg btn-custom btn-custom-${activeQuestion} btn-block btn-voting">${correspondingCustomQuestion.arButtonLabels[i]}</button>`;
+      if (correspondingCustomQuestion.isYesOrDontCareQuestion) {
+        if (correspondingCustomQuestion.arPositionValues[i] === 1) {
+          newBtn.querySelector("button").innerHTML =
+            correspondingCustomQuestion.buttonTextAndIconLabelForYes;
+        } else if (correspondingCustomQuestion.arPositionValues[i] === 0) {
+          // For such questions, the button with value -1 functions as a "Don't care button", which is why it is created (even though the user can't actually answer with -1)
+          // The 0 button, however, is not required at all -  and therefore not created
+          continue;
+        } else if (correspondingCustomQuestion.arPositionValues[i] === -1) {
+          newBtn.querySelector("button").innerHTML =
+            correspondingCustomQuestion.buttonTextAndIconLabelForDontCare;
+        }
+      }
       newBtn.querySelector("button").addEventListener("click", () => {
         arPersonalPositions[activeQuestion] =
           correspondingCustomQuestion.arPositionValues[i];
@@ -135,11 +140,29 @@ function createInitialCustomPositionButtons() {
         newBtn.disabled = true;
       }
       if (
-        obj.treat2ndAnd3rdOptionLikeSkipped &&
-        newBtn.getAttribute("data-value") === "99" &&
+        obj.isYesOrDontCareQuestion &&
         newBtn.classList.contains(`selfPosition${i}`)
       ) {
-        newBtn.innerHTML = obj.iconLabelForSkipped;
+        const isYes = +newBtn.getAttribute("data-value") === 1 ? true : false;
+        newBtn.innerHTML = isYes
+          ? obj.buttonTextAndIconLabelForYes
+          : obj.buttonTextAndIconLabelForDontCare;
+        newBtn.setAttribute(
+          "title",
+          `${TEXT_ANSWER_USER}: ${
+            isYes
+              ? obj.buttonTextAndIconLabelForYes
+              : obj.buttonTextAndIconLabelForDontCare
+          }`
+        );
+        newBtn.setAttribute(
+          "alt",
+          `${TEXT_ANSWER_USER}: ${
+            isYes
+              ? obj.buttonTextAndIconLabelForYes
+              : obj.buttonTextAndIconLabelForDontCare
+          }`
+        );
       }
 
       oldBtn.parentNode.prepend(newBtn);
@@ -186,24 +209,39 @@ function toggleSelfPositionOfCustomQuestion(i) {
         `${TEXT_ANSWER_USER}: ${obj.arButtonAltTexts[indexOfNewPosition]}`
       );
     }
+    if (obj.isYesOrDontCareQuestion) {
+      const isYes = +btn.getAttribute("data-value") === 1 ? true : false;
+      btn.innerHTML = isYes
+        ? obj.buttonTextAndIconLabelForYes
+        : obj.buttonTextAndIconLabelForDontCare;
+      btn.setAttribute(
+        "title",
+        `${TEXT_ANSWER_USER}: ${
+          isYes
+            ? obj.buttonTextAndIconLabelForYes
+            : obj.buttonTextAndIconLabelForDontCare
+        }`
+      );
+      btn.setAttribute(
+        "alt",
+        `${TEXT_ANSWER_USER}: ${
+          isYes
+            ? obj.buttonTextAndIconLabelForYes
+            : obj.buttonTextAndIconLabelForDontCare
+        }`
+      );
+    }
   });
 
   fnReEvaluate();
-  if (obj.treat2ndAnd3rdOptionLikeSkipped && newPosition === 0) {
-    document.querySelector(`.selfPosition${i}`).click();
-    document.querySelector(`.selfPosition${i}`).click();
-  }
-  if (obj.treat2ndAnd3rdOptionLikeSkipped && newPosition === -1) {
-    document.querySelector(`.selfPosition${i}`).click();
-  }
-  if (
-    obj.treat2ndAnd3rdOptionLikeSkipped &&
-    +document.querySelector(`.selfPosition${i}`).getAttribute("data-value") ===
-      99
-  ) {
-    document.querySelectorAll(`.selfPosition${i}`).forEach((btn) => {
-      btn.innerHTML = obj.iconLabelForSkipped;
-    });
+
+  if (obj.isYesOrDontCareQuestion) {
+    if (newPosition === 0) {
+      document.querySelector(`.selfPosition${i}`).click();
+      document.querySelector(`.selfPosition${i}`).click();
+    } else if (newPosition === -1) {
+      document.querySelector(`.selfPosition${i}`).click();
+    }
   }
 }
 

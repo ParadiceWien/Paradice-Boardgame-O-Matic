@@ -190,8 +190,8 @@ if (isActivated("addon_custom_voting_buttons.js")) {
   // The following keys are optional
   //    votingDoubleByDefault (boolean; default: false; meaning: Should the voting double button be in the active state by default?)
   //    hideVotingDouble (boolean; default: false; meaning: Should the voting double button be hidden on the question card and in the results tables, so that the default state cannot be changed?)
-  //    treat2ndAnd3rdOptionLikeSkipped (boolean; default: false; meaning: If true, the options with the values 0 and -1 [not necessarily the 2nd and 3rd option], cannot be selected. There is not voting button for option 0. If the user selects option -1 on the question card or changes to 0 or -1 in a results table, it automatically changes to the skipped state (99). Should only be used for yes-no-questions, where the issue of the question is either relevant for the user or not)
-  //    iconLabelForSkipped (string, should be very short; overrides the skipped symbol "↷" as button content in the results tables. Should be used together with treat2ndAnd3rdOptionLikeSkipped. Without it, users could be confused why they get the skipped icon when they try to choose the option with the value -1)
+  //    isYesOrDontCareQuestion (boolean; default: false; meaning: If true, the options with the values 0 and -1 [not necessarily the 2nd and 3rd option], cannot be selected. There is not voting button for option 0. If the user selects option -1 on the question card or changes to 0 or -1 in a results table, it automatically changes to the skipped state (99). Should only be used for yes-no-questions, where the issue of the question is either relevant for the user or not)
+  //    buttonTextAndIconLabelForDontCare (string, should be very short; overrides the skipped symbol "↷" as button content in the results tables. Should be used together with isYesOrDontCareQuestion. Without it, users could be confused why they get the skipped icon when they try to choose the option with the value -1)
   //    arBackgroundColor (array of x strings, each a hex value/rgb value/CSS color keyword representing the background color of the jumpToQuestion table cell and the icons in the results tables, if the corresponding option is selected; if not set, all options get CUSTOM_POSITION_BUTTONS_DEFAULT_VALUES.backgroundColor)
   //    arTextColor (array of x strings, same as arBackgroundColor; consider the contrast to the corresponding background color)
 
@@ -251,24 +251,17 @@ if (isActivated("addon_custom_voting_buttons.js")) {
       hideVotingDouble: true,
     },
     {
-      questionNr: 3,
+      questionNr: 5,
       arPositionValues: [1, 0, -1],
-      arButtonLabels: [
-        "As&nbsp;little text as possible",
-        "Some text is fine",
-        "It may be lots of text",
-      ],
-      arButtonAltTexts: [
-        "As little text as possible",
-        "Some text is fine",
-        "It may be lots of text",
-      ],
+      arButtonLabels: ["Little text", "Some text", "Lots of text"],
+      arButtonAltTexts: ["Little text", "Some text", "Lots of text"],
       arPositionIcons: ["Little text", "Some text", "Lots of text"],
-      treat2ndAnd3rdOptionLikeSkipped: true,
-      iconLabelForSkipped: "No matter",
+      isYesOrDontCareQuestion: true,
+      buttonTextAndIconLabelForYes: "Yes",
+      buttonTextAndIconLabelForDontCare: "No matter",
     },
     {
-      questionNr: 4,
+      questionNr: 3,
       arPositionValues: [1, 0, -1],
       arButtonLabels: [
         "Low conflict level",
@@ -287,7 +280,7 @@ if (isActivated("addon_custom_voting_buttons.js")) {
       ],
     },
     {
-      questionNr: 5,
+      questionNr: 4,
       arPositionValues: [1, 0, -1],
       arButtonLabels: ["Cooperative", "Semi-cooperative", "Competetive"],
       arButtonAltTexts: ["Cooperative", "Semi-cooperative", "Competetive"],

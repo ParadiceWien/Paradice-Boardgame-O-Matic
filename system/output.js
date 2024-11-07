@@ -254,13 +254,10 @@ function fnShowQuestionNumber(questionNumber) {
   else {
     if (isActivated("addon_custom_voting_buttons.js")) {
       CUSTOM_POSITION_BUTTONS.forEach((questionWithCustomButtons) => {
-        if (questionWithCustomButtons.treat2ndAnd3rdOptionLikeSkipped) {
+        if (questionWithCustomButtons.isYesOrDontCareQuestion) {
           const correspondingQuestion =
             questionWithCustomButtons.questionNr - 1;
-          if (
-            arPersonalPositions[correspondingQuestion] === 0 ||
-            arPersonalPositions[correspondingQuestion] === -1
-          )
+          if (arPersonalPositions[correspondingQuestion] === -1)
             arPersonalPositions[correspondingQuestion] = 99;
         }
       });
