@@ -783,7 +783,8 @@ function fnReEvaluate() {
 
     // neu ab v.0.3 - Bootstrap-Progressbar
     $(`#partyBar${i}`).width(`${percent}%`);
-    $(`#partyBar${i}`).text(`${percent}% (${arResults[i]} / ${maxPoints})`);
+    // $(`#partyBar${i}`).text(`${percent}% (${arResults[i]} / ${maxPoints})`);
+    $(`#partyBar${i}`).text(`${percent}%`);
     $(`#partyBar${i}`)
       .removeClass("bg-success bg-warning bg-danger")
       .addClass(barImage);
