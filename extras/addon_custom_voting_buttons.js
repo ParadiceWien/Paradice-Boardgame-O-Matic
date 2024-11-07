@@ -41,6 +41,14 @@ function createCustomVotingButtons() {
       i < correspondingCustomQuestion.arButtonLabels.length;
       i++
     ) {
+      if (
+        correspondingCustomQuestion.treat2ndAnd3rdOptionLikeSkipped &&
+        correspondingCustomQuestion.arPositionValues[i] === 0
+      ) {
+        // For such questions, the button with value -1 functions as a "Don't care button", which is why it is created (even though the user can't actually answer with -1)
+        // The 0 button, however, is not required at all -  and therefore not created
+        continue;
+      }
       const newBtn = document.createElement("div");
       newBtn.classList.add("col");
       newBtn.innerHTML = `<button type="button" class="btn btn-lg btn-custom btn-custom-${activeQuestion} btn-block btn-voting">${correspondingCustomQuestion.arButtonLabels[i]}</button>`;
@@ -127,7 +135,7 @@ function createInitialCustomPositionButtons() {
         newBtn.disabled = true;
       }
       if (
-        obj.treatThirdOptionLikeSkipped &&
+        obj.treat2ndAnd3rdOptionLikeSkipped &&
         newBtn.getAttribute("data-value") === "99" &&
         newBtn.classList.contains(`selfPosition${i}`)
       ) {
@@ -181,12 +189,15 @@ function toggleSelfPositionOfCustomQuestion(i) {
   });
 
   fnReEvaluate();
-
-  if (obj.treatThirdOptionLikeSkipped && newPosition === -1) {
+  if (obj.treat2ndAnd3rdOptionLikeSkipped && newPosition === 0) {
+    document.querySelector(`.selfPosition${i}`).click();
+    document.querySelector(`.selfPosition${i}`).click();
+  }
+  if (obj.treat2ndAnd3rdOptionLikeSkipped && newPosition === -1) {
     document.querySelector(`.selfPosition${i}`).click();
   }
   if (
-    obj.treatThirdOptionLikeSkipped &&
+    obj.treat2ndAnd3rdOptionLikeSkipped &&
     +document.querySelector(`.selfPosition${i}`).getAttribute("data-value") ===
       99
   ) {

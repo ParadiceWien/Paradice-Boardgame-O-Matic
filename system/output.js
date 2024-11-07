@@ -252,11 +252,19 @@ function fnShowQuestionNumber(questionNumber) {
 
   // Alle Fragen durchgelaufen -> Auswertung
   else {
-    // SPEZIAL
-    if (arPersonalPositions[2] === -1) {
-      arPersonalPositions[2] = 99;
+    if (isActivated("addon_custom_voting_buttons.js")) {
+      CUSTOM_POSITION_BUTTONS.forEach((questionWithCustomButtons) => {
+        if (questionWithCustomButtons.treat2ndAnd3rdOptionLikeSkipped) {
+          const correspondingQuestion =
+            questionWithCustomButtons.questionNr - 1;
+          if (
+            arPersonalPositions[correspondingQuestion] === 0 ||
+            arPersonalPositions[correspondingQuestion] === -1
+          )
+            arPersonalPositions[correspondingQuestion] = 99;
+        }
+      });
     }
-    // END SPEZIAL
 
     // Show loading icon
     const loadingAnimation = document.createElement("div");
