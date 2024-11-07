@@ -168,7 +168,15 @@ function fnEvaluation() {
       // With 5 position options, a full match (2&2, ...) gives 2 points, an almost-match (2&1, 1&0, ...) gives 1.5 points,
       //    half a match (2&0, 1&-1, ...) gives 1 point and so on
 
-      positionsMatch += (fullMatchValue - positionsDifference / 2) * faktor; // Hälfte der Differenz wir
+      const unadjustedActualMatch = fullMatchValue - positionsDifference / 2;
+
+      // In case of a custom question with a more than 3 position options, the unadjustedActualMatch can at maximum be equal to fullMatchValue
+      // In case of 5 options, this means it can be 2; in case of 7 questions, it can even be 3
+      // Such questions with varying number of position options shall not be automatically double weighted (or triple weighted, respectively)
+      // Therefore, the unadjustedActualMatch is divided by fullMatchValue so it can at maximum be 1 (just like for regular questions with 3 options)
+      const adjustedActualMatch = unadjustedActualMatch / fullMatchValue;
+
+      positionsMatch += adjustedActualMatch * faktor; // Hälfte der Differenz wir
     } // end: Frage nicht uebersprungen
   } // end: for numberOfQuestions
 
@@ -456,21 +464,8 @@ function calculateMaxPoints() {
   let maxPoints = 0;
   for (let i = 0; i < intQuestions; i++) {
     if (arPersonalPositions[i] === 99) continue;
-    if (
-      isActivated("addon_custom_voting_buttons.js") &&
-      (correspondingCustomQuestion = CUSTOM_POSITION_BUTTONS.find(
-        (obj) => obj.questionNr === i + 1
-      ))
-    ) {
-      const numberOfPositionOptionsForThisQuestion =
-        correspondingCustomQuestion.arButtonLabels.length;
-      const fullMatchValue = (numberOfPositionOptionsForThisQuestion - 1) / 2;
-      maxPoints += fullMatchValue;
-      if (arVotingDouble[i]) maxPoints += fullMatchValue;
-    } else {
-      maxPoints++;
-      if (arVotingDouble[i]) maxPoints++;
-    }
+    maxPoints++;
+    if (arVotingDouble[i]) maxPoints++;
   }
   if (maxPoints == 0) maxPoints = 1;
   return maxPoints;
