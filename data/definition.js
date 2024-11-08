@@ -8,7 +8,7 @@ const separator = ";";
 const fileQuestions = "demo-questions.csv";
 
 // Number of questions
-const intQuestions = 16;
+const intQuestions = 5;
 
 // Name of the CSV file with the board games in the /data directory
 const fileAnswers = "demo-games.csv";
@@ -90,7 +90,7 @@ const addons = [
   "extras/addon_custom_voting_buttons.js",
   "extras/addon_permalink_to_personal_results.js",
   "extras/addon_show_first_results.js",
-  "extras/addon_make_questions_optional.js",
+  // "extras/addon_make_questions_optional.js",
 ];
 
 // Addon-specific variables are set in this configuration file as well
@@ -251,7 +251,7 @@ if (isActivated("addon_custom_voting_buttons.js")) {
       hideVotingDouble: true,
     },
     {
-      questionNr: 5,
+      questionNr: 3,
       arPositionValues: [1, 0, -1],
       arButtonLabels: ["Little text", "Some text", "Lots of text"],
       arButtonAltTexts: ["Little text", "Some text", "Lots of text"],
@@ -261,7 +261,7 @@ if (isActivated("addon_custom_voting_buttons.js")) {
       buttonTextAndIconLabelForDontCare: "No matter",
     },
     {
-      questionNr: 3,
+      questionNr: 4,
       arPositionValues: [1, 0, -1],
       arButtonLabels: [
         "Low conflict level",
@@ -280,7 +280,7 @@ if (isActivated("addon_custom_voting_buttons.js")) {
       ],
     },
     {
-      questionNr: 4,
+      questionNr: 5,
       arPositionValues: [1, 0, -1],
       arButtonLabels: ["Cooperative", "Semi-cooperative", "Competetive"],
       arButtonAltTexts: ["Cooperative", "Semi-cooperative", "Competetive"],
@@ -356,6 +356,9 @@ if (addons.some((item) => item.includes("extras/addon_filter_results.js"))) {
     * options::object (required)
       * label::string (required)
       * value::string (required)
+      * checkedByDefault::bool (optional; default: false; is overwritten by allCheckedByDefault)
+    * allCheckedByDefault::bool (optional; default: false; overwrites allCheckedByDefault of individual options)
+    * checkedMeansExcluded::bool (optional; default: false)
     * textButtonSubmit::string (required, if "displayInModal: false" or undefined)
     * errorMessage::string (required)
   
@@ -364,6 +367,7 @@ if (addons.some((item) => item.includes("extras/addon_filter_results.js"))) {
     * label::string (required)
     * value::string (required)
     * checkedByDefault::bool (optional; default: false)
+    * checkedMeansExcluded::bool (optional; default: false)
       */
     {
       internalName: "player-number",
@@ -386,6 +390,33 @@ if (addons.some((item) => item.includes("extras/addon_filter_results.js"))) {
         cardBody: "With how many players do you want to play?",
       },
     },
+    {
+      internalName: "mechanisms",
+      type: "checkbox-list",
+      heading:
+        "Select those board game mechanics which you <strong>don't</strong> like:<br><small>All games, which have at least one of the mechanics you select, are hidden from your results</small>",
+      options: [
+        { label: "Area control", value: "areaControl" },
+        { label: "Worker Placement", value: "workerPlacement" },
+        { label: "Roll & Write / Flip & Write", value: "rollAndWrite" },
+        { label: "Deck Building", value: "deckBuilding" },
+        { label: "Drafting", value: "drafting" },
+        { label: "Deduction", value: "deduction" },
+        { label: "Push your luck", value: "pushYourLuck" },
+        { label: "Tile Placement", value: "tilePlacement" },
+        { label: "Action / Speed / Dexterity", value: "action" },
+        { label: "Drawing / Acting", value: "drawing" },
+        { label: "Party Game", value: "party" },
+        { label: "Auction / Bidding", value: "auction" },
+        { label: "Trading / Negotiating", value: "trading" },
+        { label: "Trick-taking", value: "trickTaking" },
+      ],
+      allCheckedByDefault: true,
+      checkedMeansExcluded: true,
+      strikethroughOptionsThatGetHidden: true,
+      displayInModal: true,
+      errorMessage: "You must allow at least one mechanic.",
+    },
   ];
   /* 
   Other required variables:
@@ -399,12 +430,12 @@ if (addons.some((item) => item.includes("extras/addon_filter_results.js"))) {
   * ERROR_MESSAGE_NO_FILTER_RESULTS::string (required)
   */
   MODAL = {
-    textButtonOpenModal: "Filter results",
-    heading: "Filter results",
+    textButtonOpenModal: "Filter by Mechanics",
+    heading: "Exclude games with certain Mechanics",
     buttonShowResults: "Go!",
   };
   BUTTON_RESET_ALL_FILTERS = {
-    showButton: false,
+    showButton: true,
     textButton: "Reset all filters",
   };
   ERROR_MESSAGE_NO_FILTER_RESULTS =

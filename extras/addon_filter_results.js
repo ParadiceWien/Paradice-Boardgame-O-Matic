@@ -112,8 +112,16 @@ function createFilterHtml(filter) {
     divContent += "<div style='padding-left: 20px'>";
     for (let i = 0; i < filter.options.length; i++) {
       divContent += `
-      <input type="checkbox" id="filter-checkbox-list-${filter.internalName}-option${i}" checked>
-      <label for="filter-checkbox-list-${filter.internalName}-option${i}"> ${filter.options[i].label}</label><br>`;
+      <input type="checkbox" id="filter-checkbox-list-${
+        filter.internalName
+      }-option${i}" ${
+        filter.allCheckedByDefault || filter.options[i].checkedByDefault
+          ? "checked"
+          : ""
+      }>
+      <label for="filter-checkbox-list-${filter.internalName}-option${i}"> ${
+        filter.options[i].label
+      }</label><br>`;
     }
     divContent += "</div>";
     divContent += `<p class="error-message" id='error-message-filter-${filter.type}-${filter.internalName}'></p>`;
@@ -132,6 +140,24 @@ function createFilterHtml(filter) {
     }</label>`;
   }
   containerOfFilter.innerHTML = divContent;
+  if (filter.strikethroughOptionsThatGetHidden) {
+    containerOfFilter
+      .querySelectorAll("[type='checkbox']")
+      .forEach((checkbox) => {
+        checkbox.addEventListener("change", () => {
+          if (
+            (checkbox.checked && filter.checkedMeansExcluded) ||
+            (!checkbox.checked && !filter.checkedMeansExcluded)
+          ) {
+            checkbox.nextSibling.nextSibling.style.textDecoration =
+              "line-through";
+          } else {
+            checkbox.nextSibling.nextSibling.style.textDecoration = "unset";
+          }
+        });
+        checkbox.dispatchEvent(new Event("change"));
+      });
+  }
   return containerOfFilter;
 }
 
@@ -175,6 +201,10 @@ function addEventListenerToFilter(filter) {
     checkIfAnyResultsLeft();
     sendMessageToLimitResultsAddon();
   });
+  if (filter.type === "single-checkbox" || filter.type === "checkbox-list") {
+    // In case filters are set by default, a first check must be done upfront
+    document.querySelector(selector).dispatchEvent(new Event(event));
+  }
 }
 
 function validateFilter(filter) {
@@ -220,7 +250,13 @@ function validateFilter(filter) {
     const checkboxes = document.querySelectorAll(
       `[id^="filter-checkbox-list-${filter.internalName}-option"]`
     );
-    if (!Array.from(checkboxes).some((checkbox) => checkbox.checked)) {
+    const areNoneChecked = !Array.from(checkboxes).some(
+      (checkbox) => checkbox.checked
+    );
+    const areAllChecked = Array.from(checkboxes).every(
+      (checkbox) => checkbox.checked
+    );
+    if ((filter.checkedMeansExcluded && areAllChecked) || areNoneChecked) {
       nodeErrorMessage.innerHTML = filter.errorMessage;
       return false;
     } else return true;
@@ -335,11 +371,14 @@ function hideResults(filter) {
         .querySelector(".filter-values")
         ?.getAttribute(`data-${filter.internalName}`)
         ?.split(" ");
+      const doFiltersValuesIncludeSelectedOption = selectedOptions.some(
+        (item) => arCorrespondingFilterValues.includes(item)
+      );
+
       if (
         !arCorrespondingFilterValues ||
-        !selectedOptions.some((item) =>
-          arCorrespondingFilterValues.includes(item)
-        )
+        (filter.checkedMeansExcluded && doFiltersValuesIncludeSelectedOption) ||
+        (!filter.checkedMeansExcluded && !doFiltersValuesIncludeSelectedOption)
       )
         nodeResult.classList.add(`hidden-by-filter-${filter.internalName}`);
     });
@@ -352,13 +391,13 @@ function hideResults(filter) {
       const correspondingFilterValue = nodeResult
         .querySelector(".filter-values")
         ?.getAttribute(`data-${filter.internalName}`);
-      // If checkedByDefault is true, all results are shown when the box is checked. If the box is unchecked, those results with the corresponding value are hidden
-      // If checkedByDefault is false, vice versa (results with the value are hidden when box is checked)
+      // If checkedMeansExcluded is false, all results are shown when the box is checked. If the box is unchecked, those results with the corresponding value are hidden
+      // If checkedMeansExcluded is true, vice versa (results with the value are hidden when box is checked)
       // if correspondingFilterValue is undefined, the result is not hidden; therefore, the attribute is only required on results to be hidden by this filter
       if (
         correspondingFilterValue === filter.value &&
-        ((filter.checkedByDefault && !isChecked) ||
-          (!filter.checkedByDefault && isChecked))
+        ((!filter.checkedMeansExcluded && !isChecked) ||
+          (filter.checkedMeansExcluded && isChecked))
       )
         nodeResult.classList.add(`hidden-by-filter-${filter.internalName}`);
     });
