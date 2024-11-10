@@ -256,7 +256,10 @@ function validateFilter(filter) {
     const areAllChecked = Array.from(checkboxes).every(
       (checkbox) => checkbox.checked
     );
-    if ((filter.checkedMeansExcluded && areAllChecked) || areNoneChecked) {
+    if (
+      (filter.checkedMeansExcluded && areAllChecked) ||
+      (!filter.checkedMeansExcluded && areNoneChecked)
+    ) {
       nodeErrorMessage.innerHTML = filter.errorMessage;
       return false;
     } else return true;

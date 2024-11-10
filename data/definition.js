@@ -412,11 +412,38 @@ if (addons.some((item) => item.includes("extras/addon_filter_results.js"))) {
         { label: "Trading / Negotiating", value: "trading" },
         { label: "Trick-taking", value: "trickTaking" },
       ],
-      allCheckedByDefault: true,
+      allCheckedByDefault: false,
       checkedMeansExcluded: true,
       strikethroughOptionsThatGetHidden: true,
       displayInModal: true,
       errorMessage: "You must allow at least one mechanic.",
+    },
+    {
+      internalName: "themes",
+      type: "checkbox-list",
+      heading:
+        "Select those themes & settings which you <strong>don't</strong> like:<br><small>All games, which have at least one of the themes you select, are hidden from your results</small>",
+      options: [
+        { label: "Adventure", value: "adventure" },
+        { label: "Wild West", value: "wildWest" },
+        { label: "Ancient Times", value: "ancient" },
+        { label: "Prehistorical", value: "prehistoric" },
+        { label: "Animals & Environment", value: "animals" },
+        { label: "Cities & Infrastructure", value: "cities" },
+        { label: "Fantasy & Mythology", value: "fantasy" },
+        { label: "Agriculture", value: "farming" },
+        { label: "Horror & Zombies", value: "horror" },
+        { label: "Medieval & Renaissance", value: "medieval" },
+        { label: "Ships & Pirates", value: "nautical" },
+        { label: "Cars & Racing", value: "racing" },
+        { label: "Science Fiction", value: "scifi" },
+        { label: "War", value: "war" },
+      ],
+      allCheckedByDefault: false,
+      checkedMeansExcluded: true,
+      strikethroughOptionsThatGetHidden: true,
+      displayInModal: true,
+      errorMessage: "You must allow at least one theme.",
     },
   ];
   /* 
@@ -431,8 +458,8 @@ if (addons.some((item) => item.includes("extras/addon_filter_results.js"))) {
   * ERROR_MESSAGE_NO_FILTER_RESULTS::string (required)
   */
   MODAL = {
-    textButtonOpenModal: "Filter by Mechanics",
-    heading: "Exclude games with certain Mechanics",
+    textButtonOpenModal: "Filter by Mechanics or Themes",
+    heading: "Exclude games with certain Mechanics or Themes",
     buttonShowResults: "Go!",
   };
   BUTTON_RESET_ALL_FILTERS = {
