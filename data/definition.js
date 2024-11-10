@@ -89,8 +89,9 @@ const addons = [
   "extras/addon_tooltips.js",
   "extras/addon_custom_voting_buttons.js",
   "extras/addon_permalink_to_personal_results.js",
-  "extras/addon_show_first_results.js",
+  // "extras/addon_show_first_results.js",
   // "extras/addon_make_questions_optional.js",
+  "extras/addon_make_result_details_fullscreen.js",
 ];
 
 // Addon-specific variables are set in this configuration file as well
@@ -440,4 +441,8 @@ if (addons.some((item) => item.includes("extras/addon_filter_results.js"))) {
   };
   ERROR_MESSAGE_NO_FILTER_RESULTS =
     "None of our board games matches all your filters. Please change your filters and try again.";
+}
+
+if (isActivated("addon_make_result_details_fullscreen.js")) {
+  TEXT_BUTTON_CLOSE_FULLSCREEN_EVENT_DETAILS = "&larr; Back to list";
 }
