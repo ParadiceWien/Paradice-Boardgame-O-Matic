@@ -25,7 +25,7 @@ function addCssFullscreenResultDetails() {
         .fullscreen-result-details-content {
           max-height: calc(100vh - 50px);        /* Restricts content height to viewport */
           overflow-y: auto; 
-          margin-bottom: 50px;
+          padding-bottom: 40px;
         }
         
         .fullscreen-result-details-close {
@@ -47,10 +47,6 @@ function addCssFullscreenResultDetails() {
         `;
   document.head.appendChild(stylesheet);
 }
-window.addEventListener("load", () => {
-  setMutationObserverFullscreenResultDetails();
-  addCssFullscreenResultDetails();
-});
 
 function addEventListenersFullscreenResultDetails() {
   if (!document.querySelector("#resultsHeading").textContent) return;
@@ -102,3 +98,8 @@ function addEventListenersFullscreenResultDetails() {
       });
     });
 }
+
+window.addEventListener("load", () => {
+  setMutationObserverFullscreenResultDetails();
+  addCssFullscreenResultDetails();
+});

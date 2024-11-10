@@ -92,6 +92,7 @@ const addons = [
   // "extras/addon_show_first_results.js",
   // "extras/addon_make_questions_optional.js",
   "extras/addon_make_result_details_fullscreen.js",
+  "extras/addon_display_answers_and_filter_values_in_result_details.js",
 ];
 
 // Addon-specific variables are set in this configuration file as well
@@ -484,4 +485,21 @@ if (addons.some((item) => item.includes("extras/addon_filter_results.js"))) {
 
 if (isActivated("addon_make_result_details_fullscreen.js")) {
   TEXT_BUTTON_CLOSE_FULLSCREEN_EVENT_DETAILS = "&larr; Back to list";
+}
+
+if (
+  isActivated("addon_display_answers_and_filter_values_in_result_details.js")
+) {
+  QUESTIONS_TO_BE_DISPLAYED = [
+    { questionNr: 1, displayQuestionHeading: true, isCustomQuestion: true },
+    { questionNr: 2, displayQuestionHeading: true, isCustomQuestion: true },
+    { questionNr: 3, displayQuestionHeading: false, isCustomQuestion: true },
+    { questionNr: 4, displayQuestionHeading: false, isCustomQuestion: true },
+    { questionNr: 5, displayQuestionHeading: false, isCustomQuestion: true },
+  ];
+  FILTERS_TO_BE_DISPLAYED = [
+    { internalName: "mechanisms", label: "Mechanics", bulletList: false },
+    { internalName: "themes", label: "Themes", bulletList: false },
+  ];
+  HIDE_TABLE_resultsByPartyAnswers = true;
 }
