@@ -2,7 +2,7 @@
 This file seems to be long and complex, and it kind of is, because it must accommodate a variety of different filter types and configurations as well as their interactions
 However, the procedure for each filter type (started by setupFilters()) is the same:
   * createFilterHtml (of course, highly different HTML for each filter type)
-  * addFilterNodeToDOM (the same for each filter type, only difference is display above resultsShortTable (#resultsAddonTop) vs. in popup modal (which triggers createAndAppendFilterModal))
+  * addFilterNodeToDOM (the same for each filter type, only difference is display above resultsShortTable (#resultsAddonTop) vs. in popup modal (which triggers createAndAppendSharedFilterModal))
   * addEventListenerToFilter (little differences depending on filter type)
   * Now, after the filter is triggered:
     * validateFilter (only required for filter types where input can be invalid; if input is invalid, error message is displayed)
@@ -68,7 +68,10 @@ function createFilterHtml(filter) {
       list="datalist-${filter.internalName}"
     />`; // the input type is not relevant, because it is not actually submitted and sent to a server , "text" works just fine for all cases
     // If the filter is in the modal, the modal button acts as submit button
-    if (!filter.displayInModal)
+    if (
+      !filter.displayInSharedModal &&
+      !filter.displayInIndividualModal?.isWanted
+    )
       divContent += `<button id='submit-filter-${filter.internalName}'>${filter.textButtonSubmit}</button>`;
 
     divContent += `<p class='error-message' id='error-message-filter-${filter.type}-${filter.internalName}'></p>
@@ -103,7 +106,10 @@ function createFilterHtml(filter) {
     /> km
     <p class='error-message' id='error-message-filter-${filter.type}-${filter.internalName}'></p>`;
     // If the filter is in the modal, the modal button acts as submit button
-    if (!filter.displayInModal) {
+    if (
+      !filter.displayInSharedModal &&
+      !filter.displayInIndividualModal?.isWanted
+    ) {
       divContent += `<button id='submit-filter-${filter.internalName}'>${filter.textButtonSubmit}</button>`;
     }
   } else if (filter.type === "checkbox-list") {
@@ -126,7 +132,10 @@ function createFilterHtml(filter) {
     divContent += "</div>";
     divContent += `<p class="error-message" id='error-message-filter-${filter.type}-${filter.internalName}'></p>`;
     // If the filter is in the modal, the modal button acts as submit button
-    if (!filter.displayInModal) {
+    if (
+      !filter.displayInSharedModal &&
+      !filter.displayInIndividualModal?.isWanted
+    ) {
       divContent += `<button id='submit-filter-${filter.internalName}'>${filter.textButtonSubmit}</button>`;
     }
   } else if (filter.type === "single-checkbox") {
@@ -163,9 +172,12 @@ function createFilterHtml(filter) {
 
 function addFilterNodeToDOM(nodeFilter, filter) {
   if (!document.querySelector("#resultsHeading").textContent) return;
-  if (filter.displayInModal) {
-    if (!document.querySelector("#filterModal")) createAndAppendFilterModal();
-    document.querySelector("#filterModalBody").appendChild(nodeFilter);
+  if (filter.displayInSharedModal) {
+    if (!document.querySelector("#sharedFilterModal"))
+      createAndAppendSharedFilterModal();
+    document.querySelector("#sharedFilterModalBody").appendChild(nodeFilter);
+  } else if (filter.displayInIndividualModal?.isWanted) {
+    createAndAppendIndividualFilterModal(nodeFilter, filter);
   } else document.querySelector("#resultsAddonTop").appendChild(nodeFilter);
 
   addEventListenerToFilter(filter);
@@ -185,8 +197,10 @@ function addEventListenerToFilter(filter) {
     filter.type === "checkbox-list"
   ) {
     // If not in a modal, each of these filter types have their own submit button; otherwise, the modal button acts as global submit button for all filters it contains
-    selector = filter.displayInModal
-      ? "#filter-modal-confirm"
+    selector = filter.displayInSharedModal
+      ? "#shared-filter-modal-confirm"
+      : filter.displayInIndividualModal?.isWanted
+      ? `#individual-filter-modal-confirm-${filter.internalName}`
       : `#submit-filter-${filter.internalName}`;
     event = "click";
   }
@@ -194,7 +208,8 @@ function addEventListenerToFilter(filter) {
   document.querySelector(selector).addEventListener(event, () => {
     const isFilterValid = validateFilter(filter);
     if (!isFilterValid) {
-      if (filter.displayInModal) window.allFiltersInModalCorrect = false; // This causes the modal not to close
+      if (filter.displayInSharedModal)
+        window.allFiltersInSharedModalCorrect = false; // This causes the modal not to close
       return;
     }
     hideResults(filter);
@@ -425,53 +440,105 @@ function sendMessageToLimitResultsAddon() {
   window.postMessage("filter changed", "*");
 }
 
-function createAndAppendFilterModal() {
-  const containerButtonOpenFilterModal = document.createElement("div");
-  containerButtonOpenFilterModal.classList.add("row");
-  containerButtonOpenFilterModal.setAttribute(
+function createAndAppendSharedFilterModal() {
+  const containerBtnOpenSharedFilterModal = document.createElement("div");
+  containerBtnOpenSharedFilterModal.classList.add("row");
+  containerBtnOpenSharedFilterModal.setAttribute(
     "id",
-    "container-button-open-filter-modal"
+    "container-button-open-shared-filter-modal"
   );
-  containerButtonOpenFilterModal.innerHTML = `<button id="button-open-filter-modal">${MODAL.textButtonOpenModal}</button>`;
+  containerBtnOpenSharedFilterModal.innerHTML = `<button id="button-open-shared-filter-modal">${SHARED_MODAL.textButtonOpenModal}</button>`;
   document
     .querySelector("#resultsAddonTop")
-    .appendChild(containerButtonOpenFilterModal);
+    .appendChild(containerBtnOpenSharedFilterModal);
 
-  const filterModal = document.createElement("div");
+  const sharedFilterModal = document.createElement("div");
   let divContent = `
-    <div data-backdrop="static" class="modal fade show" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterModalLabel" aria-modal="true">
+    <div data-backdrop="static" class="modal fade show" id="sharedFilterModal" tabindex="-1" role="dialog" aria-labelledby="sharedFilterModalLabel" aria-modal="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2>${MODAL.heading}</h2>
+                    <h2>${SHARED_MODAL.heading}</h2>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body" id="filterModalBody"></div>
+                <div class="modal-body" id="sharedFilterModalBody"></div>
                 <div class="modal-footer">
-                    <button type="button" id="filter-modal-confirm" class="btn">
-                        ${MODAL.buttonShowResults}
+                    <button type="button" id="shared-filter-modal-confirm" class="btn">
+                        ${SHARED_MODAL.buttonShowResults}
                     </button>
                 </div>
             </div>
         </div>
     </div>`;
-  filterModal.innerHTML = divContent;
-  document.body.append(filterModal);
+  sharedFilterModal.innerHTML = divContent;
+  document.body.append(sharedFilterModal);
   document
-    .querySelector("#button-open-filter-modal")
+    .querySelector("#button-open-shared-filter-modal")
     .addEventListener("click", () => {
-      $("#filterModal").modal("show");
+      $("#sharedFilterModal").modal("show");
     });
   document
-    .querySelector("#filter-modal-confirm")
+    .querySelector("#shared-filter-modal-confirm")
     .addEventListener("click", () => {
-      window.allFiltersInModalCorrect = true;
+      window.allFiltersInSharedModalCorrect = true;
       // If a filter in the modal fails validation, this is set to false, preventing the closing of the modal
       setTimeout(() => {
-        if (window.allFiltersInModalCorrect) $("#filterModal").modal("hide");
+        if (window.allFiltersInSharedModalCorrect)
+          $("#sharedFilterModal").modal("hide");
       }, 300);
+    });
+}
+
+function createAndAppendIndividualFilterModal(nodeFilter, filter) {
+  const containerBtnOpenIndividualFilterModal = document.createElement("div");
+  containerBtnOpenIndividualFilterModal.classList.add("row");
+  containerBtnOpenIndividualFilterModal.setAttribute(
+    "id",
+    `container-button-open-individual-filter-modal-${filter.internalName}`
+  );
+  containerBtnOpenIndividualFilterModal.innerHTML = `<button id="button-open-individual-filter-modal-${filter.internalName}">${filter.displayInIndividualModal.textButtonOpenModal}</button>`;
+  document
+    .querySelector("#resultsAddonTop")
+    .appendChild(containerBtnOpenIndividualFilterModal);
+
+  const individualFilterModal = document.createElement("div");
+  let divContent = `
+      <div data-backdrop="static" class="modal fade show" id="individualFilterModal-${filter.internalName}" tabindex="-1" role="dialog" aria-labelledby="individualFilterModalLabel-${filter.internalName}" aria-modal="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h2>${filter.displayInIndividualModal.heading}</h2>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class="modal-body" id="individualFilterModalBody-${filter.internalName}"></div>
+                  <div class="modal-footer">
+                      <button type="button" id="individual-filter-modal-confirm-${filter.internalName}" class="btn">
+                          ${filter.displayInIndividualModal.buttonShowResults}
+                      </button>
+                  </div>
+              </div>
+          </div>
+      </div>`;
+  individualFilterModal.innerHTML = divContent;
+  individualFilterModal
+    .querySelector(`#individualFilterModalBody-${filter.internalName}`)
+    .appendChild(nodeFilter);
+  document.body.append(individualFilterModal);
+  document
+    .querySelector(
+      `#button-open-individual-filter-modal-${filter.internalName}`
+    )
+    .addEventListener("click", () => {
+      $(`#individualFilterModal-${filter.internalName}`).modal("show");
+    });
+  document
+    .querySelector(`#individual-filter-modal-confirm-${filter.internalName}`)
+    .addEventListener("click", () => {
+      $(`#individualFilterModal-${filter.internalName}`).modal("hide");
     });
 }
 
@@ -641,9 +708,9 @@ function setupButtonResetAllFilters() {
   observer.observe(target, config);
   function createButtonResetAllFilters() {
     if (!document.querySelector("#resultsHeading").textContent) return;
-    const containerButton = document.createElement("div");
-    containerButton.innerHTML = `<button id="reset-all-filters">${BUTTON_RESET_ALL_FILTERS.textButton}</button>`;
-    document.querySelector("#resultsAddonTop").appendChild(containerButton);
+    const containerBtn = document.createElement("div");
+    containerBtn.innerHTML = `<button id="reset-all-filters">${BUTTON_RESET_ALL_FILTERS.textButton}</button>`;
+    document.querySelector("#resultsAddonTop").appendChild(containerBtn);
     document
       .querySelector("#reset-all-filters")
       .addEventListener("click", () => {
@@ -651,7 +718,12 @@ function setupButtonResetAllFilters() {
         // Instead of manually resetting each filter, we just delete and re-create them all
         document
           .querySelectorAll(
-            ".filter-container, #container-button-open-filter-modal, #filterModal, #reset-all-filters, #error-message-no-filter-results"
+            `.filter-container, \
+            #container-button-open-shared-filter-modal, \
+            [id^='container-button-open-individual-filter-modal'], \
+            #sharedFilterModal, [id^='individualFilterModal'], \
+            #reset-all-filters, \
+            #error-message-no-filter-results`
           )
           .forEach((node) => {
             node.remove();

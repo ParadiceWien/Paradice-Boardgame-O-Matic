@@ -318,7 +318,7 @@ if (addons.some((item) => item.includes("extras/addon_filter_results.js"))) {
     /* 
   Global keys:
     * internalName::string (required, must be unique)
-    * displayInModal::bool (optional; default: false)
+    * displayInSharedModal::bool (optional; default: false)
 
   Available types and their special keys:
   "dropdown"
@@ -336,7 +336,7 @@ if (addons.some((item) => item.includes("extras/addon_filter_results.js"))) {
     * label::string (optional)
     * datalist::array:string (required)
     * placeholder::string (required)
-    * textButtonSubmit::string (required, if "displayInModal: false" or undefined)
+    * textButtonSubmit::string (required, if "displayInSharedModal: false" or undefined)
     * errorMessage::string (required)
   
   "distance" (note: only works with kilometres)
@@ -347,7 +347,7 @@ if (addons.some((item) => item.includes("extras/addon_filter_results.js"))) {
       * lon::number (required)
     * placeholderLocation::string (required)
     * placeholderDistance::string (required)
-    * textButtonSubmit::string (required, if "displayInModal: false" or undefined)
+    * textButtonSubmit::string (required, if "displayInSharedModal: false" or undefined)
     * errorMessageNoLocation::string (required)
     * errorMessageWrongLocation::string (required)
     * errorMessageDistance::string (required)
@@ -360,7 +360,7 @@ if (addons.some((item) => item.includes("extras/addon_filter_results.js"))) {
       * checkedByDefault::bool (optional; default: false; is overwritten by allCheckedByDefault)
     * allCheckedByDefault::bool (optional; default: false; overwrites allCheckedByDefault of individual options)
     * checkedMeansExcluded::bool (optional; default: false)
-    * textButtonSubmit::string (required, if "displayInModal: false" or undefined)
+    * textButtonSubmit::string (required, if "displayInSharedModal: false" or undefined)
     * errorMessage::string (required)
   
   "single-checkbox"
@@ -384,7 +384,7 @@ if (addons.some((item) => item.includes("extras/addon_filter_results.js"))) {
         { text: "≥ 7", value: "7" },
       ],
       textOfOptionToShowAll: "Show all",
-      displayInModal: false,
+      displayInSharedModal: false,
       setAtStart: {
         isWanted: true,
         cardHeading: "Player number",
@@ -415,7 +415,13 @@ if (addons.some((item) => item.includes("extras/addon_filter_results.js"))) {
       allCheckedByDefault: false,
       checkedMeansExcluded: true,
       strikethroughOptionsThatGetHidden: true,
-      displayInModal: true,
+      displayInSharedModal: false,
+      displayInIndividualModal: {
+        isWanted: true,
+        textButtonOpenModal: "Filter by Mechanics",
+        heading: "Exclude games with certain Mechanics",
+        buttonShowResults: "Go!",
+      },
       errorMessage: "You must allow at least one mechanic.",
     },
     {
@@ -442,13 +448,19 @@ if (addons.some((item) => item.includes("extras/addon_filter_results.js"))) {
       allCheckedByDefault: false,
       checkedMeansExcluded: true,
       strikethroughOptionsThatGetHidden: true,
-      displayInModal: true,
+      displayInSharedModal: false,
+      displayInIndividualModal: {
+        isWanted: true,
+        textButtonOpenModal: "Filter by Themes",
+        heading: "Exclude games with certain Themes / Settings",
+        buttonShowResults: "Go!",
+      },
       errorMessage: "You must allow at least one theme.",
     },
   ];
   /* 
   Other required variables:
-  * MODAL::object (required, if at least one filter has "displayInModal: true")
+  * MODAL::object (required, if at least one filter has "displayInSharedModal: true")
     * textButtonOpenModal::string (required)
     * heading::string (required)
     * buttonShowResults::string (required)
@@ -457,9 +469,9 @@ if (addons.some((item) => item.includes("extras/addon_filter_results.js"))) {
     * textButton::string (required, if "showButton: true")
   * ERROR_MESSAGE_NO_FILTER_RESULTS::string (required)
   */
-  MODAL = {
-    textButtonOpenModal: "Filter by Mechanics or Themes",
-    heading: "Exclude games with certain Mechanics or Themes",
+  SHARED_MODAL = {
+    textButtonOpenModal: "Filter results",
+    heading: "Filter results",
     buttonShowResults: "Go!",
   };
   BUTTON_RESET_ALL_FILTERS = {
