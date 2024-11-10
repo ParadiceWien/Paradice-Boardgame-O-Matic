@@ -498,8 +498,8 @@ if (
     { questionNr: 5, displayQuestionHeading: false, isCustomQuestion: true },
   ];
   FILTERS_TO_BE_DISPLAYED = [
-    { internalName: "mechanisms", label: "Mechanics", bulletList: false },
-    { internalName: "themes", label: "Themes", bulletList: false },
+    { internalName: "mechanisms", label: "Mechanics", bulletList: true },
+    { internalName: "themes", label: "Themes", bulletList: true },
   ];
   HIDE_TABLE_resultsByPartyAnswers = true;
 }
