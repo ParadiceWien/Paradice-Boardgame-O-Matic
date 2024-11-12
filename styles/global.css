@@ -852,8 +852,27 @@ button:active,
 }
 
 @keyframes flyOutLeft {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
   100% {
     transform: translateX(-200px);
+    opacity: 0;
+  }
+}
+
+.flyOutRight {
+  animation: flyOutRight 0.4s ease-in-out;
+}
+
+@keyframes flyOutRight {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(200px);
     opacity: 0;
   }
 }
@@ -865,6 +884,21 @@ button:active,
 @keyframes flyInRight {
   0% {
     transform: translateX(200px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.flyInLeft {
+  animation: flyInLeft 0.4s ease-in-out;
+}
+
+@keyframes flyInLeft {
+  0% {
+    transform: translateX(-200px);
     opacity: 0;
   }
   100% {

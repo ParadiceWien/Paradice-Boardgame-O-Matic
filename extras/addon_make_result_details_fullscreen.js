@@ -1,5 +1,4 @@
 function setMutationObserverFullscreenResultDetails() {
-  if (window.innerWidth > 768) return;
   const target = document.querySelector("#resultsHeading");
   var observer = new MutationObserver(addEventListenersFullscreenResultDetails);
   var config = {
@@ -100,6 +99,7 @@ function addEventListenersFullscreenResultDetails() {
 }
 
 window.addEventListener("load", () => {
+  if (window.innerWidth > 768) return;
   setMutationObserverFullscreenResultDetails();
   addCssFullscreenResultDetails();
 });

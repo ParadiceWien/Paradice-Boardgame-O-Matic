@@ -88,3 +88,11 @@ main {
   color: var(--warning);
   border-color: var(--warning);
 }
+
+.bx {
+  vertical-align: middle;
+}
+
+i.bx-sm {
+  font-size: 1.25rem !important;
+}

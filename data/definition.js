@@ -24,6 +24,7 @@ const design = [
   "system/fontawesome/css/fontawesome.css",
   "system/fontawesome/css/solid.css",
   "system/fontawesome/css/regular.css",
+  "styles/boxicons.min.css",
 ];
 
 // Changes to how Matomo is implemented can be made directly in system/privacy.js
@@ -93,6 +94,7 @@ const addons = [
   // "extras/addon_make_questions_optional.js",
   "extras/addon_make_result_details_fullscreen.js",
   "extras/addon_display_answers_and_filter_values_in_result_details.js",
+  "extras/addon_split_results_view_on_mobile_in_tabs.js",
 ];
 
 // Addon-specific variables are set in this configuration file as well
@@ -144,7 +146,7 @@ if (isActivated("addon_limit_results.js")) {
 
 if (isActivated("addon_permalink_to_personal_results.js")) {
   // Text in the button
-  PERMALINK_BUTTON_TEXT = `<i class="fa-solid fa-floppy-disk"></i>&nbsp; Save/share results`;
+  PERMALINK_BUTTON_TEXT = `<i class='bx bx-save bx-sm'></i>&nbsp; Save/share results`;
   // Explanatory text, which is shown for a couple of seconds after the button is pressed
   PERMALINK_DESCRIPTION_TEXT =
     "A permalink has been generated and copied to your clipboard. Share or save this link and open it again later to go directly to this results page.";
@@ -180,8 +182,10 @@ if (isActivated("addon_custom_voting_buttons.js")) {
     // To overwrite the default values for a question, set the key arBackgroundColor / arTextColor in an object of CUSTOM_POSITION_BUTTONS
     // The value of arBackgroundColor / arTextColor must be an array with as many elements as there are values of the button
   };
-  const full = "<i class='fa-solid fa-star'></i>";
-  const empty = "<i class='fa-regular fa-star'></i>";
+  const full = "<i class='bx bxs-cog bx-sm'></i>";
+  const empty = "<i class='bx bx-cog bx-sm'></i>";
+  const fullBolt = "<i class='bx bxs-bolt-circle bx-sm' ></i>";
+  const emptyBolt = "<i class='bx bx-bolt-circle bx-sm'></i>";
   // For each question that should be customized, add an object to the array CUSTOM_POSITION_BUTTONS
   // The following keys are required (x = number of options/buttons for this question, should be an odd number)
   //    questionNr (integer; 1-indexed)
@@ -276,9 +280,9 @@ if (isActivated("addon_custom_voting_buttons.js")) {
         "High conflict level",
       ],
       arPositionIcons: [
-        `${full}${empty}${empty}`,
-        `${full}${full}${empty}`,
-        `${full}${full}${full}`,
+        `${fullBolt}${emptyBolt}${emptyBolt}`,
+        `${fullBolt}${fullBolt}${emptyBolt}`,
+        `${fullBolt}${fullBolt}${fullBolt}`,
       ],
     },
     {
@@ -286,7 +290,7 @@ if (isActivated("addon_custom_voting_buttons.js")) {
       arPositionValues: [1, 0, -1],
       arButtonLabels: ["Cooperative", "Semi-cooperative", "Competetive"],
       arButtonAltTexts: ["Cooperative", "Semi-cooperative", "Competetive"],
-      arPositionIcons: ["Coop", "Semi-coop", "Competetive"],
+      arPositionIcons: ["Coop", "Semi-coop", "Compe&shy;tetive"],
     },
   ];
 }
@@ -484,7 +488,8 @@ if (addons.some((item) => item.includes("extras/addon_filter_results.js"))) {
 }
 
 if (isActivated("addon_make_result_details_fullscreen.js")) {
-  TEXT_BUTTON_CLOSE_FULLSCREEN_EVENT_DETAILS = "&larr; Back to list";
+  TEXT_BUTTON_CLOSE_FULLSCREEN_EVENT_DETAILS =
+    "<i class='bx bx-chevron-left' ></i> Back to list";
 }
 
 if (
