@@ -90,9 +90,25 @@ main {
 }
 
 .bx {
-  vertical-align: middle;
+  vertical-align: sub;
 }
 
 i.bx-sm {
   font-size: 1.25rem !important;
+}
+
+.container-checkbox-list input {
+  display: none;
+}
+
+.color-success {
+  color: var(--success);
+}
+
+.color-danger {
+  color: var(--danger);
+}
+
+.line-through {
+  text-decoration: line-through;
 }

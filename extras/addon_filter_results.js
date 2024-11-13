@@ -115,19 +115,28 @@ function createFilterHtml(filter) {
   } else if (filter.type === "checkbox-list") {
     if (filter.heading)
       divContent += `<p id="filter-heading-checkbox-list-${filter.internalName}" class="filter-heading">${filter.heading}</p>`;
-    divContent += "<div style='padding-left: 20px'>";
+    divContent +=
+      "<div class='container-checkbox-list' style='padding-left: 20px'>";
     for (let i = 0; i < filter.options.length; i++) {
+      const isChecked =
+        filter.allCheckedByDefault || filter.options[i].checkedByDefault;
+      const isActive =
+        (isChecked && !filter.checkedMeansExcluded) ||
+        (!isChecked && filter.checkedMeansExcluded);
       divContent += `
       <input type="checkbox" id="filter-checkbox-list-${
         filter.internalName
       }-option${i}" ${
-        filter.allCheckedByDefault || filter.options[i].checkedByDefault
-          ? "checked"
+        isChecked ? "checked" : ""
+      }><label for="filter-checkbox-list-${
+        filter.internalName
+      }-option${i}"><i class='bx bx-${
+        isActive ? "check" : "x"
+      } bx-sm bx-border'></i>&nbsp;<span ${
+        !isActive && filter.strikethroughOptionsThatGetHidden
+          ? "class='line-through'"
           : ""
-      }>
-      <label for="filter-checkbox-list-${filter.internalName}-option${i}"> ${
-        filter.options[i].label
-      }</label><br>`;
+      }>${filter.options[i].label}</span></label><br>`;
     }
     divContent += "</div>";
     divContent += `<p class="error-message" id='error-message-filter-${filter.type}-${filter.internalName}'></p>`;
@@ -149,22 +158,22 @@ function createFilterHtml(filter) {
     }</label>`;
   }
   containerOfFilter.innerHTML = divContent;
-  if (filter.strikethroughOptionsThatGetHidden) {
+
+  if (filter.type === "checkbox-list") {
     containerOfFilter
       .querySelectorAll("[type='checkbox']")
       .forEach((checkbox) => {
         checkbox.addEventListener("change", () => {
-          if (
-            (checkbox.checked && filter.checkedMeansExcluded) ||
-            (!checkbox.checked && !filter.checkedMeansExcluded)
-          ) {
-            checkbox.nextSibling.nextSibling.style.textDecoration =
-              "line-through";
-          } else {
-            checkbox.nextSibling.nextSibling.style.textDecoration = "unset";
+          const icon = checkbox.nextSibling.querySelector("i");
+          ["bx-check", "bx-x", "color-success", "color-danger"].forEach((cls) =>
+            icon.classList.toggle(cls)
+          );
+          if (filter.strikethroughOptionsThatGetHidden) {
+            checkbox.nextSibling
+              .querySelector("span")
+              .classList.toggle("line-through");
           }
         });
-        checkbox.dispatchEvent(new Event("change"));
       });
   }
   return containerOfFilter;
