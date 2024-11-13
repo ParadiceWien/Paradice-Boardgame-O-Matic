@@ -319,6 +319,9 @@ if (isActivated("addon_make_questions_optional.js")) {
 }
 
 if (addons.some((item) => item.includes("extras/addon_filter_results.js"))) {
+  TEXT_FILTERS_HEADING = "Filters";
+  TEXT_FILTERS_SUBHEADING =
+    "Set filters rules to get more accurate suggestions";
   FILTERS = [
     /* 
   Global keys:
@@ -506,5 +509,5 @@ if (
     { internalName: "mechanisms", label: "Mechanics", bulletList: false },
     { internalName: "themes", label: "Themes", bulletList: false },
   ];
-  HIDE_TABLE_resultsByPartyAnswers = true;
+  HIDE_TABLE_resultsByPartyAnswers = false;
 }

@@ -183,6 +183,7 @@ function addFilterNodeToDOM(nodeFilter, filter) {
   const filtersTab = document.createElement("div");
   filtersTab.setAttribute("id", "filters");
   filtersTab.classList.add("row", "d-none");
+  filtersTab.innerHTML = `<div id="filtersHeading"><h1>${TEXT_FILTERS_HEADING}</h1><h2>${TEXT_FILTERS_SUBHEADING}</h2></div>  `;
   if (!document.querySelector("#resultsHeading").textContent) return;
   if (filter.displayInSharedModal) {
     if (!document.querySelector("#sharedFilterModal"))

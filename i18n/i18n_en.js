@@ -34,13 +34,13 @@ const TEXT_MATOMO_MODAL = `Do you authorise us to collect data about your visit 
 
 // Results
 const TEXT_RESULTS_HEADING = "Your Top Matches";
-const TEXT_RESULTS_SUBHEADING = "You have the highest match with these games";
-
+const TEXT_RESULTS_SUBHEADING =
+  "With these board games you have the highest match";
 const TEXT_LINK_TO_EXTERNAL_PAGE =
   "View at BoardGameGeek <i class='bx bx-link-external' ></i>";
-
-const TEXT_RESULTS_INFO_THESES =
-  "<h2>The answers of all games to the questions</h2>";
+const TEXT_FINETUNING_HEADING = "Finetuning";
+const TEXT_FINETUNING_SUBHEADING =
+  "Change your answers or weights and check the values of all board games for each question";
 const TEXT_SHOW_PARTY_DESCRIPTION = `Show details <i class='bx bx-chevron-down bx-sm' ></i>`;
 const TEXT_HIDE_PARTY_DESCRIPTION = `Hide details <i class='bx bx-chevron-up bx-sm' ></i>`;
 const TEXT_SHOW_PARTY_ANSWERS = `Compare answers <i class='bx bx-chevron-down bx-sm' ></i>`;
@@ -48,6 +48,12 @@ const TEXT_HIDE_PARTY_ANSWERS = `Hide answers <i class='bx bx-chevron-up bx-sm' 
 const TEXT_SHOW_THESIS_ANSWERS = TEXT_SHOW_PARTY_ANSWERS;
 const TEXT_HIDE_THESIS_ANSWERS = TEXT_HIDE_PARTY_ANSWERS;
 
+const TEXT_SHARE_AND_SAVE_HEADING = "Share or Save your Results";
+const TEXT_SHARE_AND_SAVE_SUBHEADING =
+  "Use the link below to share your results with others or to save it for yourself";
+
+const TEXT_INFO_HEADING = "About the Boardgame-O-Matic";
+const TEXT_INFO_SUBHEADING = "";
 // The following words may be used as ALT-Text or headers on the results-page
 const TEXT_QUESTION = "Question";
 const TEXT_POSITION_PARTY = "Position of the game";

@@ -181,6 +181,9 @@ window.addEventListener("load", () => {
     // mutationObserver is triggered at the very start, because resultsHeading is emptied. This first trigger is ignored
     if (!document.querySelector("#resultsHeading").textContent) return;
 
+    document.querySelector(
+      "#shareAndSaveHeading"
+    ).innerHTML = `<h1>${TEXT_SHARE_AND_SAVE_HEADING}</h1><h2>${TEXT_SHARE_AND_SAVE_SUBHEADING}</h2>`;
     // Without disconnecting, the mutation would for some reason be triggered twice, leading to 2 buttons
     observerResults.disconnect();
 

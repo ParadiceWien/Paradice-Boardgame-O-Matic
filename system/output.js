@@ -428,205 +428,201 @@ function fnEvaluationShort(arResults) {
 
   $("#sectionShowQuestions").empty().hide();
 
-  // Anzeige der Ergebnisse
-  $("#resultsHeading").append(
-    `<h1>${TEXT_RESULTS_HEADING}</h1><h2>${TEXT_RESULTS_SUBHEADING}</h2>`
-  );
+  addContentToResultsTab();
+  function addContentToResultsTab() {
+    document.querySelector(
+      "#resultsHeading"
+    ).innerHTML = `<h1>${TEXT_RESULTS_HEADING}</h1><h2>${TEXT_RESULTS_SUBHEADING}</h2>`;
 
-  var numberOfQuestions = arQuestionsShort.length;
-  //Anzahl der Maximalpunkte ermitteln
-  const maxPoints = calculateMaxPoints();
+    //Anzahl der Maximalpunkte ermitteln
+    const maxPoints = calculateMaxPoints();
 
-  let tableContentResultsShort = `<div class='row' id='resultsShortTable' role='table'>
-        <div class='col'>`;
+    let tableContentResultsShort = `<div class='row' id='resultsShortTable' role='table'>
+    <div class='col'>`;
 
-  for (i = 0; i <= intParties - 1; i++) {
-    let partyNum = arSortParties[i];
-    let percent = fnPercentage(arResults[partyNum], maxPoints);
+    for (i = 0; i <= intParties - 1; i++) {
+      let partyNum = arSortParties[i];
+      let percent = fnPercentage(arResults[partyNum], maxPoints);
 
-    // "Klammer" um den Inhalt.
-    // Wenn ein Addon (z.B. addon_contacts_in_results.js) eine neue Zeile unter die Zeile #resultsShortParty einfügt,
-    // bleiben die Zebrastreifen aus der Klasse ".mow-row-striped" in der richtigen Reihenfolge.
-    tableContentResultsShort += `<div class='border rounded mow-row-striped row-with-one-result' id='resultsShortPartyClamp${partyNum}' role='row'>
-     <div class='row' id='resultsShortParty${partyNum}' role='row'>
-        <div class='col col-2 col-md-1' role='cell'>
-          <img src='${
-            arPartyLogosImg[partyNum]
-          }' class='rounded img-fluid' alt='Logo ${
-      arPartyNamesLong[partyNum]
-    }' />
-        </div>
-        <div class='col col-10 col-md-7' role='cell'>
-            <strong>${arPartyNamesLong[partyNum]}</strong>
-            <br />
-            <span class="tagline">${arPartyInternet[partyNum]}</span>
-            <br /> 
-            <button type="button" class="btn btn-sm btn-outline-secondary" 
-              id="resultsShortPartyDescriptionButton${partyNum}">
-              ${TEXT_SHOW_PARTY_DESCRIPTION}</button>
-        </div> 
-        <div class='col col-12 col-md-4' role='cell'>
-            <div class='progress'>
-                <div class='progress-bar' role='progressbar' id='partyBar${partyNum}' style='width:${percent}%;'
-                      aria-valuenow='${percent}' aria-valuemin='0' aria-valuemax='100'>JUST_A_PLACEHOLDER_TEXT - SEE FUNCTION fnReEvaluate()
-                </div>
+      // "Klammer" um den Inhalt.
+      // Wenn ein Addon (z.B. addon_contacts_in_results.js) eine neue Zeile unter die Zeile #resultsShortParty einfügt,
+      // bleiben die Zebrastreifen aus der Klasse ".mow-row-striped" in der richtigen Reihenfolge.
+      tableContentResultsShort += `<div class='border rounded mow-row-striped row-with-one-result' id='resultsShortPartyClamp${partyNum}' role='row'>
+ <div class='row' id='resultsShortParty${partyNum}' role='row'>
+    <div class='col col-2 col-md-1' role='cell'>
+      <img src='${
+        arPartyLogosImg[partyNum]
+      }' class='rounded img-fluid' alt='Logo ${arPartyNamesLong[partyNum]}' />
+    </div>
+    <div class='col col-10 col-md-7' role='cell'>
+        <strong>${arPartyNamesLong[partyNum]}</strong>
+        <br />
+        <span class="tagline">${arPartyInternet[partyNum]}</span>
+        <br /> 
+        <button type="button" class="btn btn-sm btn-outline-secondary" 
+          id="resultsShortPartyDescriptionButton${partyNum}">
+          ${TEXT_SHOW_PARTY_DESCRIPTION}</button>
+    </div> 
+    <div class='col col-12 col-md-4' role='cell'>
+        <div class='progress'>
+            <div class='progress-bar' role='progressbar' id='partyBar${partyNum}' style='width:${percent}%;'
+                  aria-valuenow='${percent}' aria-valuemin='0' aria-valuemax='100'>JUST_A_PLACEHOLDER_TEXT - SEE FUNCTION fnReEvaluate()
             </div>
         </div>
-      </div>
-      <div id="resultsShortPartyDetails${partyNum}">
-        <div id='resultsShortPartyDescription${partyNum}'>
-        <br /> 
-        <span id="internet-above-description"><a href='https://boardgamegeek.com/boardgame/${
-          arPartyNamesShort[partyNum]
-        }' target='_blank' alt='Link: ${arPartyNamesLong[partyNum]}'
-                  title='Link: ${arPartyNamesLong[partyNum]}'>
-                  ${TEXT_LINK_TO_EXTERNAL_PAGE}</a>
-        <br / ></span>
-            ${
-              arPartyDescription[partyNum] ? arPartyDescription[partyNum] : null
-            }
-        <br /> 
-        <span id="internet-below-description"><a href='https://boardgamegeek.com/boardgame/${
-          arPartyNamesShort[partyNum]
-        }' target='_blank' alt='Link: ${arPartyNamesLong[partyNum]}'
-                  title='Link: ${arPartyNamesLong[partyNum]}'>
-                  ${TEXT_LINK_TO_EXTERNAL_PAGE}</a>
-        <br / ></span>
-        </div>
-        <div id="containerForAddonGeneratedElements"></div>
-        <div style='text-align: center; width: 100%;'>
-        <button id='resultsByPartyAnswers${partyNum}collapse' class='nonexpanded btn btn-sm btn-outline-secondary' type='button'>
-            ${TEXT_SHOW_PARTY_ANSWERS}
-        </button>
-        <span id='resultsByPartyAnswersToQuestion${partyNum}'> <!-- Hilfs-SPAN für Textfilter -->
-            <div class='row border rounded'>
-              <div class='col'>`;
+    </div>
+  </div>
+  <div id="resultsShortPartyDetails${partyNum}">
+    <div id='resultsShortPartyDescription${partyNum}'>
+    <br /> 
+    <span id="internet-above-description"><a href='https://boardgamegeek.com/boardgame/${
+      arPartyNamesShort[partyNum]
+    }' target='_blank' alt='Link: ${arPartyNamesLong[partyNum]}'
+              title='Link: ${arPartyNamesLong[partyNum]}'>
+              ${TEXT_LINK_TO_EXTERNAL_PAGE}</a>
+    <br / ></span>
+        ${arPartyDescription[partyNum] ? arPartyDescription[partyNum] : null}
+    <br /> 
+    <span id="internet-below-description"><a href='https://boardgamegeek.com/boardgame/${
+      arPartyNamesShort[partyNum]
+    }' target='_blank' alt='Link: ${arPartyNamesLong[partyNum]}'
+              title='Link: ${arPartyNamesLong[partyNum]}'>
+              ${TEXT_LINK_TO_EXTERNAL_PAGE}</a>
+    <br / ></span>
+    </div>
+    <div id="containerForAddonGeneratedElements"></div>
+    <div style='text-align: center; width: 100%;'>
+    <button id='resultsByPartyAnswers${partyNum}collapse' class='nonexpanded btn btn-sm btn-outline-secondary' type='button'>
+        ${TEXT_SHOW_PARTY_ANSWERS}
+    </button>
+    <span id='resultsByPartyAnswersToQuestion${partyNum}'> <!-- Hilfs-SPAN für Textfilter -->
+        <div class='row border rounded'>
+          <div class='col'>`;
 
-    // $(`#resultsByPartyAnswersToQuestion${  i  }`).css("display", "none");
+      jStart = partyNum * intQuestions; // z.B. Citronen Partei = 3. Partei im Array[2] = 2 * 5 Fragen = 10
+      jEnd = jStart + intQuestions - 1; // 10 + 5 Fragen -1 = 14
 
-    jStart = partyNum * intQuestions; // z.B. Citronen Partei = 3. Partei im Array[2] = 2 * 5 Fragen = 10
-    jEnd = jStart + intQuestions - 1; // 10 + 5 Fragen -1 = 14
+      // Anzeige der Partei-Antworten
+      for (j = jStart; j <= jEnd; j++) {
+        // 1./4 Zellen - Frage
+        modulo = j % intQuestions; // z.B. arPartyPositions[11] % 5 Fragen = 1 -> arQuestionsShort[1] = 2. Frage
 
-    // Anzeige der Partei-Antworten
-    for (j = jStart; j <= jEnd; j++) {
-      // 1./4 Zellen - Frage
-      modulo = j % intQuestions; // z.B. arPartyPositions[11] % 5 Fragen = 1 -> arQuestionsShort[1] = 2. Frage
+        tableContentResultsShort += `
+                <div class='row mow-row-striped' role='row'>
+                    <div class='col col-10 col-md-5' role='cell'>
+                        ${modulo + 1}. <strong>${
+          arQuestionsShort[modulo]
+        }</strong> - ${arQuestionsLong[modulo]}
+                    </div>`;
+        // 2./4 Zellen - Icon für eigene Meinung [+] [0] [-]
+        var positionButton = fnTransformPositionToButton(
+          arPersonalPositions[modulo]
+        );
+        var positionIcon = fnTransformPositionToIcon(
+          arPersonalPositions[modulo]
+        );
+        var positionText = fnTransformPositionToText(
+          arPersonalPositions[modulo]
+        );
 
-      tableContentResultsShort += `
-                    <div class='row mow-row-striped' role='row'>
-                        <div class='col col-10 col-md-5' role='cell'>
-                            ${modulo + 1}. <strong>${
-        arQuestionsShort[modulo]
-      }</strong> - ${arQuestionsLong[modulo]}
-                        </div>`;
-      // 2./4 Zellen - Icon für eigene Meinung [+] [0] [-]
-      var positionButton = fnTransformPositionToButton(
-        arPersonalPositions[modulo]
+        tableContentResultsShort += `<div class='col col-4 col-md-2' id='selfPositionContainer${modulo}' role='cell'>
+                      <button type='button' id='' class='btn ${positionButton} btn-sm selfPosition${modulo}' 
+                              onclick='fnToggleSelfPosition(${modulo})' alt='${TEXT_ANSWER_USER} : ${positionText}'
+                              title='${TEXT_ANSWER_USER} : ${positionText}' data-value='${arPersonalPositions[modulo]}'>
+                          ${positionIcon}
+                      </button>
+                  </div>`;
+
+        // 3./4 Zellen - Icons für Postion der Parteien [+] [0] [-]
+        var positionIcon = fnTransformPositionToIcon(arPartyPositions[j]);
+        var positionButton = fnTransformPositionToButton(arPartyPositions[j]);
+        var positionText = fnTransformPositionToText(arPartyPositions[j]);
+
+        tableContentResultsShort += `<div class='col col-4 col-md-2' id='partyPositionContainer${modulo}' role='cell'>
+                      <button type='button' class='btn ${positionButton} partyPositionToQuestion${modulo} btn-sm' disabled data-value="${arPartyPositions[j]}"
+                              alt='${TEXT_ANSWER_PARTY} : ${positionText}' title='${TEXT_ANSWER_PARTY} : ${positionText}'>
+                          ${positionIcon}
+                      </button>
+                  </div>
+                  <div class='col col-6 col-md-3' role='cell' headers='resultsByPartyHeading${i}'>
+                      ${arPartyOpinions[j]}
+                      <!-- die Beschreibung der Partei in einem VERSTECKTEN DIV -> ein Workaround für das Addon "Textfilter" (siehe /EXTRAS) :( -->
+                  </div>
+              </div> <!-- end: row Anzeige der Partei-Antworten -->`;
+      } // end: for-j
+      tableContentResultsShort += `</div> <!-- end col -->
+            </div> <!-- end row resultsByPartyAnswersToQuestion -->
+          </span> <!-- end span resultsByPartyAnswersToQuestion -->
+          </div> <!-- end span resultsShortPartyDetails -->
+        </div> <!-- end: row .mow-row-striped + #resultsShortPartyClampX -->
+    </div> <!-- row #resultsShortPartyX -->`;
+    } // end for
+    tableContentResultsShort += `</div>
+  </div> <!-- end: col (resultsShortTable) -->
+</div> <!-- end: row (resultsShortTable) -->`;
+
+    // Daten in Browser schreiben
+    document.querySelector("#resultsShort").innerHTML =
+      tableContentResultsShort;
+
+    for (let i = 0; i < intParties; i++) {
+      const btnShowAnswersOfThisParty = document.querySelector(
+        `#resultsShortPartyClamp${i} .nonexpanded`
       );
-      var positionIcon = fnTransformPositionToIcon(arPersonalPositions[modulo]);
-      var positionText = fnTransformPositionToText(arPersonalPositions[modulo]);
+      btnShowAnswersOfThisParty.addEventListener("click", () => {
+        $(`#resultsByPartyAnswersToQuestion${i}`).toggle(500);
+        btnShowAnswersOfThisParty.classList.toggle("expanded");
+        btnShowAnswersOfThisParty.classList.toggle("nonexpanded");
+        if (btnShowAnswersOfThisParty.classList.contains("expanded")) {
+          btnShowAnswersOfThisParty.innerHTML = TEXT_HIDE_PARTY_ANSWERS;
+        } else {
+          btnShowAnswersOfThisParty.innerHTML = TEXT_SHOW_PARTY_ANSWERS;
+        }
+      });
+    }
 
-      tableContentResultsShort += `<div class='col col-4 col-md-2' id='selfPositionContainer${modulo}' role='cell'>
-                          <button type='button' id='' class='btn ${positionButton} btn-sm selfPosition${modulo}' 
-                                  onclick='fnToggleSelfPosition(${modulo})' alt='${TEXT_ANSWER_USER} : ${positionText}'
-                                  title='${TEXT_ANSWER_USER} : ${positionText}' data-value='${arPersonalPositions[modulo]}'>
-                              ${positionIcon}
-                          </button>
-                      </div>`;
+    // Funktion zur Berechnung der "Doppelten Wertung" aufrufen
+    // -> enthält Aufruf für farbliche Progressbar (muss hier ja nicht extra wiederholt werden)
+    fnReEvaluate();
 
-      // 3./4 Zellen - Icons für Postion der Parteien [+] [0] [-]
-      var positionIcon = fnTransformPositionToIcon(arPartyPositions[j]);
-      var positionButton = fnTransformPositionToButton(arPartyPositions[j]);
-      var positionText = fnTransformPositionToText(arPartyPositions[j]);
-
-      tableContentResultsShort += `<div class='col col-4 col-md-2' id='partyPositionContainer${modulo}' role='cell'>
-                          <button type='button' class='btn ${positionButton} partyPositionToQuestion${modulo} btn-sm' disabled data-value="${arPartyPositions[j]}"
-                                  alt='${TEXT_ANSWER_PARTY} : ${positionText}' title='${TEXT_ANSWER_PARTY} : ${positionText}'>
-                              ${positionIcon}
-                          </button>
-                      </div>
-                      <div class='col col-6 col-md-3' role='cell' headers='resultsByPartyHeading${i}'>
-                          ${arPartyOpinions[j]}
-                          <!-- die Beschreibung der Partei in einem VERSTECKTEN DIV -> ein Workaround für das Addon "Textfilter" (siehe /EXTRAS) :( -->
-                      </div>
-                  </div> <!-- end: row Anzeige der Partei-Antworten -->`;
-    } // end: for-j
-    tableContentResultsShort += `</div> <!-- end col -->
-                </div> <!-- end row resultsByPartyAnswersToQuestion -->
-              </span> <!-- end span resultsByPartyAnswersToQuestion -->
-              </div> <!-- end span resultsShortPartyDetails -->
-            </div> <!-- end: row .mow-row-striped + #resultsShortPartyClampX -->
-        </div> <!-- row #resultsShortPartyX -->`;
-  } // end for
-  tableContentResultsShort += `</div>
-      </div> <!-- end: col (resultsShortTable) -->
-    </div> <!-- end: row (resultsShortTable) -->`;
-
-  // Daten in Browser schreiben
-  $("#resultsShort").append(tableContentResultsShort).fadeIn(0);
-
-  for (let i = 0; i <= intParties - 1; i++) {
-    $(`#resultsShortPartyClamp${i} .nonexpanded`).click(function () {
-      var $this = $(this);
-      $(`#resultsByPartyAnswersToQuestion${i}`).toggle(500);
-      $this.toggleClass("expanded");
-      $this.toggleClass("nonexpanded");
-
-      if ($this.hasClass("expanded")) {
-        $this.html(TEXT_HIDE_PARTY_ANSWERS);
-      } else {
-        $this.html(TEXT_SHOW_PARTY_ANSWERS);
-      }
-    });
-    $(`#resultsByPartyAnswersToQuestion${i}`).css("display", "none");
-  }
-
-  for (let i = 0; i <= intParties - 1; i++) {
-    // Klickfunktion - bei Überschrift
-    $(`#resultsShortPartyDescriptionButton${i}`).click(() => {
-      $(`#resultsByPartyAnswers${i}collapse`).toggle(500);
-      const btnCollapse = document.querySelector(
-        `#resultsByPartyAnswers${i}collapse`
+    for (let i = 0; i < intParties; i++) {
+      const btnExpandDetailsForThisParty = document.querySelector(
+        `#resultsShortPartyDescriptionButton${i}`
       );
-      if (btnCollapse.classList.contains("expanded")) {
-        btnCollapse.textContent = TEXT_SHOW_PARTY_ANSWERS;
-        btnCollapse.classList.remove("expanded");
-        btnCollapse.classList.add("nonexpanded");
-      }
+      btnExpandDetailsForThisParty.addEventListener("click", () => {
+        $(`#resultsShortPartyDetails${i}`).toggle(500);
+
+        btnExpandDetailsForThisParty.classList.toggle("expanded");
+
+        if (btnExpandDetailsForThisParty.classList.contains("expanded")) {
+          btnExpandDetailsForThisParty.innerHTML = TEXT_HIDE_PARTY_DESCRIPTION; // MINUS
+        } else {
+          btnExpandDetailsForThisParty.innerHTML = TEXT_SHOW_PARTY_DESCRIPTION; // PLUS
+
+          // If the details are closed and the answers were expanded, collapse the answers
+          const btnCollapseAnswersOfThisParty = document.querySelector(
+            `#resultsByPartyAnswers${i}collapse`
+          );
+          if (btnCollapseAnswersOfThisParty.classList.contains("expanded"))
+            btnCollapseAnswersOfThisParty.click();
+        }
+      });
+
       $(`#resultsByPartyAnswersToQuestion${i}`).hide(500);
-    });
 
-    // am Anfang ausblenden
-    $(`#resultsByPartyAnswers${i}collapse`).hide(500);
+      // am Anfang die Antworten ausblenden
+      $(`#resultsShortPartyDetails${i}`).fadeOut(0);
+    }
   }
 
-  // Funktion zur Berechnung der "Doppelten Wertung" aufrufen
-  // -> enthält Aufruf für farbliche Progressbar (muss hier ja nicht extra wiederholt werden)
-  fnReEvaluate();
+  document.querySelector(
+    "#infoHeading"
+  ).innerHTML = `<h1>${TEXT_INFO_HEADING}</h1><h2>${TEXT_INFO_SUBHEADING}</h2>`;
 
-  for (let i = 0; i <= intParties - 1; i++) {
-    $(`#resultsShortPartyDescriptionButton${i}`).click(function () {
-      var $this = $(this);
-      $(`#resultsShortPartyDetails${i}`).toggle(500);
+  document.querySelector("#info .col").innerHTML = textInfoBox;
 
-      $this.toggleClass("expanded");
-
-      if ($this.hasClass("expanded")) {
-        $this.html(TEXT_HIDE_PARTY_DESCRIPTION); // MINUS
-      } else {
-        $this.html(TEXT_SHOW_PARTY_DESCRIPTION); // PLUS
-      }
-    });
-
-    // am Anfang die Antworten ausblenden
-    $(`#resultsShortPartyDetails${i}`).fadeOut(0);
-  }
-
-  document.querySelector("#info .col").innerHTML = `
-  <div id='resultsIntro'>
-    <div id='infoIcon'>&#9432;</div>
-    <div>${textInfoBox}</div>
-  </div>`;
+  document.querySelector(
+    "#infoHeading"
+  ).innerHTML = `<h1>${TEXT_INFO_HEADING}</h1><h2>${TEXT_INFO_SUBHEADING}</h2>`;
 
   createNavigationBar();
 
@@ -705,7 +701,11 @@ function animateTabs(arTabs, oldActiveTab, newActiveTab) {
 // Anzeige der Ergebnisse - detailliert, Fragen und Antworten der Parteien
 // Array arResults kommt von fnEvaluation
 function fnEvaluationByThesis(arResults) {
-  var tableContentResultsByThesis = `${TEXT_RESULTS_INFO_THESES}
+  document.querySelector(
+    "#finetuningHeading"
+  ).innerHTML = `<h1>${TEXT_FINETUNING_HEADING}</h1><h2>${TEXT_FINETUNING_SUBHEADING}</h2>`;
+
+  var tableContentResultsByThesis = `
     <div class='row' id='resultsByThesisTable' role='table'>
       <div class='col'>`;
   for (i = 0; i <= intQuestions - 1; i++) {
