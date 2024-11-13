@@ -433,12 +433,6 @@ function fnEvaluationShort(arResults) {
     `<h1>${TEXT_RESULTS_HEADING}</h1><h2>${TEXT_RESULTS_SUBHEADING}</h2>`
   );
 
-  if (showInfoBoxAboveResultsShortTable) {
-    $("#resultsHeading").append(
-      `<div id='resultsIntro'><div id='infoIcon'>&#9432;</div><div>${textInfoBox}`
-    );
-  }
-
   var numberOfQuestions = arQuestionsShort.length;
   //Anzahl der Maximalpunkte ermitteln
   const maxPoints = calculateMaxPoints();
@@ -628,8 +622,84 @@ function fnEvaluationShort(arResults) {
     $(`#resultsShortPartyDetails${i}`).fadeOut(0);
   }
 
-  // $("#results").fadeIn(500);
+  document.querySelector("#info .col").innerHTML = `
+  <div id='resultsIntro'>
+    <div id='infoIcon'>&#9432;</div>
+    <div>${textInfoBox}</div>
+  </div>`;
+
+  createNavigationBar();
+
   $("#sectionResults").fadeIn(0);
+}
+
+function createNavigationBar() {
+  const navigationBar = document.createElement("div");
+  navigationBar.setAttribute("id", "navigationBar");
+  const arTabsNavigationBar = [
+    {
+      icon: "bx-slider-alt",
+      id: "finetuning",
+    },
+    {
+      icon: "bx-trophy",
+      id: "results",
+    },
+    {
+      icon: "bx-share-alt",
+      id: "shareAndSave",
+    },
+    {
+      icon: "bx-info-circle",
+      id: "info",
+    },
+  ];
+  if (isActivated("addon_filter_results.js"))
+    arTabsNavigationBar.splice(1, 0, { icon: "bx-filter-alt", id: "filters" });
+
+  arTabsNavigationBar.forEach((tab) => {
+    const tabBtnContainer = document.createElement("div");
+    tabBtnContainer.setAttribute("id", `${tab.id}TabBtnContainer`);
+    tabBtnContainer.innerHTML = `<button id='${tab.id}TabBtn' ${
+      tab.id === "results" ? "class='activeTabBtn'" : ""
+    }><i class='bx ${tab.icon}'></i></button>`;
+
+    tabBtnContainer.addEventListener("click", () => {
+      const oldActiveTab = document.querySelector(".activeTab");
+      const newActiveTab = document.querySelector(`#${tab.id}`);
+      if (oldActiveTab === newActiveTab) return;
+      animateTabs(arTabsNavigationBar, oldActiveTab, newActiveTab);
+      document.querySelector(".activeTabBtn").classList.remove("activeTabBtn");
+      document
+        .querySelector(`.${tab.icon}`)
+        .parentNode.classList.add("activeTabBtn");
+    });
+    navigationBar.appendChild(tabBtnContainer);
+  });
+  document.body.appendChild(navigationBar);
+}
+
+function animateTabs(arTabs, oldActiveTab, newActiveTab) {
+  const idOldActiveTab = oldActiveTab.getAttribute("id");
+  const indexOldActiveTab = arTabs.findIndex(
+    (obj) => obj.id === idOldActiveTab
+  );
+  const idNewActiveTab = newActiveTab.getAttribute("id");
+  const indexNewActiveTab = arTabs.findIndex(
+    (obj) => obj.id === idNewActiveTab
+  );
+  const goRight = indexOldActiveTab < indexNewActiveTab;
+
+  oldActiveTab.classList.add(goRight ? "flyOutLeft" : "flyOutRight");
+  setTimeout(() => {
+    oldActiveTab.classList.replace("activeTab", "d-none");
+    oldActiveTab.classList.remove(goRight ? "flyOutLeft" : "flyOutRight");
+    newActiveTab.classList.add(goRight ? "flyInRight" : "flyInLeft");
+    newActiveTab.classList.replace("d-none", "activeTab");
+  }, 350);
+  setTimeout(() => {
+    newActiveTab.classList.remove(goRight ? "flyInRight" : "flyInLeft");
+  }, 700);
 }
 
 // Anzeige der Ergebnisse - detailliert, Fragen und Antworten der Parteien

@@ -309,7 +309,18 @@
       <!-- 2. ERGEBNISSE / RESULTS -->
 
       <section id="sectionResults">
-        <div class="row" id="results">
+        <div class="row d-none" id="finetuning">
+          <div class="col">
+            <div id="resultsByThesis">
+              Detaillierte Ergebnisse / Resultate mit eigener Meinung in
+              tabellarischer Form <br />
+              Table with results (long / detailed)
+            </div>
+            <!-- <div id="resultsAddonBottom">
+            </div> -->
+          </div>
+        </div>
+        <div class="row activeTab" id="results">
           <div class="col">
             <div id="resultsHeading">
               &Uuml;berschrift f&uuml;r die Ergebnisse/Resultate (ungenutzt)
@@ -327,23 +338,11 @@
             </div>
           </div>
         </div>
-
-        <!-- 
-				Auswahlknoepfe für die detaillierten Ergebnisse. Text in i18n.
-				Buttons for detailled resuts. Labels in i18n.
-			-->
-        <hr id="separator-results-sections" />
-        <div class="row">
-          <div class="col">
-            <div id="resultsByThesis">
-              Detaillierte Ergebnisse / Resultate mit eigener Meinung in
-              tabellarischer Form <br />
-              Table with results (long / detailed)
-            </div>
-            <div id="resultsAddonBottom">
-              <!-- Platzhalter / Placeholder -->
-            </div>
-          </div>
+        <div class="row d-none" id="shareAndSave">
+          <div class="col"></div>
+        </div>
+        <div class="row d-none" id="info">
+          <div class="col"></div>
         </div>
       </section>
 

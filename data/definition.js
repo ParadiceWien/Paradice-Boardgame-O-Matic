@@ -94,7 +94,7 @@ const addons = [
   // "extras/addon_make_questions_optional.js",
   "extras/addon_make_result_details_fullscreen.js",
   "extras/addon_display_answers_and_filter_values_in_result_details.js",
-  "extras/addon_split_results_view_on_mobile_in_tabs.js",
+  // "extras/addon_split_results_view_on_mobile_in_tabs.js",
 ];
 
 // Addon-specific variables are set in this configuration file as well

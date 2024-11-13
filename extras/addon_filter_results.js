@@ -180,6 +180,9 @@ function createFilterHtml(filter) {
 }
 
 function addFilterNodeToDOM(nodeFilter, filter) {
+  const filtersTab = document.createElement("div");
+  filtersTab.setAttribute("id", "filters");
+  filtersTab.classList.add("row", "d-none");
   if (!document.querySelector("#resultsHeading").textContent) return;
   if (filter.displayInSharedModal) {
     if (!document.querySelector("#sharedFilterModal"))
@@ -187,7 +190,10 @@ function addFilterNodeToDOM(nodeFilter, filter) {
     document.querySelector("#sharedFilterModalBody").appendChild(nodeFilter);
   } else if (filter.displayInIndividualModal?.isWanted) {
     createAndAppendIndividualFilterModal(nodeFilter, filter);
-  } else document.querySelector("#resultsAddonTop").appendChild(nodeFilter);
+  } else filtersTab.appendChild(nodeFilter);
+  document
+    .querySelector("#sectionResults")
+    .insertBefore(filtersTab, document.querySelector("#info"));
 
   addEventListenerToFilter(filter);
   if (FILTERS.some((filter) => filter.setAtStart?.isWanted))
@@ -458,7 +464,7 @@ function createAndAppendSharedFilterModal() {
   );
   containerBtnOpenSharedFilterModal.innerHTML = `<button id="button-open-shared-filter-modal">${SHARED_MODAL.textButtonOpenModal}</button>`;
   document
-    .querySelector("#resultsAddonTop")
+    .querySelector("#filters")
     .appendChild(containerBtnOpenSharedFilterModal);
 
   const sharedFilterModal = document.createElement("div");
@@ -509,7 +515,7 @@ function createAndAppendIndividualFilterModal(nodeFilter, filter) {
   );
   containerBtnOpenIndividualFilterModal.innerHTML = `<button id="button-open-individual-filter-modal-${filter.internalName}">${filter.displayInIndividualModal.textButtonOpenModal}</button>`;
   document
-    .querySelector("#resultsAddonTop")
+    .querySelector("#filters")
     .appendChild(containerBtnOpenIndividualFilterModal);
 
   const individualFilterModal = document.createElement("div");
@@ -719,7 +725,7 @@ function setupButtonResetAllFilters() {
     if (!document.querySelector("#resultsHeading").textContent) return;
     const containerBtn = document.createElement("div");
     containerBtn.innerHTML = `<button id="reset-all-filters">${BUTTON_RESET_ALL_FILTERS.textButton}</button>`;
-    document.querySelector("#resultsAddonTop").appendChild(containerBtn);
+    document.querySelector("#filters").appendChild(containerBtn);
     document
       .querySelector("#reset-all-filters")
       .addEventListener("click", () => {

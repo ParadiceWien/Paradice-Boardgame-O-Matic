@@ -56,7 +56,7 @@ function processPermalink(urlParams) {
   setTimeout(() => {
     // Jump to results. Without timeout, not everything would be ready
     fnShowQuestionNumber(intQuestions);
-    selectFilterFromUrl(urlParams);
+    extractFilterFromUrl(urlParams);
   }, 500);
 
   setTimeout(() => {
@@ -64,7 +64,7 @@ function processPermalink(urlParams) {
   }, 2000);
 }
 
-function selectFilterFromUrl(urlParams) {
+function extractFilterFromUrl(urlParams) {
   if (!addons.some((item) => item.includes("addon_results_textfilter.js")))
     return;
   const filterFromUrl = decodeURIComponent(urlParams.get("fil"));
@@ -213,7 +213,7 @@ window.addEventListener("load", () => {
     });
 
     document
-      .querySelector("#resultsAddonTop")
+      .querySelector("#shareAndSave")
       .append(permalinkButton, permalinkDescription);
   }
 });
