@@ -165,8 +165,8 @@ function createInitialCustomPositionButtons() {
         );
       }
 
-      oldBtn.parentNode.prepend(newBtn);
-      oldBtn.parentNode.removeChild(oldBtn);
+      oldBtn.parentNode.insertBefore(newBtn, oldBtn);
+      oldBtn.remove();
     });
   });
 }

@@ -285,8 +285,7 @@ function fnShowQuestionNumber(questionNumber) {
       });
 
       // Übergabe an Tabellen zur Darstellung/Ausgabe
-      fnEvaluationShort(arResults); // Kurzüberblick mit Progress-bar
-      fnEvaluationByThesis(arResults); // Thesen + Partei-Antworten
+      generateSectionResults(arResults); // Kurzüberblick mit Progress-bar
 
       // Buttons einblenden für detaillierte Ergebnisse
       $("#resultsButtons").fadeIn(0);
@@ -423,12 +422,7 @@ function fnJumpToQuestionNumber(questionNumber) {
 
 // Anzeige der Ergebnisse - zusammengefasst (Prozentwerte) - nur Parteien
 // Array arResults kommt von fnEvaluation
-function fnEvaluationShort(arResults) {
-  // Alten Inhalt des DIVs loeschen
-
-  $("#sectionShowQuestions").empty().hide();
-
-  addContentToResultsTab();
+function generateSectionResults(arResults) {
   function addContentToResultsTab() {
     document.querySelector(
       "#resultsHeading"
@@ -613,229 +607,303 @@ function fnEvaluationShort(arResults) {
       $(`#resultsShortPartyDetails${i}`).fadeOut(0);
     }
   }
+  function addContentToFinetuningTab() {
+    document.querySelector(
+      "#finetuningHeading"
+    ).innerHTML = `<h1>${TEXT_FINETUNING_HEADING}</h1><h2>${TEXT_FINETUNING_SUBHEADING}</h2>`;
 
-  document.querySelector(
-    "#infoHeading"
-  ).innerHTML = `<h1>${TEXT_INFO_HEADING}</h1><h2>${TEXT_INFO_SUBHEADING}</h2>`;
+    let tableContentResultsByThesis = `
+        <div class='row' id='resultsByThesisTable' role='table'>
+          <div class='col'>`;
+    for (i = 0; i < intQuestions; i++) {
+      var positionButton = fnTransformPositionToButton(arPersonalPositions[i]);
+      var positionIcon = fnTransformPositionToIcon(arPersonalPositions[i]);
+      var positionText = fnTransformPositionToText(arPersonalPositions[i]);
 
-  document.querySelector("#info .col").innerHTML = textInfoBox;
+      tableContentResultsByThesis += `<div class='row border' id='resultsByThesisQuestion${i}Container' role='row'>
+                  <div class='col' id='resultsByThesisQuestion${i}' role='cell'>
+                  
+                      <div id='resultsByThesisQuestion${i}Text'>
+                          <strong>${i + 1}. ${arQuestionsShort[i]}</strong>: ${
+        arQuestionsLong[i]
+      }
+                      </div>
 
-  document.querySelector(
-    "#infoHeading"
-  ).innerHTML = `<h1>${TEXT_INFO_HEADING}</h1><h2>${TEXT_INFO_SUBHEADING}</h2>`;
+                      <div id='resultsByThesisQuestion${i}PersonalPosition'>
+                      <small>${TEXT_ANSWER_USER}: </small><button type='button' id='' class='btn ${positionButton} btn-sm selfPosition${i}' onclick='fnToggleSelfPosition(${i})' 
+                              alt='${TEXT_ANSWER_USER} : ${positionText}' title='${TEXT_ANSWER_USER} : ${positionText}' data-value="${
+        arPersonalPositions[i]
+      }">
+                          ${positionIcon}
+                      </button>
+                      <button type='button'  id='doubleIcon${i}'
+                            onclick='fnToggleDouble(${i})' 
+     ${
+       arVotingDouble[i]
+         ? `class='btn btn-sm btn-dark' title='${TEXT_ANSWER_DOUBLE}'>x2`
+         : `class='btn btn-sm btn-outline-dark' title='${TEXT_ANSWER_NORMAL}'>x1`
+     }
+                    
+                      </button>
+                  </div>
 
-  createNavigationBar();
+                      <button id='resultsByThesisQuestion${i}collapse' class='nonexpanded btn btn-sm btn-outline-secondary' type='button'>
+                          ${TEXT_SHOW_THESIS_ANSWERS}
+                      </button>
+                  </div>
+                 
 
-  $("#sectionResults").fadeIn(0);
-}
+              <!-- darunterliegende Zeile - Parteipositionen anzeigen -->
+              <div class='row border rounded' id='resultsByThesisAnswersToQuestion${i}'>
+                  <div class='col'>`;
 
-function createNavigationBar() {
-  const navigationBar = document.createElement("div");
-  navigationBar.setAttribute("id", "navigationBar");
-  const arTabsNavigationBar = [
-    {
-      icon: "bx-slider-alt",
-      id: "finetuning",
-    },
-    {
-      icon: "bx-trophy",
-      id: "results",
-    },
-    {
-      icon: "bx-share-alt",
-      id: "shareAndSave",
-    },
-    {
-      icon: "bx-info-circle",
-      id: "info",
-    },
-  ];
-  if (isActivated("addon_filter_results.js"))
-    arTabsNavigationBar.splice(1, 0, { icon: "bx-filter-alt", id: "filters" });
+      // darunterliegende Zeile - Parteipositionen anzeigen
+      for (j = 0; j < intParties; j++) {
+        var partyNum = arSortParties[j];
+        var partyPositionsRow = partyNum * intQuestions + i;
+        var positionButton = fnTransformPositionToButton(
+          arPartyPositions[partyPositionsRow]
+        );
+        var positionIcon = fnTransformPositionToIcon(
+          arPartyPositions[partyPositionsRow]
+        );
+        var positionText = fnTransformPositionToText(
+          arPartyPositions[partyPositionsRow]
+        );
 
-  arTabsNavigationBar.forEach((tab) => {
-    const tabBtnContainer = document.createElement("div");
-    tabBtnContainer.setAttribute("id", `${tab.id}TabBtnContainer`);
-    tabBtnContainer.innerHTML = `<button id='${tab.id}TabBtn' ${
-      tab.id === "results" ? "class='activeTabBtn'" : ""
-    }><i class='bx ${tab.icon}'></i></button>`;
+        // Inhalt der Zelle
+        tableContentResultsByThesis += `<div class='row mow-row-striped row-with-one-result' role='row'>
+  
+                          <div class='w-50 d-flex align-items-center' role='cell'>
+                              <small><strong>${arPartyNamesLong[
+                                partyNum
+                              ].replace(
+                                / <small>.*?<\/small>/,
+                                ""
+                              )}: </strong></small>${
+          arPartyOpinions[partyPositionsRow] ? ":" : ""
+        } ${arPartyOpinions[partyPositionsRow]}
+                          <!-- die Beschreibung der Partei in einem VERSTECKTEN DIV -> ein Workaround für das Addon "Textfilter" (siehe /EXTRAS) :( -->
+                              <span style='visibility:hidden; display:none;' aria-hidden='true'>${
+                                arPartyDescription[partyNum]
+                              }</span>
+                          </div>
+                          <div class='w-50 d-flex align-items-center' role='cell'>
+                              <button type='button' class='btn ${positionButton} partyPositionToQuestion${i} btn-sm' disabled data-value="${
+          arPartyPositions[partyPositionsRow]
+        }"
+                                      alt='${TEXT_ANSWER_PARTY} : ${positionText}' title='${TEXT_ANSWER_PARTY} : ${positionText}'>
+                                  ${positionIcon}
+                              </button>
+                          </div>
+                      </div>`;
+      }
+      tableContentResultsByThesis += `</div> <!-- col (Partei-Antworten) -->
+              </div> <!-- row (Partei-Antworten) -->
+              </div> <!-- row Fragen -->
+              `;
+    } // end if
 
-    tabBtnContainer.addEventListener("click", () => {
-      const oldActiveTab = document.querySelector(".activeTab");
-      const newActiveTab = document.querySelector(`#${tab.id}`);
-      if (oldActiveTab === newActiveTab) return;
-      animateTabs(arTabsNavigationBar, oldActiveTab, newActiveTab);
-      document.querySelector(".activeTabBtn").classList.remove("activeTabBtn");
+    tableContentResultsByThesis += `</div> <!-- col -->
+      </div> <!-- row -->`;
+
+    // Daten in Browser schreiben
+    $("#resultsByThesis").append(tableContentResultsByThesis);
+
+    for (let i = 0; i < intQuestions; i++) {
       document
-        .querySelector(`.${tab.icon}`)
-        .parentNode.classList.add("activeTabBtn");
+        .querySelector(`#resultsByThesisQuestion${i} .nonexpanded`)
+        .addEventListener("click", () => {
+          $(`#resultsByThesisAnswersToQuestion${i}`).toggle(200);
+
+          function makePartyAnswerListFullscreenOnMobile() {
+            function addClosingButton() {
+              const btnClose = document.createElement("button");
+              btnClose.innerHTML = TEXT_BUTTON_CLOSE_FULLSCREEN_EVENT_DETAILS;
+              btnClose.addEventListener("click", () => {
+                btnExpand.click();
+              });
+              sectionQuestion.parentNode.appendChild(btnClose);
+              btnClose.classList.add(
+                "fullscreen-on-mobile-btn-close",
+                "fullscreen-on-mobile-btn-close-out-of-screen"
+              );
+              setTimeout(() => {
+                btnClose.classList.remove(
+                  "fullscreen-on-mobile-btn-close-out-of-screen"
+                );
+              }, 10);
+            }
+
+            sectionQuestion.scrollIntoView({ behavior: "smooth" });
+            const wrapperDiv = document.createElement("div");
+            wrapperDiv.classList.add("fullscreen-on-mobile-overlay");
+            sectionQuestion.classList.add("fullscreen-on-mobile-content");
+            questionTextContainer.classList.add("fullscreen-on-mobile-header");
+            const heightOfQuestionTextContainer = window.getComputedStyle(
+              questionTextContainer
+            ).height;
+            console.log(heightOfQuestionTextContainer);
+            console.log(
+              +heightOfQuestionTextContainer.replace("px", "") + 10 + "px"
+            );
+
+            console.log(questionTextContainer.nextElementSibling);
+            setTimeout(() => {
+              sectionQuestion.parentNode.insertBefore(
+                wrapperDiv,
+                sectionQuestion
+              );
+              wrapperDiv.appendChild(sectionQuestion);
+              document.body.style.overflow = "hidden";
+              questionTextContainer.nextElementSibling.style.margin = `${
+                +heightOfQuestionTextContainer.replace("px", "") + 10
+              }px auto 0 auto`;
+              addClosingButton();
+            }, 300);
+          }
+          function closeFullscreenPartyAnswerListOnMobile() {
+            console.log("hey");
+            const wrapperDiv = sectionQuestion.parentNode;
+            wrapperDiv.parentNode.insertBefore(sectionQuestion, wrapperDiv);
+            wrapperDiv.remove();
+            sectionQuestion.classList.remove("fullscreen-on-mobile-content");
+            questionTextContainer.classList.remove(
+              "fullscreen-on-mobile-header"
+            );
+            questionTextContainer.nextElementSibling.style.marginTop = "0";
+            document.body.style.overflow = "unset";
+            sectionQuestion.scrollIntoView({ behavior: "smooth" });
+          }
+          const sectionQuestion = document.querySelector(
+            `#resultsByThesisQuestion${i}Container`
+          );
+          const btnExpand = document.querySelector(
+            `#resultsByThesisQuestion${i} .nonexpanded`
+          );
+          const questionTextContainer = document.querySelector(
+            `#resultsByThesisQuestion${i}`
+          );
+          btnExpand.classList.toggle("expanded");
+          if (btnExpand.classList.contains("expanded")) {
+            btnExpand.innerHTML = TEXT_HIDE_THESIS_ANSWERS; // MINUS
+            if (window.innerWidth <= 768)
+              makePartyAnswerListFullscreenOnMobile();
+          } else {
+            btnExpand.innerHTML = TEXT_SHOW_THESIS_ANSWERS; // PLUS
+            if (window.innerWidth <= 768)
+              closeFullscreenPartyAnswerListOnMobile();
+          }
+        });
+
+      // am Anfang die Antworten ausblenden
+      //		$("#resultsByThesisAnswersToQuestion"+i).fadeOut(500);	// irgendwie verrutschen die Zeilen bei fadeOut() -> deshalb die css()-Lösung
+      $(`#resultsByThesisAnswersToQuestion${i}`).css("display", "none");
+    }
+
+    // Nach jedem Klick auf einen Button den Fokus wieder entfernen, um bleibende Hervorhebungen (Unterstreichungen) zu vermeiden
+    document.querySelectorAll("button").forEach((button) => {
+      button.addEventListener("click", () => {
+        document.activeElement.blur();
+      });
     });
-    navigationBar.appendChild(tabBtnContainer);
-  });
-  document.body.appendChild(navigationBar);
-}
+  }
+  function addContentToInfoTab() {
+    document.querySelector(
+      "#infoHeading"
+    ).innerHTML = `<h1>${TEXT_INFO_HEADING}</h1><h2>${TEXT_INFO_SUBHEADING}</h2>`;
 
-function animateTabs(arTabs, oldActiveTab, newActiveTab) {
-  const idOldActiveTab = oldActiveTab.getAttribute("id");
-  const indexOldActiveTab = arTabs.findIndex(
-    (obj) => obj.id === idOldActiveTab
-  );
-  const idNewActiveTab = newActiveTab.getAttribute("id");
-  const indexNewActiveTab = arTabs.findIndex(
-    (obj) => obj.id === idNewActiveTab
-  );
-  const goRight = indexOldActiveTab < indexNewActiveTab;
+    document.querySelector("#info .col").innerHTML = textInfoBox;
+  }
+  function createNavigationBar() {
+    function animateTabs(arTabs, oldActiveTab, newActiveTab) {
+      const idOldActiveTab = oldActiveTab.getAttribute("id");
+      const indexOldActiveTab = arTabs.findIndex(
+        (obj) => obj.id === idOldActiveTab
+      );
+      const idNewActiveTab = newActiveTab.getAttribute("id");
+      const indexNewActiveTab = arTabs.findIndex(
+        (obj) => obj.id === idNewActiveTab
+      );
+      const goRight = indexOldActiveTab < indexNewActiveTab;
 
-  oldActiveTab.classList.add(goRight ? "flyOutLeft" : "flyOutRight");
-  setTimeout(() => {
-    oldActiveTab.classList.replace("activeTab", "d-none");
-    oldActiveTab.classList.remove(goRight ? "flyOutLeft" : "flyOutRight");
-    newActiveTab.classList.add(goRight ? "flyInRight" : "flyInLeft");
-    newActiveTab.classList.replace("d-none", "activeTab");
-  }, 350);
-  setTimeout(() => {
-    newActiveTab.classList.remove(goRight ? "flyInRight" : "flyInLeft");
-  }, 700);
+      oldActiveTab.classList.add(goRight ? "flyOutLeft" : "flyOutRight");
+      setTimeout(() => {
+        oldActiveTab.classList.replace("activeTab", "d-none");
+        oldActiveTab.classList.remove(goRight ? "flyOutLeft" : "flyOutRight");
+        newActiveTab.classList.add(goRight ? "flyInRight" : "flyInLeft");
+        newActiveTab.classList.replace("d-none", "activeTab");
+      }, 350);
+      setTimeout(() => {
+        newActiveTab.classList.remove(goRight ? "flyInRight" : "flyInLeft");
+      }, 700);
+    }
+
+    const navigationBar = document.createElement("div");
+    navigationBar.setAttribute("id", "navigationBar");
+    const arTabsNavigationBar = [
+      {
+        icon: "bx-slider-alt",
+        id: "finetuning",
+      },
+      {
+        icon: "bx-trophy",
+        id: "results",
+      },
+      {
+        icon: "bx-share-alt",
+        id: "shareAndSave",
+      },
+      {
+        icon: "bx-info-circle",
+        id: "info",
+      },
+    ];
+    if (isActivated("addon_filter_results.js"))
+      arTabsNavigationBar.splice(1, 0, {
+        icon: "bx-filter-alt",
+        id: "filters",
+      });
+
+    arTabsNavigationBar.forEach((tab) => {
+      const tabBtnContainer = document.createElement("div");
+      tabBtnContainer.setAttribute("id", `${tab.id}TabBtnContainer`);
+      tabBtnContainer.innerHTML = `<button id='${tab.id}TabBtn' ${
+        tab.id === "results" ? "class='activeTabBtn'" : ""
+      }><i class='bx ${tab.icon}'></i></button>`;
+
+      tabBtnContainer.addEventListener("click", () => {
+        const oldActiveTab = document.querySelector(".activeTab");
+        const newActiveTab = document.querySelector(`#${tab.id}`);
+        if (oldActiveTab === newActiveTab) return;
+        animateTabs(arTabsNavigationBar, oldActiveTab, newActiveTab);
+        document
+          .querySelector(".activeTabBtn")
+          .classList.remove("activeTabBtn");
+        document
+          .querySelector(`.${tab.icon}`)
+          .parentNode.classList.add("activeTabBtn");
+      });
+      navigationBar.appendChild(tabBtnContainer);
+    });
+    document.body.appendChild(navigationBar);
+  }
+  document.querySelector("#sectionShowQuestions").remove();
+  addContentToResultsTab();
+  addContentToFinetuningTab();
+  addContentToInfoTab();
+  createNavigationBar();
+  document.querySelector("#sectionResults").style.display = "block";
 }
 
 // Anzeige der Ergebnisse - detailliert, Fragen und Antworten der Parteien
 // Array arResults kommt von fnEvaluation
-function fnEvaluationByThesis(arResults) {
-  document.querySelector(
-    "#finetuningHeading"
-  ).innerHTML = `<h1>${TEXT_FINETUNING_HEADING}</h1><h2>${TEXT_FINETUNING_SUBHEADING}</h2>`;
-
-  var tableContentResultsByThesis = `
-    <div class='row' id='resultsByThesisTable' role='table'>
-      <div class='col'>`;
-  for (i = 0; i <= intQuestions - 1; i++) {
-    var positionButton = fnTransformPositionToButton(arPersonalPositions[i]);
-    var positionIcon = fnTransformPositionToIcon(arPersonalPositions[i]);
-    var positionText = fnTransformPositionToText(arPersonalPositions[i]);
-
-    tableContentResultsByThesis += `<div class='row border' role='row'>
-              <div class='col col-2' role='cell'>
-                  <button type='button' id='' class='btn ${positionButton} btn-sm selfPosition${i}' onclick='fnToggleSelfPosition(${i})' 
-                          alt='${TEXT_ANSWER_USER} : ${positionText}' title='${TEXT_ANSWER_USER} : ${positionText}' data-value="${
-      arPersonalPositions[i]
-    }">
-                      ${positionIcon}
-                  </button>
-                  <button type='button' class='btn btn-sm ${
-                    arVotingDouble[i] ? "btn-dark" : "btn-outline-dark"
-                  }' id='doubleIcon${i}'
-                        onclick='fnToggleDouble(${i})' title='${
-      arVotingDouble[i] ? TEXT_ANSWER_DOUBLE : TEXT_ANSWER_NORMAL
-    }'>
-                      x2
-                  </button>
-              </div>
-              <div class='col col-10' id='resultsByThesisQuestion${i}' role='cell'>
-                  <div>
-                      <strong>${i + 1}. ${arQuestionsShort[i]}</strong>: ${
-      arQuestionsLong[i]
-    }
-                  </div>
-                  <button id='resultsByThesisQuestion${i}collapse' class='nonexpanded btn btn-sm btn-outline-secondary' type='button'>
-                      ${TEXT_SHOW_THESIS_ANSWERS}
-                  </button>
-              </div>
-          </div> <!-- row Fragen -->
-          <!-- darunterliegende Zeile - Parteipositionen anzeigen -->
-          <div class='row border rounded' id='resultsByThesisAnswersToQuestion${i}'>
-              <div class='col'>`;
-
-    // darunterliegende Zeile - Parteipositionen anzeigen
-    for (j = 0; j <= intParties - 1; j++) {
-      var partyNum = arSortParties[j];
-      var partyPositionsRow = partyNum * intQuestions + i;
-      var positionButton = fnTransformPositionToButton(
-        arPartyPositions[partyPositionsRow]
-      );
-      var positionIcon = fnTransformPositionToIcon(
-        arPartyPositions[partyPositionsRow]
-      );
-      var positionText = fnTransformPositionToText(
-        arPartyPositions[partyPositionsRow]
-      );
-
-      // Inhalt der Zelle
-      tableContentResultsByThesis += `<div class='row mow-row-striped row-with-one-result' role='row'>
-                      <div class='col col-2' role='cell'>
-                          <button type='button' class='btn ${positionButton} partyPositionToQuestion${i} btn-sm' disabled data-value="${
-        arPartyPositions[partyPositionsRow]
-      }"
-                                  alt='${TEXT_ANSWER_PARTY} : ${positionText}' title='${TEXT_ANSWER_PARTY} : ${positionText}'>
-                              ${positionIcon}
-                          </button>
-                      </div>
-                      <div class='col col-10' role='cell'>
-                          <strong>${arPartyNamesLong[partyNum]}</strong>${
-        arPartyOpinions[partyPositionsRow] ? ":" : ""
-      } ${arPartyOpinions[partyPositionsRow]}
-                      <!-- die Beschreibung der Partei in einem VERSTECKTEN DIV -> ein Workaround für das Addon "Textfilter" (siehe /EXTRAS) :( -->
-                          <span style='visibility:hidden; display:none;' aria-hidden='true'>${
-                            arPartyDescription[partyNum]
-                          }</span>
-                      </div>
-                  </div>`;
-    }
-    tableContentResultsByThesis += `</div> <!-- col (Partei-Antworten) -->
-          </div> <!-- row (Partei-Antworten) -->`;
-  } // end if
-
-  tableContentResultsByThesis += `</div> <!-- col -->
-  </div> <!-- row -->`;
-
-  // Daten in Browser schreiben
-  $("#resultsByThesis").append(tableContentResultsByThesis);
-
-  // Click-Funktion auf FRAGE-(und ANTWORT)-Zeile legen zum Anzeigen der ANTWORT-Zeile (direkt darunter)
-  // "[In a FOR-loop] you can use the let keyword, which makes the i variable local to the loop instead of global"
-  // 	https://stackoverflow.com/questions/4091765/assign-click-handlers-in-for-loop
-  for (let i = 0; i <= intQuestions - 1; i++) {
-    /*		
-		// Klickfunktion - bei Überschriftenzeile
-		$("#resultsByThesisQuestion"+i).click(function () {
-				$("#resultsByThesisAnswersToQuestion"+i+"").toggle(500);
-
-				// Wechsel des PLUS und MINUS-Symbols beim Klick (siehe auch DEFAULT.CSS)
-				// *** ToDo: Button mit Inhalt füllen für ARIA, kein CSS ***
-				// $("#resultsByThesisQuestion"+i+" .resultsByThesisQuestionCollapsePlus").toggleClass("resultsByThesisQuestionCollapseMinus")				
-				
-			});
-		*/
-
-    $("#resultsByThesisQuestion" + i + " .nonexpanded").click(function () {
-      var $this = $(this);
-      $("#resultsByThesisAnswersToQuestion" + i + "").toggle(500);
-
-      $this.toggleClass("expanded");
-
-      if ($this.hasClass("expanded")) {
-        $this.html(TEXT_HIDE_THESIS_ANSWERS); // MINUS
-      } else {
-        $this.html(TEXT_SHOW_THESIS_ANSWERS); // PLUS
-      }
-    });
-
-    // am Anfang die Antworten ausblenden
-    //		$("#resultsByThesisAnswersToQuestion"+i).fadeOut(500);	// irgendwie verrutschen die Zeilen bei fadeOut() -> deshalb die css()-Lösung
-    $(`#resultsByThesisAnswersToQuestion${i}`).css("display", "none");
-  }
-
-  // Nach jedem Klick auf einen Button den Fokus wieder entfernen, um bleibende Hervorhebungen (Unterstreichungen) zu vermeiden
-  document.querySelectorAll("button").forEach((button) => {
-    button.addEventListener("click", () => {
-      document.activeElement.blur();
-    });
-  });
-} // end function
+// end function
 
 // 02/2015 BenKob
 // Aktualisierung der Ergebnisse in der oberen Ergebnistabelle (short)
 // Aufruf heraus in:
-// (a) fnEvaluationShort() nach dem Aufbau der oberen Tabelle
+// (a) generateSectionResults() nach dem Aufbau der oberen Tabelle
 // (b) in den Buttons in der detaillierten Auswertung (fnToggleSelfPosition() und fnToggleDouble())
 function fnReEvaluate() {
   //Ergebniss neu auswerten und Anzeige aktualisieren

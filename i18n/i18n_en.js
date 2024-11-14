@@ -40,19 +40,22 @@ const TEXT_LINK_TO_EXTERNAL_PAGE =
   "View at BoardGameGeek <i class='bx bx-link-external' ></i>";
 const TEXT_FINETUNING_HEADING = "Finetuning";
 const TEXT_FINETUNING_SUBHEADING =
-  "Change your answers or weights and check the values of all board games for each question";
+  "<ul style='text-align: left; font-size: 80%;'><li>Change your answers or weights</li><li>Check out the values of your matching board games for each question</li></ul>";
 const TEXT_SHOW_PARTY_DESCRIPTION = `Show details <i class='bx bx-chevron-down bx-sm' ></i>`;
 const TEXT_HIDE_PARTY_DESCRIPTION = `Hide details <i class='bx bx-chevron-up bx-sm' ></i>`;
 const TEXT_SHOW_PARTY_ANSWERS = `Compare answers <i class='bx bx-chevron-down bx-sm' ></i>`;
 const TEXT_HIDE_PARTY_ANSWERS = `Hide answers <i class='bx bx-chevron-up bx-sm' ></i>`;
-const TEXT_SHOW_THESIS_ANSWERS = TEXT_SHOW_PARTY_ANSWERS;
-const TEXT_HIDE_THESIS_ANSWERS = TEXT_HIDE_PARTY_ANSWERS;
+const TEXT_SHOW_THESIS_ANSWERS =
+  "Show values of board games <i class='bx bx-chevron-down bx-sm' ></i>";
+const TEXT_HIDE_THESIS_ANSWERS =
+  "Hide values of board games <i class='bx bx-chevron-up bx-sm' ></i>";
 
 const TEXT_SHARE_AND_SAVE_HEADING = "Share or Save your Results";
 const TEXT_SHARE_AND_SAVE_SUBHEADING =
   "Use the link below to share your results with others or to save it for yourself";
 
-const TEXT_INFO_HEADING = "About the Boardgame-O-Matic";
+const TEXT_INFO_HEADING =
+  "About the <span style='white-space: nowrap;''>Boardgame-O-Matic</span>";
 const TEXT_INFO_SUBHEADING = "";
 // The following words may be used as ALT-Text or headers on the results-page
 const TEXT_QUESTION = "Question";

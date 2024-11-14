@@ -161,3 +161,53 @@ i.bx-sm {
 .activeTabBtn {
   background-color: #fff !important;
 }
+
+.fullscreen-on-mobile-overlay {
+  min-height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #fff;
+  z-index: 1000;
+  width: 100%;
+}
+.fullscreen-on-mobile-content {
+  max-height: calc(100vh - 50px); /* Restricts content height to viewport */
+  overflow-y: auto;
+  padding-bottom: 40px;
+}
+
+.fullscreen-on-mobile-btn-close {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 50px;
+  font-size: 1.1rem;
+  background: var(--primary-color);
+  color: var(--text-on-primary);
+  transition: transform 3s;
+  transform: translateY(0);
+}
+.fullscreen-on-mobile-btn-close-out-of-screen {
+  transform: translateY(50px) !important;
+}
+
+.fullscreen-on-mobile-header {
+  position: fixed;
+  background: #fff;
+  z-index: 5;
+  padding: 15px;
+  top: 0;
+  border-bottom: 1px solid var(--secondary-color);
+}
+
+.fullscreen-on-mobile-header + div {
+  width: 100%;
+}
+
+@media only screen and (max-width: 767px) {
+  [id^="resultsByThesisAnswersToQuestion"] {
+    border: none !important;
+  }
+}
