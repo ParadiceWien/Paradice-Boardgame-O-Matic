@@ -12,7 +12,7 @@ function setMutationObserverFullscreenResultDetails() {
 function addCssFullscreenResultDetails() {
   const stylesheet = document.createElement("style");
   stylesheet.setAttribute("id", "resultDetailsFullPageCSS");
-  stylesheet.textContent += `.fullscreen-result-details-overlay {
+  stylesheet.textContent = `.fullscreen-result-details-overlay {
           min-height: 100vh;
           position: fixed;
           top: 0;
@@ -43,7 +43,13 @@ function addCssFullscreenResultDetails() {
         .fullscreen-result-details-close-out-of-screen {
           transform: translateY(50px) !important;
         }
+
         `;
+  if (HIDE_TABLE_resultsByPartyAnswers)
+    stylesheet.textContent += `
+        [id^="resultsShortPartyDetails"] .nonexpanded {
+          display: none;
+        }`;
   document.head.appendChild(stylesheet);
 }
 

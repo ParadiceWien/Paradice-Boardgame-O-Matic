@@ -21,6 +21,17 @@ window.addEventListener("load", setupFilters);
 function setupFilters() {
   if (FILTERS.some((filter) => filter.setAtStart?.isWanted))
     setFiltersAtStart();
+  const filtersTab = document.createElement("div");
+  filtersTab.setAttribute("id", "filters");
+  filtersTab.classList.add("row", "d-none");
+  filtersTab.innerHTML = `<div id="filtersHeading" class="tabHeading">
+      <h1>${TEXT_FILTERS_HEADING}</h1>
+      <h2>${TEXT_FILTERS_SUBHEADING}</h2>
+    </div>
+    <div id="filtersContainer"></div>`;
+  document
+    .querySelector("#sectionResults")
+    .insertBefore(filtersTab, document.querySelector("#results"));
   FILTERS.forEach((filter) => {
     const nodeFilter = createFilterHtml(filter);
     // Start mutation observer to recognize when the results page is displayed
@@ -49,8 +60,9 @@ function createFilterHtml(filter) {
   if (filter.type === "dropdown") {
     containerOfFilter.classList.add("filter-container-dropdown");
     if (filter.label)
-      divContent += `<label id="filter-label-dropdown-${filter.internalName}" class="filter-label" for="filter-dropdown-${filter.internalName}">${filter.label}</label>`;
-    divContent += `<select name="filter-dropdown-${filter.internalName}" id="filter-dropdown-${filter.internalName}">`;
+      divContent += `<i class="bx bx-fw ${filter.icon}"></i>
+      <label id="filter-label-dropdown-${filter.internalName}" class="filter-label" for="filter-dropdown-${filter.internalName}">${filter.label}</label>`;
+    divContent += `<select name="filter-dropdown-${filter.internalName}" id="filter-dropdown-${filter.internalName}" class="filter-dropdown-select">`;
     divContent += `<option value="show-all">${filter.textOfOptionToShowAll}</option>`; // the 1st option is always a "show all" option (applies no filter to results)
     filter.options.forEach((option) => {
       divContent += `<option value="${option.value}">${option.text}</option>`;
@@ -126,17 +138,17 @@ function createFilterHtml(filter) {
       divContent += `
       <input type="checkbox" id="filter-checkbox-list-${
         filter.internalName
-      }-option${i}" ${
-        isChecked ? "checked" : ""
-      }><label for="filter-checkbox-list-${
+      }-option${i}" ${isChecked ? "checked" : ""}>
+      <label class="checkbox-list-label" for="filter-checkbox-list-${
         filter.internalName
-      }-option${i}"><i class='bx bx-${
-        isActive ? "check" : "x"
-      } bx-sm bx-border'></i>&nbsp;<span ${
-        !isActive && filter.strikethroughOptionsThatGetHidden
-          ? "class='line-through'"
-          : ""
-      }>${filter.options[i].label}</span></label><br>`;
+      }-option${i}">
+        <i class='bx bx-${isActive ? "check" : "x"} bx-sm bx-border'></i>
+        <span ${
+          !isActive && filter.strikethroughOptionsThatGetHidden
+            ? "class='line-through'"
+            : ""
+        }>${filter.options[i].label}</span>
+      </label>`;
     }
     divContent += "</div>";
     divContent += `<p class="error-message" id='error-message-filter-${filter.type}-${filter.internalName}'></p>`;
@@ -164,12 +176,12 @@ function createFilterHtml(filter) {
       .querySelectorAll("[type='checkbox']")
       .forEach((checkbox) => {
         checkbox.addEventListener("change", () => {
-          const icon = checkbox.nextSibling.querySelector("i");
+          const icon = checkbox.nextElementSibling.querySelector("i");
           ["bx-check", "bx-x", "color-success", "color-danger"].forEach((cls) =>
             icon.classList.toggle(cls)
           );
           if (filter.strikethroughOptionsThatGetHidden) {
-            checkbox.nextSibling
+            checkbox.nextElementSibling
               .querySelector("span")
               .classList.toggle("line-through");
           }
@@ -180,10 +192,6 @@ function createFilterHtml(filter) {
 }
 
 function addFilterNodeToDOM(nodeFilter, filter) {
-  const filtersTab = document.createElement("div");
-  filtersTab.setAttribute("id", "filters");
-  filtersTab.classList.add("row", "d-none");
-  filtersTab.innerHTML = `<div id="filtersHeading"><h1>${TEXT_FILTERS_HEADING}</h1><h2>${TEXT_FILTERS_SUBHEADING}</h2></div>  `;
   if (!document.querySelector("#resultsHeading").textContent) return;
   if (filter.displayInSharedModal) {
     if (!document.querySelector("#sharedFilterModal"))
@@ -191,10 +199,7 @@ function addFilterNodeToDOM(nodeFilter, filter) {
     document.querySelector("#sharedFilterModalBody").appendChild(nodeFilter);
   } else if (filter.displayInIndividualModal?.isWanted) {
     createAndAppendIndividualFilterModal(nodeFilter, filter);
-  } else filtersTab.appendChild(nodeFilter);
-  document
-    .querySelector("#sectionResults")
-    .insertBefore(filtersTab, document.querySelector("#info"));
+  } else document.querySelector("#filtersContainer").appendChild(nodeFilter);
 
   addEventListenerToFilter(filter);
   if (FILTERS.some((filter) => filter.setAtStart?.isWanted))
@@ -458,14 +463,15 @@ function sendMessageToLimitResultsAddon() {
 
 function createAndAppendSharedFilterModal() {
   const containerBtnOpenSharedFilterModal = document.createElement("div");
-  containerBtnOpenSharedFilterModal.classList.add("row");
   containerBtnOpenSharedFilterModal.setAttribute(
     "id",
     "container-button-open-shared-filter-modal"
   );
-  containerBtnOpenSharedFilterModal.innerHTML = `<button id="button-open-shared-filter-modal">${SHARED_MODAL.textButtonOpenModal}</button>`;
+  containerBtnOpenSharedFilterModal.innerHTML = `<i class="bx bx-fw ${SHARED_MODAL.iconButtonOpenModal}"></i><button id="button-open-shared-filter-modal" class="btn-open-filter-modal">
+    ${SHARED_MODAL.textButtonOpenModal}
+  </button>`;
   document
-    .querySelector("#filters")
+    .querySelector("#filtersContainer")
     .appendChild(containerBtnOpenSharedFilterModal);
 
   const sharedFilterModal = document.createElement("div");
@@ -481,7 +487,7 @@ function createAndAppendSharedFilterModal() {
                 </div>
                 <div class="modal-body" id="sharedFilterModalBody"></div>
                 <div class="modal-footer">
-                    <button type="button" id="shared-filter-modal-confirm" class="btn">
+                    <button type="button" id="shared-filter-modal-confirm" class="btn btn-primary">
                         ${SHARED_MODAL.buttonShowResults}
                     </button>
                 </div>
@@ -509,14 +515,17 @@ function createAndAppendSharedFilterModal() {
 
 function createAndAppendIndividualFilterModal(nodeFilter, filter) {
   const containerBtnOpenIndividualFilterModal = document.createElement("div");
-  containerBtnOpenIndividualFilterModal.classList.add("row");
   containerBtnOpenIndividualFilterModal.setAttribute(
     "id",
     `container-button-open-individual-filter-modal-${filter.internalName}`
   );
-  containerBtnOpenIndividualFilterModal.innerHTML = `<button id="button-open-individual-filter-modal-${filter.internalName}">${filter.displayInIndividualModal.textButtonOpenModal}</button>`;
+  containerBtnOpenIndividualFilterModal.innerHTML = `
+  <i class="bx bx-fw ${filter.displayInIndividualModal.iconButtonOpenModal}"></i>
+  <button id="button-open-individual-filter-modal-${filter.internalName}"  class="btn-open-filter-modal">
+    ${filter.displayInIndividualModal.textButtonOpenModal}
+  </button>`;
   document
-    .querySelector("#filters")
+    .querySelector("#filtersContainer")
     .appendChild(containerBtnOpenIndividualFilterModal);
 
   const individualFilterModal = document.createElement("div");
@@ -532,7 +541,7 @@ function createAndAppendIndividualFilterModal(nodeFilter, filter) {
                   </div>
                   <div class="modal-body" id="individualFilterModalBody-${filter.internalName}"></div>
                   <div class="modal-footer">
-                      <button type="button" id="individual-filter-modal-confirm-${filter.internalName}" class="btn">
+                      <button type="button" id="individual-filter-modal-confirm-${filter.internalName}" class="btn btn-primary">
                           ${filter.displayInIndividualModal.buttonShowResults}
                       </button>
                   </div>
@@ -725,8 +734,12 @@ function setupButtonResetAllFilters() {
   function createButtonResetAllFilters() {
     if (!document.querySelector("#resultsHeading").textContent) return;
     const containerBtn = document.createElement("div");
-    containerBtn.innerHTML = `<button id="reset-all-filters">${BUTTON_RESET_ALL_FILTERS.textButton}</button>`;
-    document.querySelector("#filters").appendChild(containerBtn);
+    containerBtn.setAttribute("id", "container-reset-all-filters");
+    containerBtn.innerHTML = `<button id="reset-all-filters">
+      <i class="bx bx-fw ${BUTTON_RESET_ALL_FILTERS.iconButton}"></i>
+      ${BUTTON_RESET_ALL_FILTERS.textButton}
+    </button>`;
+    document.querySelector("#filtersContainer").appendChild(containerBtn);
     document
       .querySelector("#reset-all-filters")
       .addEventListener("click", () => {
@@ -738,7 +751,7 @@ function setupButtonResetAllFilters() {
             #container-button-open-shared-filter-modal, \
             [id^='container-button-open-individual-filter-modal'], \
             #sharedFilterModal, [id^='individualFilterModal'], \
-            #reset-all-filters, \
+            #container-reset-all-filters, \
             #error-message-no-filter-results`
           )
           .forEach((node) => {
@@ -748,13 +761,15 @@ function setupButtonResetAllFilters() {
           const nodeFilter = createFilterHtml(filter);
           addFilterNodeToDOM(nodeFilter, filter);
         });
-        document.querySelectorAll(".row-with-one-result").forEach((result) => {
-          Array.from(result.classList).forEach((className) => {
-            if (className.startsWith("hidden-by-filter")) {
-              result.classList.remove(className);
-            }
+        document
+          .querySelectorAll(".row-with-one-result[class*='hidden-by-filter']")
+          .forEach((result) => {
+            Array.from(result.classList).forEach((className) => {
+              if (className.startsWith("hidden-by-filter")) {
+                result.classList.remove(className);
+              }
+            });
           });
-        });
         createButtonResetAllFilters();
         sendMessageToLimitResultsAddon();
       });

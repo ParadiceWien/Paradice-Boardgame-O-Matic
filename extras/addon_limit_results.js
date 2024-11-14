@@ -83,13 +83,15 @@ function mow_addon_limit_results_create_buttons() {
 
     let buttonContent_Minus = `<button type="button" class="Buttons_showPartiesAtEnd_minus btn btn-outline-dark btn-sm btn-block">${TEXT_RESULTS_BUTTON_SHOW_LESS}</button>`;
     // intParties wird dynamisch berechnet, kann also erst jetzt hinzugefügt werden
-    let buttonContent_Plus = `<button type="button" class="Buttons_showPartiesAtEnd_plus  btn btn-outline-dark btn-sm btn-block" >${TEXT_RESULTS_BUTTON_SHOW_MORE} (${TEXT_RESULTS_BUTTON_SHOW_MORE_PREPOSITION} ${intParties})</button>`;
+    let buttonContent_Plus = `<button type="button" class="Buttons_showPartiesAtEnd_plus  btn btn-outline-dark btn-sm btn-block" >${TEXT_RESULTS_BUTTON_SHOW_MORE}</button>`;
 
     let buttonContent_All = `<button type="button" class="Buttons_showPartiesAtEnd_all">${
-      typeof TEXT_RESULTS_BUTTON_SHOW_ALL === "undefined"
-        ? "Alle anzeigen"
-        : TEXT_RESULTS_BUTTON_SHOW_ALL
-    }</button>`;
+      typeof TEXT_RESULTS_BUTTON_SHOW_ALL !== "undefined"
+        ? TEXT_RESULTS_BUTTON_SHOW_ALL
+        : language === "en"
+        ? "Show all"
+        : "Alle anzeigen"
+    } (${intParties})</button>`;
 
     // Erstelle eine neue Zeile mit Bootstrap-Klassen
     // -> 1. ROW -> 2a.) COL (links / left) + 2b.) COL (rechts / right)
@@ -224,9 +226,6 @@ function fnCalculate_Buttons(rowStart, rowEnd) {
       "fnCalculate_Buttons(" + rowStart + "," + rowEndPlus + ")"
     );
     // console.log("BTN+ "+i+" Start: "+rowStart+" Ende: "+rowEndPlus)
-    buttons_plus[
-      i
-    ].innerHTML = `${TEXT_RESULTS_BUTTON_SHOW_MORE} (${TEXT_RESULTS_BUTTON_SHOW_MORE_PREPOSITION} ${intMaxPartiesToShow})`;
   }
 
   for (var i = 0; i < buttons_all.length; i++) {
@@ -234,6 +233,9 @@ function fnCalculate_Buttons(rowStart, rowEnd) {
       "onclick",
       "fnCalculate_Buttons(" + rowStart + "," + intParties + ")"
     );
+    buttons_all[
+      i
+    ].innerHTML = `${TEXT_RESULTS_BUTTON_SHOW_ALL} (${intMaxPartiesToShow})`;
   }
   for (var i = 0; i < buttons_minus.length; i++) {
     buttons_minus[i].setAttribute(

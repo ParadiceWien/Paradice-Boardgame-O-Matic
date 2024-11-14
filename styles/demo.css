@@ -211,3 +211,85 @@ i.bx-sm {
     border: none !important;
   }
 }
+
+.tabHeading {
+  padding: 10px;
+  width: 100%;
+}
+
+#filtersContainer {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+#filtersContainer div {
+  height: 40px;
+}
+
+.btn-open-filter-modal {
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  color: var(--link-color);
+  text-decoration: underline;
+}
+
+.filter-dropdown-select {
+  border: none;
+  background: transparent;
+  padding: 10px;
+  border-radius: var(--border-radius);
+  margin-left: 10px;
+  border: 1px solid var(--primary-color);
+  padding: 5px 10px;
+}
+
+#container-reset-all-filters {
+  margin-top: 50px;
+}
+
+#reset-all-filters {
+  background-color: transparent;
+  border: 1px solid;
+  padding: 3px 6px;
+  color: var(--danger);
+  border-radius: var(--border-radius);
+  margin-left: -7px;
+}
+
+.checkbox-list-label {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.container-checkbox-list i {
+  padding: 0.1em;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: var(--text-on-primary);
+}
+
+.btn-secondary {
+  background-color: var(--secondary-color);
+  color: var(--text-on-secondary);
+}
+
+.btn-success {
+  background-color: var(--success);
+  color: var(--text-on-success);
+}
+
+.btn-warning {
+  background-color: var(--warning);
+  color: var(--text-on-warning);
+}
+
+.btn-danger {
+  background-color: var(--danger);
+  color: var(--text-on-danger);
+}

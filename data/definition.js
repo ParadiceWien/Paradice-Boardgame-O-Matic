@@ -138,10 +138,8 @@ if (isActivated("addon_limit_results.js")) {
   // Also the number of results added to the table with each press of the show more button
   intPartiesShowAtEnd = 5;
   TEXT_RESULTS_BUTTON_SHOW_MORE = "<strong>+</strong> Show more";
-  // The show more button also tells the total number of results that can be shown (potentially subject to filter restrictions)
-  // For this, it needs a preposition. In English, this is "of". The button could say "Show more (of 123)"
-  TEXT_RESULTS_BUTTON_SHOW_MORE_PREPOSITION = "of";
   TEXT_RESULTS_BUTTON_SHOW_LESS = "<strong>-</strong> Show less";
+  TEXT_RESULTS_BUTTON_SHOW_ALL = "Show all";
 }
 
 if (isActivated("addon_permalink_to_personal_results.js")) {
@@ -328,8 +326,7 @@ if (isActivated("addon_make_questions_optional.js")) {
 
 if (addons.some((item) => item.includes("extras/addon_filter_results.js"))) {
   TEXT_FILTERS_HEADING = "Filters";
-  TEXT_FILTERS_SUBHEADING =
-    "Set filters rules to get more accurate suggestions";
+  TEXT_FILTERS_SUBHEADING = "Set filters to get more accurate suggestions";
   FILTERS = [
     /* 
   Global keys:
@@ -389,6 +386,7 @@ if (addons.some((item) => item.includes("extras/addon_filter_results.js"))) {
     {
       internalName: "player-number",
       type: "dropdown",
+      icon: "bx-group",
       label: "Filter by player number: ",
       options: [
         { text: "Solo", value: "1" },
@@ -411,7 +409,7 @@ if (addons.some((item) => item.includes("extras/addon_filter_results.js"))) {
       internalName: "mechanisms",
       type: "checkbox-list",
       heading:
-        "Select those board game mechanics which you <strong>don't</strong> like:<br><small>All games, which have at least one of the mechanics you select, are hidden from your results</small>",
+        "All board games, which have at least one of the mechanics you disallow, are exluced from your results.",
       options: [
         { label: "Area control", value: "areaControl" },
         { label: "Worker Placement", value: "workerPlacement" },
@@ -434,9 +432,10 @@ if (addons.some((item) => item.includes("extras/addon_filter_results.js"))) {
       displayInSharedModal: false,
       displayInIndividualModal: {
         isWanted: true,
+        iconButtonOpenModal: "bx-cog",
         textButtonOpenModal: "Filter by Mechanics",
-        heading: "Exclude games with certain Mechanics",
-        buttonShowResults: "Go!",
+        heading: "Filter by Mechanics",
+        buttonShowResults: "Apply filter",
       },
       errorMessage: "You must allow at least one mechanic.",
     },
@@ -444,7 +443,7 @@ if (addons.some((item) => item.includes("extras/addon_filter_results.js"))) {
       internalName: "themes",
       type: "checkbox-list",
       heading:
-        "Select those themes & settings which you <strong>don't</strong> like:<br><small>All games, which have at least one of the themes you select, are hidden from your results</small>",
+        "All board games, which have at least one of the themes you disallow, are exluced from your results.",
       options: [
         { label: "Adventure", value: "adventure" },
         { label: "Wild West", value: "wildWest" },
@@ -466,10 +465,11 @@ if (addons.some((item) => item.includes("extras/addon_filter_results.js"))) {
       strikethroughOptionsThatGetHidden: true,
       displayInSharedModal: false,
       displayInIndividualModal: {
+        iconButtonOpenModal: "bx-landscape",
         isWanted: true,
         textButtonOpenModal: "Filter by Themes",
-        heading: "Exclude games with certain Themes / Settings",
-        buttonShowResults: "Go!",
+        heading: "Filter by Themes / Settings",
+        buttonShowResults: "Apply filter",
       },
       errorMessage: "You must allow at least one theme.",
     },
@@ -493,6 +493,7 @@ if (addons.some((item) => item.includes("extras/addon_filter_results.js"))) {
   BUTTON_RESET_ALL_FILTERS = {
     showButton: true,
     textButton: "Reset all filters",
+    iconButton: "bx-trash",
   };
   ERROR_MESSAGE_NO_FILTER_RESULTS =
     "None of our board games matches all your filters. Please change your filters and try again.";
@@ -517,5 +518,5 @@ if (
     { internalName: "mechanisms", label: "Mechanics", bulletList: false },
     { internalName: "themes", label: "Themes", bulletList: false },
   ];
-  HIDE_TABLE_resultsByPartyAnswers = false;
+  HIDE_TABLE_resultsByPartyAnswers = true;
 }
