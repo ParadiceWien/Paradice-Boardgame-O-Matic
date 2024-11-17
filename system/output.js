@@ -651,7 +651,7 @@ function generateSectionResults(arResults) {
                       </button>
                   </div>
 
-                      <button id='resultsByThesisQuestion${i}collapse' class='nonexpanded btn btn-sm btn-outline-secondary flex-center' type='button'>
+                      <button id='resultsByThesisQuestion${i}collapse' style='float: left;' class='nonexpanded btn btn-sm btn-outline-secondary flex-center' type='button'>
                           ${TEXT_SHOW_THESIS_ANSWERS}
                       </button>
                   </div>
@@ -890,7 +890,7 @@ function generateSectionResults(arResults) {
       });
       navigationBar.appendChild(tabBtnContainer);
     });
-    document.body.appendChild(navigationBar);
+    document.querySelector("#sectionResults").appendChild(navigationBar);
 
     circulateSharingAndSavingIcon();
   }

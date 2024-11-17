@@ -234,9 +234,9 @@ function addEventListenerToFilter(filter) {
       return;
     }
     hideResults(filter);
-    showBtnGoToUpdatedResults();
     checkIfAnyResultsLeft();
     sendMessageToLimitResultsAddon();
+    showBtnGoToUpdatedResults();
   });
   if (filter.type === "single-checkbox" || filter.type === "checkbox-list") {
     // In case filters are set by default, a first check must be done upfront
@@ -245,12 +245,34 @@ function addEventListenerToFilter(filter) {
 }
 
 function showBtnGoToUpdatedResults() {
+  if (
+    !document.querySelector("#filters").classList.contains("activeTab") || // If the filters tab is not active, the filter was not manually changed, but this function was triggered initially at startup
+    document.querySelector("#btn-go-to-updated-results-after-filter")
+  )
+    return;
   const btnGoToUpdatedResults = document.createElement("button");
   btnGoToUpdatedResults.setAttribute(
     "id",
     "btn-go-to-updated-results-after-filter"
   );
-  btnGoToUpdatedResults.innerHTML = "See updated results <";
+  btnGoToUpdatedResults.classList.add(
+    "flex-center",
+    "off-screen",
+    "btn-secondary"
+  );
+  btnGoToUpdatedResults.innerHTML =
+    "See updated results <i class='bx bx-chevron-right bx-sm'></i><i class='bx bx-trophy bx-sm'></i>";
+  document.querySelector("#filters").appendChild(btnGoToUpdatedResults);
+  setTimeout(() => {
+    btnGoToUpdatedResults.classList.remove("off-screen");
+  }, 0);
+  const resultsTabBtn = document.querySelector("#resultsTabBtn");
+  btnGoToUpdatedResults.addEventListener("click", () => {
+    resultsTabBtn.click();
+  });
+  resultsTabBtn.addEventListener("click", () => {
+    btnGoToUpdatedResults.remove();
+  });
 }
 
 function validateFilter(filter) {
