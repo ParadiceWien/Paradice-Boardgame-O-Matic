@@ -887,6 +887,8 @@ function generateSectionResults(arResults) {
       navigationBar.appendChild(tabBtnContainer);
     });
     document.body.appendChild(navigationBar);
+
+    circulateSharingAndSavingIcon();
   }
   document.querySelector("#sectionShowQuestions").remove();
   addContentToResultsTab();
@@ -894,6 +896,40 @@ function generateSectionResults(arResults) {
   addContentToInfoTab();
   createNavigationBar();
   document.querySelector("#sectionResults").style.display = "block";
+}
+
+function circulateSharingAndSavingIcon() {
+  const initialIcon = document.querySelector("#shareAndSaveTabBtn i");
+  const newIcon = initialIcon.cloneNode();
+  const btn = initialIcon.parentNode;
+  initialIcon.classList.add("currentIcon");
+  btn.style.position = "relative";
+  newIcon.classList.replace("bx-share-alt", "bx-save");
+  newIcon.style.position = "absolute";
+  newIcon.classList.add("invisible");
+  btn.appendChild(newIcon);
+
+  function swapIcons() {
+    const rectInitialIcon = initialIcon.getBoundingClientRect();
+    const rectBtn = btn.getBoundingClientRect();
+    newIcon.style.left = `${rectInitialIcon.left - rectBtn.left}px`;
+    newIcon.style.top = `${rectInitialIcon.top - rectBtn.top}px`;
+    const currentIcon = document.querySelector(".currentIcon");
+    const otherIcon = document.querySelector(
+      "#shareAndSaveTabBtn i:not(.currentIcon)"
+    );
+    const direction = currentIcon.classList.contains("bx-share-alt")
+      ? "Top"
+      : "Bottom";
+    currentIcon.classList.replace("currentIcon", `fadeOut${direction}`);
+    otherIcon.classList.replace("invisible", `fadeIn${direction}`);
+    setTimeout(() => {
+      currentIcon.classList.replace(`fadeOut${direction}`, "invisible");
+      otherIcon.classList.replace(`fadeIn${direction}`, "currentIcon");
+    }, 290);
+  }
+
+  setInterval(swapIcons, 8000);
 }
 
 // Anzeige der Ergebnisse - detailliert, Fragen und Antworten der Parteien

@@ -144,15 +144,15 @@ if (isActivated("addon_limit_results.js")) {
 
 if (isActivated("addon_permalink_to_personal_results.js")) {
   // Text in the button
-  PERMALINK_BUTTON_TEXT = `<i class='bx bx-save bx-sm'></i>&nbsp; Save/share results`;
+  PERMALINK_BUTTON_TEXT = `Generate Link`;
   // Explanatory text, which is shown for a couple of seconds after the button is pressed
   PERMALINK_DESCRIPTION_TEXT =
-    "A permalink has been generated and copied to your clipboard. Share or save this link and open it again later to go directly to this results page.";
+    "Your link has been copied to your clipboard. Save it to a location of your choice or share it with others &ndash; it leads directly to your personal results page.";
   // Method for copying to clipboard is not supported in all browsers. Fallback: Show URL and tell user to copy it
   PERMALINK_BUTTON_TEXT_ALT =
-    "Copy the following link and save it to a location of your choice or share it. This link will take you back to this personal results page.";
+    "Copy the following link and save it to a location of your choice or share it  &ndash; it leads directly to your personal results page.";
   // How many seconds is the explanatory text shown after each button click before it disappears again?
-  PERMALINK_DESCRIPTION_DURATION = 8;
+  PERMALINK_DESCRIPTION_DURATION = 15;
 }
 
 if (isActivated("addon_tooltips.js")) {

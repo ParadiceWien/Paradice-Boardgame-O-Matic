@@ -293,3 +293,65 @@ i.bx-sm {
   background-color: var(--danger);
   color: var(--text-on-danger);
 }
+
+#permalink-button {
+  margin: 30px auto;
+}
+
+.fadeOutTop {
+  animation: fadeOutTop 0.3s ease-in-out;
+}
+
+@keyframes fadeOutTop {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+}
+
+.fadeInTop {
+  animation: fadeInTop 0.3s ease-in-out;
+}
+
+@keyframes fadeInTop {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.fadeOutBottom {
+  animation: fadeOutBottom 0.3s ease-in-out;
+}
+
+@keyframes fadeOutBottom {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+}
+
+.fadeInBottom {
+  animation: fadeInBottom 0.3s ease-in-out;
+}
+
+@keyframes fadeInBottom {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

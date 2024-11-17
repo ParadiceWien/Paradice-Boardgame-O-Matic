@@ -52,7 +52,7 @@ const TEXT_HIDE_THESIS_ANSWERS =
 
 const TEXT_SHARE_AND_SAVE_HEADING = "Share or Save your Results";
 const TEXT_SHARE_AND_SAVE_SUBHEADING =
-  "Use the link below to share your results with others or to save it for yourself";
+  "Generate a personal link to share your results with others or to save it for yourself";
 
 const TEXT_INFO_HEADING =
   "About the <span style='white-space: nowrap;''>Boardgame-O-Matic</span>";
