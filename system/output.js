@@ -882,10 +882,10 @@ function generateSectionResults(arResults) {
         if (oldActiveTab === newActiveTab) return;
         animateTabs(arTabsNavigationBar, oldActiveTab, newActiveTab);
         document
-          .querySelector(".activeTabBtn")
+          .querySelector("#navigationBar .activeTabBtn")
           .classList.remove("activeTabBtn");
         document
-          .querySelector(`.${tab.icon}`)
+          .querySelector(`#navigationBar .${tab.icon}`)
           .parentNode.classList.add("activeTabBtn");
       });
       navigationBar.appendChild(tabBtnContainer);
@@ -930,7 +930,7 @@ function circulateSharingAndSavingIcon() {
     setTimeout(() => {
       currentIcon.classList.replace(`fadeOut${direction}`, "invisible");
       otherIcon.classList.replace(`fadeIn${direction}`, "currentIcon");
-    }, 290);
+    }, 390);
   }
 
   setInterval(swapIcons, 8000);

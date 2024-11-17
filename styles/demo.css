@@ -295,7 +295,7 @@ i.bx-sm {
 }
 
 .fadeOutTop {
-  animation: fadeOutTop 0.3s ease-in-out;
+  animation: fadeOutTop 0.4s ease-in-out;
 }
 
 @keyframes fadeOutTop {
@@ -309,7 +309,7 @@ i.bx-sm {
 }
 
 .fadeInTop {
-  animation: fadeInTop 0.3s ease-in-out;
+  animation: fadeInTop 0.4s ease-in-out;
 }
 
 @keyframes fadeInTop {
@@ -324,7 +324,7 @@ i.bx-sm {
 }
 
 .fadeOutBottom {
-  animation: fadeOutBottom 0.3s ease-in-out;
+  animation: fadeOutBottom 0.4s ease-in-out;
 }
 
 @keyframes fadeOutBottom {
@@ -338,7 +338,7 @@ i.bx-sm {
 }
 
 .fadeInBottom {
-  animation: fadeInBottom 0.3s ease-in-out;
+  animation: fadeInBottom 0.4s ease-in-out;
 }
 
 @keyframes fadeInBottom {
@@ -367,7 +367,7 @@ i.bx-sm {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 3px;
+  gap: 5px;
 }
 
 #navigationBar i {
@@ -376,4 +376,16 @@ i.bx-sm {
 
 .off-screen {
   transform: translateY(50px) !important;
+}
+
+#error-message-no-filter-results p {
+  padding: 15px;
+  background-color: var(--danger);
+  color: var(--text-on-danger);
+  border-radius: var(--border-radius);
+  margin: 5px;
+}
+
+#no-filter-results-change-filters {
+  margin: 30px auto;
 }

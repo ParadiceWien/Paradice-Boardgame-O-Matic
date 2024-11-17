@@ -261,7 +261,7 @@ function showBtnGoToUpdatedResults() {
     "btn-secondary"
   );
   btnGoToUpdatedResults.innerHTML =
-    "See updated results <i class='bx bx-chevron-right bx-sm'></i><i class='bx bx-trophy bx-sm'></i>";
+    "<i class='bx bx-trophy bx-sm'></i> See updated results";
   document.querySelector("#filters").appendChild(btnGoToUpdatedResults);
   setTimeout(() => {
     btnGoToUpdatedResults.classList.remove("off-screen");
@@ -481,10 +481,16 @@ function checkIfAnyResultsLeft() {
   );
   if (nodelistResultsNotHiddenByFilters.length === 0) {
     if (document.querySelector("#error-message-no-filter-results")) return;
-    const nodeErrorMessage = document.createElement("p");
+    const nodeErrorMessage = document.createElement("div");
     nodeErrorMessage.classList.add("error-message");
     nodeErrorMessage.setAttribute("id", "error-message-no-filter-results");
-    nodeErrorMessage.innerHTML = ERROR_MESSAGE_NO_FILTER_RESULTS;
+    nodeErrorMessage.innerHTML = `<p>${ERROR_MESSAGE_NO_FILTER_RESULTS}</p>\
+    <button id="no-filter-results-change-filters" class="btn btn-primary flex-center"><i class="bx bx-filter-alt bx-sm"></i> Change filters</button>`;
+    nodeErrorMessage
+      .querySelector("#no-filter-results-change-filters")
+      .addEventListener("click", () => {
+        document.querySelector("#filtersTabBtn").click();
+      });
     document.querySelector("#resultsShort").appendChild(nodeErrorMessage);
   } else document.querySelector("#error-message-no-filter-results")?.remove();
 }
