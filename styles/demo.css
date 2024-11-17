@@ -89,10 +89,6 @@ main {
   border-color: var(--warning);
 }
 
-.bx {
-  vertical-align: sub;
-}
-
 i.bx-sm {
   font-size: 1.25rem !important;
 }
@@ -354,4 +350,25 @@ i.bx-sm {
     transform: translateY(0);
     opacity: 1;
   }
+}
+
+#btn-go-to-updated-results-after-filter {
+  background-color: var(--secondary-color);
+  color: var(--text-on-secondary);
+  position: fixed;
+  bottom: 70px;
+  left: 0;
+  height: 50px;
+  width: 100%;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+}
+
+#navigationBar i {
+  vertical-align: middle;
 }

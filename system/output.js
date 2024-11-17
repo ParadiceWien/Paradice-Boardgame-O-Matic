@@ -453,7 +453,7 @@ function generateSectionResults(arResults) {
         <br />
         <span class="tagline">${arPartyInternet[partyNum]}</span>
         <br /> 
-        <button type="button" class="btn btn-sm btn-outline-secondary" 
+        <button type="button" class="btn btn-sm btn-outline-secondary flex-center" 
           id="resultsShortPartyDescriptionButton${partyNum}">
           ${TEXT_SHOW_PARTY_DESCRIPTION}</button>
     </div> 
@@ -470,7 +470,9 @@ function generateSectionResults(arResults) {
     <br /> 
     <span id="internet-above-description"><a href='https://boardgamegeek.com/boardgame/${
       arPartyNamesShort[partyNum]
-    }' target='_blank' alt='Link: ${arPartyNamesLong[partyNum]}'
+    }' target='_blank' class='flex-center' alt='Link: ${
+        arPartyNamesLong[partyNum]
+      }'
               title='Link: ${arPartyNamesLong[partyNum]}'>
               ${TEXT_LINK_TO_EXTERNAL_PAGE}</a>
     <br / ></span>
@@ -478,7 +480,9 @@ function generateSectionResults(arResults) {
     <br /> 
     <span id="internet-below-description"><a href='https://boardgamegeek.com/boardgame/${
       arPartyNamesShort[partyNum]
-    }' target='_blank' alt='Link: ${arPartyNamesLong[partyNum]}'
+    }' target='_blank'  class='flex-center' alt='Link: ${
+        arPartyNamesLong[partyNum]
+      }'
               title='Link: ${arPartyNamesLong[partyNum]}'>
               ${TEXT_LINK_TO_EXTERNAL_PAGE}</a>
     <br / ></span>
@@ -647,7 +651,7 @@ function generateSectionResults(arResults) {
                       </button>
                   </div>
 
-                      <button id='resultsByThesisQuestion${i}collapse' class='nonexpanded btn btn-sm btn-outline-secondary' type='button'>
+                      <button id='resultsByThesisQuestion${i}collapse' class='nonexpanded btn btn-sm btn-outline-secondary flex-center' type='button'>
                           ${TEXT_SHOW_THESIS_ANSWERS}
                       </button>
                   </div>

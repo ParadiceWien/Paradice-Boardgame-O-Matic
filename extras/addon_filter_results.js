@@ -234,6 +234,7 @@ function addEventListenerToFilter(filter) {
       return;
     }
     hideResults(filter);
+    showBtnGoToUpdatedResults();
     checkIfAnyResultsLeft();
     sendMessageToLimitResultsAddon();
   });
@@ -241,6 +242,15 @@ function addEventListenerToFilter(filter) {
     // In case filters are set by default, a first check must be done upfront
     document.querySelector(selector).dispatchEvent(new Event(event));
   }
+}
+
+function showBtnGoToUpdatedResults() {
+  const btnGoToUpdatedResults = document.createElement("button");
+  btnGoToUpdatedResults.setAttribute(
+    "id",
+    "btn-go-to-updated-results-after-filter"
+  );
+  btnGoToUpdatedResults.innerHTML = "See updated results <";
 }
 
 function validateFilter(filter) {
@@ -634,7 +644,7 @@ function setFiltersAtStart() {
     divContent += `</div></section>
         <div class="w-100"></div>
         <div class="col">
-                        <button type="button" style="background-color: transparent;" id="skip-set-filter-${filter.internalName}" class="btn btn-secondary btn float-right">${TEXT_VOTING_SKIP}</button>
+                        <button type="button" style="background-color: transparent; color: var(--text-on-primary)" id="skip-set-filter-${filter.internalName}" class="btn btn-secondary btn float-right flex-center">${TEXT_VOTING_SKIP}</button>
                       </div>`;
 
     cardToSetFilter.innerHTML = divContent;

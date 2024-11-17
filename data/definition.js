@@ -144,7 +144,7 @@ if (isActivated("addon_limit_results.js")) {
 
 if (isActivated("addon_permalink_to_personal_results.js")) {
   // Text in the button
-  PERMALINK_BUTTON_TEXT = `Generate Link`;
+  PERMALINK_BUTTON_TEXT = `<i class='bx bx-link'></i> Generate Link`;
   // Explanatory text, which is shown for a couple of seconds after the button is pressed
   PERMALINK_DESCRIPTION_TEXT =
     "Your link has been copied to your clipboard. Save it to a location of your choice or share it with others &ndash; it leads directly to your personal results page.";

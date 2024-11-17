@@ -192,7 +192,7 @@ window.addEventListener("load", () => {
 
     const permalinkButton = document.createElement("button");
     permalinkButton.setAttribute("id", "permalink-button");
-    permalinkButton.classList.add("btn", "btn-secondary");
+    permalinkButton.classList.add("btn", "btn-secondary", "flex-center");
     permalinkButton.innerHTML = PERMALINK_BUTTON_TEXT;
     const permalinkDescription = document.createElement("p");
     permalinkDescription.setAttribute("id", "permalink-description");
