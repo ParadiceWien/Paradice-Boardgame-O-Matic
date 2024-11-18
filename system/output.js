@@ -806,11 +806,35 @@ function generateSectionResults(arResults) {
     });
   }
   function addContentToInfoTab() {
+    function showLegalBtnsOnlyInInfoTab() {
+      const legalBtns = document.querySelectorAll("#privacy, #imprint");
+      legalBtns.forEach((node) => {
+        node.classList.add("d-none");
+      });
+      setTimeout(() => {
+        // Wait for navigation bar to be created and appended
+        document.querySelectorAll("#navigationBar button").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            if (btn.getAttribute("id") === "infoTabBtn") {
+              legalBtns.forEach((node) => {
+                node.classList.remove("d-none");
+              });
+            } else {
+              legalBtns.forEach((node) => {
+                node.classList.add("d-none");
+              });
+            }
+          });
+        });
+      }, 300);
+    }
     document.querySelector(
       "#infoHeading"
     ).innerHTML = `<h1>${TEXT_INFO_HEADING}</h1><h2>${TEXT_INFO_SUBHEADING}</h2>`;
 
     document.querySelector("#info .col").innerHTML = textInfoBox;
+
+    showLegalBtnsOnlyInInfoTab();
   }
   function createNavigationBar() {
     function animateTabs(arTabs, oldActiveTab, newActiveTab) {

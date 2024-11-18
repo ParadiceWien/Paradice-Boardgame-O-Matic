@@ -387,3 +387,9 @@ i.bx-sm {
 #no-filter-results-change-filters {
   margin: 30px auto;
 }
+
+#sectionFooter {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 70px;
+}

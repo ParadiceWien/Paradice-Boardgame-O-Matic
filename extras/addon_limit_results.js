@@ -85,13 +85,13 @@ function mow_addon_limit_results_create_buttons() {
     // intParties wird dynamisch berechnet, kann also erst jetzt hinzugefügt werden
     let buttonContent_Plus = `<button type="button" class="Buttons_showPartiesAtEnd_plus  btn btn-outline-dark btn-sm btn-block" >${TEXT_RESULTS_BUTTON_SHOW_MORE}</button>`;
 
-    let buttonContent_All = `<button type="button" class="Buttons_showPartiesAtEnd_all">${
+    let buttonContent_All = `<button type="button" class="Buttons_showPartiesAtEnd_all"><small>${
       typeof TEXT_RESULTS_BUTTON_SHOW_ALL !== "undefined"
         ? TEXT_RESULTS_BUTTON_SHOW_ALL
         : language === "en"
         ? "Show all"
         : "Alle anzeigen"
-    } (${intParties})</button>`;
+    } (${intParties})</small></button>`;
 
     // Erstelle eine neue Zeile mit Bootstrap-Klassen
     // -> 1. ROW -> 2a.) COL (links / left) + 2b.) COL (rechts / right)
@@ -235,7 +235,7 @@ function fnCalculate_Buttons(rowStart, rowEnd) {
     );
     buttons_all[
       i
-    ].innerHTML = `${TEXT_RESULTS_BUTTON_SHOW_ALL} (${intMaxPartiesToShow})`;
+    ].innerHTML = `<small>${TEXT_RESULTS_BUTTON_SHOW_ALL} (${intMaxPartiesToShow})</small>`;
   }
   for (var i = 0; i < buttons_minus.length; i++) {
     buttons_minus[i].setAttribute(
