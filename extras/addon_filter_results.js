@@ -256,12 +256,13 @@ function showBtnGoToUpdatedResults() {
     "btn-go-to-updated-results-after-filter"
   );
   btnGoToUpdatedResults.classList.add(
+    "btn",
     "flex-center",
     "off-screen",
     "btn-secondary"
   );
   btnGoToUpdatedResults.innerHTML =
-    "<i class='bx bx-trophy bx-sm'></i> See updated results";
+    "See updated results <i class='bx bx-chevron-right bx-sm'></i>";
   document.querySelector("#filters").appendChild(btnGoToUpdatedResults);
   setTimeout(() => {
     btnGoToUpdatedResults.classList.remove("off-screen");
@@ -485,7 +486,7 @@ function checkIfAnyResultsLeft() {
     nodeErrorMessage.classList.add("error-message");
     nodeErrorMessage.setAttribute("id", "error-message-no-filter-results");
     nodeErrorMessage.innerHTML = `<p>${ERROR_MESSAGE_NO_FILTER_RESULTS}</p>\
-    <button id="no-filter-results-change-filters" class="btn btn-primary flex-center"><i class="bx bx-filter-alt bx-sm"></i> Change filters</button>`;
+    <button id="no-filter-results-change-filters" class="btn btn-primary flex-center"><i class="bx bx-chevron-left bx-sm"></i> Change filters</button>`;
     nodeErrorMessage
       .querySelector("#no-filter-results-change-filters")
       .addEventListener("click", () => {

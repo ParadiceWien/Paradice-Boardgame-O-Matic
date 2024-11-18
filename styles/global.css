@@ -1164,67 +1164,6 @@ div[id^="resultsShortPartyDescription"] {
   color: var(--text-on-primary);
 }
 
-#refresh-button {
-  background: var(--secondary-color);
-  color: var(--text-on-secondary);
-  position: fixed;
-  z-index: 3;
-  transition: top 0.3s;
-  cursor: pointer;
-}
-
-.show-refresh-button {
-  animation: showRefreshButton 0.4s ease-in-out;
-}
-
-@media only screen and (min-width: 768px) {
-  #refresh-button {
-    padding: 6px 12px;
-    bottom: 20px;
-    right: 20px;
-  }
-
-  @keyframes showRefreshButton {
-    0% {
-      transform: translateX(200px);
-    }
-    100% {
-      transform: translateX(0);
-    }
-  }
-
-  .highlight-refresh-button {
-    animation: highlightRefreshButton 0.4s ease-in-out;
-  }
-
-  @keyframes highlightRefreshButton {
-    50% {
-      transform: translateY(-10px);
-    }
-    100% {
-      transform: translateY(0);
-    }
-  }
-}
-
-@media only screen and (max-width: 767px) {
-  #refresh-button {
-    bottom: 0;
-    width: 100%;
-    text-align: center;
-    padding: 10px 0;
-  }
-
-  @keyframes showRefreshButton {
-    0% {
-      transform: translateY(200px);
-    }
-    100% {
-      transform: translateY(0);
-    }
-  }
-}
-
 /* Short description already showing before details of result are opened */
 .tagline {
   font-style: italic;

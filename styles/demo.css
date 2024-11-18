@@ -121,6 +121,7 @@ i.bx-sm {
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  background-color: var(--primary-color);
 }
 #navigationBar div {
   flex: 1 0 auto;
@@ -352,7 +353,8 @@ i.bx-sm {
   }
 }
 
-#btn-go-to-updated-results-after-filter {
+#btn-go-to-updated-results-after-filter,
+#refresh-button {
   border: none;
   position: fixed;
   bottom: 70px;
@@ -361,6 +363,8 @@ i.bx-sm {
   width: 100%;
   padding-bottom: 10px;
   transform: translateY(0);
+  margin: 0;
+  border-radius: 0 !important;
 }
 
 .flex-center {

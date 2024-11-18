@@ -94,7 +94,6 @@ const addons = [
   // "extras/addon_make_questions_optional.js",
   "extras/addon_make_result_details_fullscreen.js",
   "extras/addon_display_answers_and_filter_values_in_result_details.js",
-  // "extras/addon_split_results_view_on_mobile_in_tabs.js",
 ];
 
 // Addon-specific variables are set in this configuration file as well
@@ -153,6 +152,7 @@ if (isActivated("addon_permalink_to_personal_results.js")) {
     "Copy the following link and save it to a location of your choice or share it  &ndash; it leads directly to your personal results page.";
   // How many seconds is the explanatory text shown after each button click before it disappears again?
   PERMALINK_DESCRIPTION_DURATION = 15;
+  REFRESH_BUTTON_TEXT = `See updated results <i class="bx bx-chevron-right bx-sm"></i>`;
 }
 
 if (isActivated("addon_tooltips.js")) {

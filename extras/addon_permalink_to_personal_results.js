@@ -100,16 +100,29 @@ function checkIfResultsChange() {
     let btnRefresh;
     if (!isBtnRefreshShowingAlready) {
       isBtnRefreshShowingAlready = true;
-      btnRefresh = document.createElement("a");
+      btnRefresh = document.createElement("button");
       btnRefresh.setAttribute("id", "refresh-button");
+      btnRefresh.classList.add(
+        "btn",
+        "btn-secondary",
+        "flex-center",
+        "off-screen"
+      );
       btnRefresh.innerHTML =
         window.REFRESH_BUTTON_TEXT !== undefined
           ? REFRESH_BUTTON_TEXT
           : "&#8634; Ranking aktualisieren";
-      btnRefresh.addEventListener("click", () => {
-        window.open(generateLinkWithCurrentUserAnswers(), "_self");
-      });
-      document.body.appendChild(btnRefresh);
+      [btnRefresh, document.querySelector("#resultsTabBtn")].forEach(
+        (button) => {
+          button.addEventListener("click", () => {
+            window.open(generateLinkWithCurrentUserAnswers(), "_self");
+          });
+        }
+      );
+      document.querySelector("#finetuning").appendChild(btnRefresh);
+      setTimeout(() => {
+        btnRefresh.classList.remove("off-screen");
+      }, 0);
       if (
         addons.some((item) =>
           item.includes("addon_check_iframe_resize_client.js")
