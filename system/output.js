@@ -747,12 +747,6 @@ function generateSectionResults(arResults) {
             const heightOfQuestionTextContainer = window.getComputedStyle(
               questionTextContainer
             ).height;
-            console.log(heightOfQuestionTextContainer);
-            console.log(
-              +heightOfQuestionTextContainer.replace("px", "") + 10 + "px"
-            );
-
-            console.log(questionTextContainer.nextElementSibling);
             setTimeout(() => {
               sectionQuestion.parentNode.insertBefore(
                 wrapperDiv,
@@ -767,7 +761,6 @@ function generateSectionResults(arResults) {
             }, 300);
           }
           function closeFullscreenPartyAnswerListOnMobile() {
-            console.log("hey");
             const wrapperDiv = sectionQuestion.parentNode;
             wrapperDiv.parentNode.insertBefore(sectionQuestion, wrapperDiv);
             wrapperDiv.remove();

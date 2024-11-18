@@ -98,6 +98,7 @@ function generateLinkWithCurrentUserAnswers() {
 function checkIfResultsChange() {
   function showOrHighlightBtnRefresh() {
     let btnRefresh;
+    console.log(1);
     if (!isBtnRefreshShowingAlready) {
       isBtnRefreshShowingAlready = true;
       btnRefresh = document.createElement("button");
@@ -109,7 +110,7 @@ function checkIfResultsChange() {
         "off-screen"
       );
       btnRefresh.innerHTML =
-        window.REFRESH_BUTTON_TEXT !== undefined
+        REFRESH_BUTTON_TEXT !== undefined
           ? REFRESH_BUTTON_TEXT
           : "&#8634; Ranking aktualisieren";
       [btnRefresh, document.querySelector("#resultsTabBtn")].forEach(
@@ -149,12 +150,18 @@ function checkIfResultsChange() {
   }
 
   let isBtnRefreshShowingAlready = false;
-  const nodelistResultChangingButtons = document.querySelectorAll(
-    "[class*='selfPosition'], [id^='doubleIcon']"
+
+  setTimeout(
+    () => {
+      const nodelistResultChangingButtons = document.querySelectorAll(
+        "[class*='selfPosition'], [id^='doubleIcon']"
+      );
+      nodelistResultChangingButtons.forEach((btn) => {
+        btn.addEventListener("click", showOrHighlightBtnRefresh);
+      });
+    },
+    isActivated("addon_custom_voting_buttons.js") ? 500 : 0 // If there are custom buttons, wait for the addon file to exchange the selfPosition buttons before assigning the event listener
   );
-  nodelistResultChangingButtons.forEach((btn) => {
-    btn.addEventListener("click", showOrHighlightBtnRefresh);
-  });
 
   // In iframe, position:fixed does not work, because from the viewpoint of the iframe page, the window is much larger than the actual users' screen
   // This workaround positions the button at the actual button of the users' screen

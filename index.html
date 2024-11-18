@@ -53,25 +53,22 @@
           language +
           ".js'><\/script>"
       );
-      document.writeln(
-        `<script type="text/javascript" src="${pathToOutputJs}"><\/script>`
-      );
-      document.writeln(
-        `<script type="text/javascript" src="${pathToGeneralJs}"><\/script>`
-      );
-      document.writeln(
-        `<script type="text/javascript" src="${pathToPrivacyJs}"><\/script>`
-      );
+
+      system.forEach((path) => {
+        document.writeln(
+          `<script type="text/javascript" src="${path}"><\/script>`
+        );
+      });
 
       // Mat-o-Wahl CSS Styles
-      for (i = 0; i <= design.length - 1; i++) {
+      for (let i = 0; i < design.length; i++) {
         document.writeln(
           `<link rel='stylesheet' type='text/css' href='${design[i]}'/>`
         );
       }
 
       // Mat-o-Wahl Extras / Add-ons
-      for (i = 0; i <= addons.length - 1; i++) {
+      for (let i = 0; i < addons.length; i++) {
         document.writeln(
           `<script type="text/javascript" src="${addons[i]}"><\/script>`
         );

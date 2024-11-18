@@ -14,10 +14,13 @@ const intQuestions = 5;
 const fileAnswers = "demo-games.csv";
 
 // File paths to system and CSS files
-// If you have several instances of this tool running, you can use absolute references to global files (therefore, these are not hardcoded)
-const pathToOutputJs = "system/output.js";
-const pathToGeneralJs = "system/general.js";
-const pathToPrivacyJs = "system/privacy.js";
+// If you have several instances of this tool running, you can use absolute references to global files (therefore, these are not hardcoded)=
+const system = [
+  "system/output.js",
+  "system/general.js",
+  "system/privacy.js",
+  "system/permalink_to_personal_results.js",
+];
 const design = [
   "styles/global.css",
   "styles/demo.css",
@@ -85,6 +88,18 @@ const privacyExternalPageLink = false;
 const privacyModalTitle = `Privacy policy for the Demo Boardgame-O-Matic`;
 const privacyModalGeneral = `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.`;
 
+// Text in the button
+const PERMALINK_BUTTON_TEXT = `<i class='bx bx-link'></i> Generate Link`;
+// Explanatory text, which is shown for a couple of seconds after the button is pressed
+const PERMALINK_DESCRIPTION_TEXT =
+  "Your link has been copied to your clipboard. Save it to a location of your choice or share it with others &ndash; it leads directly to your personal results page.";
+// Method for copying to clipboard is not supported in all browsers. Fallback: Show URL and tell user to copy it
+const PERMALINK_BUTTON_TEXT_ALT =
+  "Copy the following link and save it to a location of your choice or share it  &ndash; it leads directly to your personal results page.";
+// How many seconds is the explanatory text shown after each button click before it disappears again?
+const PERMALINK_DESCRIPTION_DURATION = 15;
+const REFRESH_BUTTON_TEXT = `See updated results <i class="bx bx-chevron-right bx-sm"></i>`;
+
 // Addons can vastly enhance the functionality of your tool
 // Add the paths of the addon files you want to activate to the array
 // If you have several instances of this tool running, you can use absolute references to global files
@@ -93,7 +108,6 @@ const addons = [
   "extras/addon_filter_results.js",
   "extras/addon_tooltips.js",
   "extras/addon_custom_voting_buttons.js",
-  "extras/addon_permalink_to_personal_results.js",
   // "extras/addon_show_first_results.js",
   // "extras/addon_make_questions_optional.js",
   "extras/addon_make_result_details_fullscreen.js",
@@ -143,20 +157,6 @@ if (isActivated("addon_limit_results.js")) {
   TEXT_RESULTS_BUTTON_SHOW_MORE = "<strong>+</strong> Show more";
   TEXT_RESULTS_BUTTON_SHOW_LESS = "<strong>-</strong> Show less";
   TEXT_RESULTS_BUTTON_SHOW_ALL = "Show all";
-}
-
-if (isActivated("addon_permalink_to_personal_results.js")) {
-  // Text in the button
-  PERMALINK_BUTTON_TEXT = `<i class='bx bx-link'></i> Generate Link`;
-  // Explanatory text, which is shown for a couple of seconds after the button is pressed
-  PERMALINK_DESCRIPTION_TEXT =
-    "Your link has been copied to your clipboard. Save it to a location of your choice or share it with others &ndash; it leads directly to your personal results page.";
-  // Method for copying to clipboard is not supported in all browsers. Fallback: Show URL and tell user to copy it
-  PERMALINK_BUTTON_TEXT_ALT =
-    "Copy the following link and save it to a location of your choice or share it  &ndash; it leads directly to your personal results page.";
-  // How many seconds is the explanatory text shown after each button click before it disappears again?
-  PERMALINK_DESCRIPTION_DURATION = 15;
-  REFRESH_BUTTON_TEXT = `See updated results <i class="bx bx-chevron-right bx-sm"></i>`;
 }
 
 if (isActivated("addon_tooltips.js")) {
