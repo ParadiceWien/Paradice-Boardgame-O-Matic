@@ -24,6 +24,7 @@ function createLookupTablesAnswersAndFilterValuesInResultDetails() {
       lookupTableEntry;
   });
   window.lookupTableForFilters = {};
+  if (!isActivated("addon_filter_results.js")) return;
   FILTERS_TO_BE_DISPLAYED.forEach((filter) => {
     const objFilter = FILTERS.find(
       (obj) => obj.internalName === filter.internalName
@@ -64,26 +65,29 @@ function dummyFunction() {
         divContent += answerText;
         divContent += "</li>";
       });
-      FILTERS_TO_BE_DISPLAYED.forEach((filter) => {
-        const presentFilterValues = description
-          .querySelector(".filter-values")
-          .getAttribute(`data-${filter.internalName}`)
-          .split(" ");
-        if (presentFilterValues.length === 1 && presentFilterValues[0] === "")
-          return;
-        const textsForPresentFilterValues = presentFilterValues.map(
-          (value) => window.lookupTableForFilters[filter.internalName][value]
-        );
-        divContent += "<li>";
-        if (filter.label) divContent += `${filter.label}: `;
-        if (filter.bulletList) {
-          divContent += "<ul>";
-          textsForPresentFilterValues.forEach((text) => {
-            divContent += `<li>${text}</li>`;
-          });
-          divContent += "</ul>";
-        } else divContent += textsForPresentFilterValues.join("; ");
-      });
+      if (isActivated("addon_filter_results.js")) {
+        FILTERS_TO_BE_DISPLAYED.forEach((filter) => {
+          const presentFilterValues = description
+            .querySelector(".filter-values")
+            .getAttribute(`data-${filter.internalName}`)
+            .split(" ");
+          if (presentFilterValues.length === 1 && presentFilterValues[0] === "")
+            return;
+          const textsForPresentFilterValues = presentFilterValues.map(
+            (value) => window.lookupTableForFilters[filter.internalName][value]
+          );
+          divContent += "<li>";
+          if (filter.label) divContent += `${filter.label}: `;
+          if (filter.bulletList) {
+            divContent += "<ul>";
+            textsForPresentFilterValues.forEach((text) => {
+              divContent += `<li>${text}</li>`;
+            });
+            divContent += "</ul>";
+          } else divContent += textsForPresentFilterValues.join("; ");
+        });
+      }
+
       divContent += "</ul>";
       nodeAnswersAndFilterValues.innerHTML = divContent;
       description.insertBefore(

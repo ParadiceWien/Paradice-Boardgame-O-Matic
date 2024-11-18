@@ -49,6 +49,10 @@ const descriptionExplanation =
 // Right to left slide animations when a new question is shown - OR - immediate cuts
 const animateQuestionsCard = true;
 
+// If true, the #resultsTabBtn is bigger than the others
+// Only works if addon_filter_results.js is active, because only then there are 5 buttons with the results button in the middle (only then it makes sense to highlight it)
+const highlightResultsTabBtnOfNavigationBar = true;
+
 // Show "Current question number/total question number" (e. g. "3/15") before title of question
 // Not recommended if addon_make_questions_optional.js is active
 const showQuestionNumberOnCard = false;

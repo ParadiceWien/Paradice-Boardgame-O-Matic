@@ -853,6 +853,11 @@ function generateSectionResults(arResults) {
       {
         icon: "bx-trophy",
         id: "results",
+        style:
+          highlightResultsTabBtnOfNavigationBar &&
+          isActivated("addon_filter_results.js")
+            ? "height: 100px; font-size: 45px; border-radius: 10px;"
+            : null,
       },
       {
         icon: "bx-share-alt",
@@ -872,6 +877,7 @@ function generateSectionResults(arResults) {
     arTabsNavigationBar.forEach((tab) => {
       const tabBtnContainer = document.createElement("div");
       tabBtnContainer.setAttribute("id", `${tab.id}TabBtnContainer`);
+      if (tab.style) tabBtnContainer.style.cssText = tab.style;
       tabBtnContainer.innerHTML = `<button id='${tab.id}TabBtn' ${
         tab.id === "results" ? "class='activeTabBtn'" : ""
       }><i class='bx ${tab.icon}'></i></button>`;
