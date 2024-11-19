@@ -806,7 +806,7 @@ button:active,
   max-height: 0;
   border-color: transparent;
   width: min(100%, 500px);
-  margin: 10px 0;
+  margin: 10px auto;
 }
 
 .permalink-description-visible {
@@ -814,24 +814,6 @@ button:active,
   border-color: var(--success) !important;
   max-height: 250px !important;
   word-wrap: break-word;
-}
-
-@media only screen and (min-width: 768px) {
-  #permalink-button,
-  #permalink-description {
-    float: right;
-  }
-  #permalink-description,
-  #resultsShort {
-    clear: both;
-  }
-}
-
-@media only screen and (max-width: 767px) {
-  #permalink-button {
-    display: block;
-    margin-top: 20px;
-  }
 }
 
 #textfilter-label {

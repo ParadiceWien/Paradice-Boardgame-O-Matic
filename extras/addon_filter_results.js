@@ -23,7 +23,7 @@ function setupFilters() {
     setFiltersAtStart();
   const filtersTab = document.createElement("div");
   filtersTab.setAttribute("id", "filters");
-  filtersTab.classList.add("row", "d-none");
+  filtersTab.classList.add("col", "d-none");
   filtersTab.innerHTML = `<div id="filtersHeading" class="tabHeading">
       <h1>${TEXT_FILTERS_HEADING}</h1>
       <h2>${TEXT_FILTERS_SUBHEADING}</h2>

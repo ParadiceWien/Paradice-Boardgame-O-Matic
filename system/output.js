@@ -868,7 +868,7 @@ function generateSectionResults(arResults) {
       "#infoHeading"
     ).innerHTML = `<h1>${TEXT_INFO_HEADING}</h1><h2>${TEXT_INFO_SUBHEADING}</h2>`;
 
-    document.querySelector("#info .col").innerHTML = textInfoBox;
+    document.querySelector("#infoText").innerHTML = textInfoBox;
 
     showLegalBtnsOnlyInInfoTab();
   }
@@ -906,11 +906,6 @@ function generateSectionResults(arResults) {
       {
         icon: "bx-trophy",
         id: "results",
-        style:
-          highlightResultsTabBtnOfNavigationBar &&
-          isActivated("addon_filter_results.js")
-            ? "height: 100px; font-size: 45px; border-radius: 10px;"
-            : null,
       },
       {
         icon: "bx-share-alt",
@@ -930,7 +925,6 @@ function generateSectionResults(arResults) {
     arTabsNavigationBar.forEach((tab) => {
       const tabBtnContainer = document.createElement("div");
       tabBtnContainer.setAttribute("id", `${tab.id}TabBtnContainer`);
-      if (tab.style) tabBtnContainer.style.cssText = tab.style;
       tabBtnContainer.innerHTML = `<button id='${tab.id}TabBtn' ${
         tab.id === "results" ? "class='activeTabBtn'" : ""
       }><i class='bx ${tab.icon}'></i></button>`;
@@ -949,6 +943,15 @@ function generateSectionResults(arResults) {
       });
       navigationBar.appendChild(tabBtnContainer);
     });
+    console.log(arTabsNavigationBar.length);
+    if (
+      highlightResultsTabBtnOfNavigationBar &&
+      arTabsNavigationBar.length % 2 === 1
+    ) {
+      navigationBar
+        .querySelector("#resultsTabBtnContainer")
+        .classList.add("highlightedTabBtn");
+    }
     document.querySelector("#sectionResults").appendChild(navigationBar);
 
     circulateSharingAndSavingIcon();
@@ -989,7 +992,7 @@ function circulateSharingAndSavingIcon() {
     setTimeout(() => {
       currentIcon.classList.replace(`fadeOut${direction}`, "invisible");
       otherIcon.classList.replace(`fadeIn${direction}`, "currentIcon");
-    }, 390);
+    }, 350);
   }
 
   setInterval(swapIcons, 8000);
