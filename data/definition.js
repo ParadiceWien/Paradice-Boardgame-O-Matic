@@ -100,6 +100,9 @@ const PERMALINK_BUTTON_TEXT_ALT =
 const PERMALINK_DESCRIPTION_DURATION = 15;
 const REFRESH_BUTTON_TEXT = `See updated results <i class="bx bx-chevron-right bx-sm"></i>`;
 
+const TEXT_BUTTON_CLOSE_FULLSCREEN_EVENT_DETAILS =
+  "<i class='bx bx-chevron-left' ></i> Back to list";
+
 // Addons can vastly enhance the functionality of your tool
 // Add the paths of the addon files you want to activate to the array
 // If you have several instances of this tool running, you can use absolute references to global files
@@ -110,7 +113,6 @@ const addons = [
   "extras/addon_custom_voting_buttons.js",
   // "extras/addon_show_first_results.js",
   // "extras/addon_make_questions_optional.js",
-  "extras/addon_make_result_details_fullscreen.js",
   "extras/addon_display_answers_and_filter_values_in_result_details.js",
 ];
 
@@ -501,11 +503,6 @@ if (addons.some((item) => item.includes("extras/addon_filter_results.js"))) {
   };
   ERROR_MESSAGE_NO_FILTER_RESULTS =
     "None of our board games matches all your filters. Please change your filters and try again.";
-}
-
-if (isActivated("addon_make_result_details_fullscreen.js")) {
-  TEXT_BUTTON_CLOSE_FULLSCREEN_EVENT_DETAILS =
-    "<i class='bx bx-chevron-left' ></i> Back to list";
 }
 
 if (

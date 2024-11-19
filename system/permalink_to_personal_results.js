@@ -98,7 +98,6 @@ function generateLinkWithCurrentUserAnswers() {
 function checkIfResultsChange() {
   function showOrHighlightBtnRefresh() {
     let btnRefresh;
-    console.log(1);
     if (!isBtnRefreshShowingAlready) {
       isBtnRefreshShowingAlready = true;
       btnRefresh = document.createElement("button");

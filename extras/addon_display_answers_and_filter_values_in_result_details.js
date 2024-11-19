@@ -94,10 +94,6 @@ function dummyFunction() {
         nodeAnswersAndFilterValues,
         description.querySelector("#internet-below-description")
       );
-      if (HIDE_TABLE_resultsByPartyAnswers)
-        description.parentNode
-          .querySelector("button[id^='resultsByPartyAnswers']")
-          .classList.add("d-none");
     });
 }
 

@@ -393,3 +393,30 @@ i.bx-sm {
   justify-content: space-between;
   margin-bottom: 70px;
 }
+
+.fullscreen-result-details-overlay {
+  min-height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #fff;
+  z-index: 1000;
+}
+.fullscreen-result-details-content {
+  max-height: calc(100vh - 50px); /* Restricts content height to viewport */
+  overflow-y: auto;
+  padding-bottom: 40px;
+}
+
+.fullscreen-result-details-close {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 50px;
+  font-size: 1.1rem;
+  background: var(--primary-color);
+  color: var(--text-on-primary);
+  transition: transform 3s;
+  transform: translateY(0);
+}

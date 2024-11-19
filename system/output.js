@@ -487,8 +487,9 @@ function generateSectionResults(arResults) {
               ${TEXT_LINK_TO_EXTERNAL_PAGE}</a>
     <br / ></span>
     </div>
-    <div id="containerForAddonGeneratedElements"></div>
-    <div style='text-align: center; width: 100%;'>
+    <div id="containerForAddonGeneratedElements"></div>`;
+      if (!HIDE_TABLE_resultsByPartyAnswers) {
+        tableContentResultsShort += `<div style='text-align: center; width: 100%;'>
     <button id='resultsByPartyAnswers${partyNum}collapse' class='nonexpanded btn btn-sm btn-outline-secondary' type='button'>
         ${TEXT_SHOW_PARTY_ANSWERS}
     </button>
@@ -496,33 +497,33 @@ function generateSectionResults(arResults) {
         <div class='row border rounded'>
           <div class='col'>`;
 
-      jStart = partyNum * intQuestions; // z.B. Citronen Partei = 3. Partei im Array[2] = 2 * 5 Fragen = 10
-      jEnd = jStart + intQuestions - 1; // 10 + 5 Fragen -1 = 14
+        jStart = partyNum * intQuestions; // z.B. Citronen Partei = 3. Partei im Array[2] = 2 * 5 Fragen = 10
+        jEnd = jStart + intQuestions - 1; // 10 + 5 Fragen -1 = 14
 
-      // Anzeige der Partei-Antworten
-      for (j = jStart; j <= jEnd; j++) {
-        // 1./4 Zellen - Frage
-        modulo = j % intQuestions; // z.B. arPartyPositions[11] % 5 Fragen = 1 -> arQuestionsShort[1] = 2. Frage
+        // Anzeige der Partei-Antworten
+        for (j = jStart; j <= jEnd; j++) {
+          // 1./4 Zellen - Frage
+          modulo = j % intQuestions; // z.B. arPartyPositions[11] % 5 Fragen = 1 -> arQuestionsShort[1] = 2. Frage
 
-        tableContentResultsShort += `
+          tableContentResultsShort += `
                 <div class='row mow-row-striped' role='row'>
                     <div class='col col-10 col-md-5' role='cell'>
                         ${modulo + 1}. <strong>${
-          arQuestionsShort[modulo]
-        }</strong> - ${arQuestionsLong[modulo]}
+            arQuestionsShort[modulo]
+          }</strong> - ${arQuestionsLong[modulo]}
                     </div>`;
-        // 2./4 Zellen - Icon für eigene Meinung [+] [0] [-]
-        var positionButton = fnTransformPositionToButton(
-          arPersonalPositions[modulo]
-        );
-        var positionIcon = fnTransformPositionToIcon(
-          arPersonalPositions[modulo]
-        );
-        var positionText = fnTransformPositionToText(
-          arPersonalPositions[modulo]
-        );
+          // 2./4 Zellen - Icon für eigene Meinung [+] [0] [-]
+          var positionButton = fnTransformPositionToButton(
+            arPersonalPositions[modulo]
+          );
+          var positionIcon = fnTransformPositionToIcon(
+            arPersonalPositions[modulo]
+          );
+          var positionText = fnTransformPositionToText(
+            arPersonalPositions[modulo]
+          );
 
-        tableContentResultsShort += `<div class='col col-4 col-md-2' id='selfPositionContainer${modulo}' role='cell'>
+          tableContentResultsShort += `<div class='col col-4 col-md-2' id='selfPositionContainer${modulo}' role='cell'>
                       <button type='button' id='' class='btn ${positionButton} btn-sm selfPosition${modulo}' 
                               onclick='fnToggleSelfPosition(${modulo})' alt='${TEXT_ANSWER_USER} : ${positionText}'
                               title='${TEXT_ANSWER_USER} : ${positionText}' data-value='${arPersonalPositions[modulo]}'>
@@ -530,12 +531,12 @@ function generateSectionResults(arResults) {
                       </button>
                   </div>`;
 
-        // 3./4 Zellen - Icons für Postion der Parteien [+] [0] [-]
-        var positionIcon = fnTransformPositionToIcon(arPartyPositions[j]);
-        var positionButton = fnTransformPositionToButton(arPartyPositions[j]);
-        var positionText = fnTransformPositionToText(arPartyPositions[j]);
+          // 3./4 Zellen - Icons für Postion der Parteien [+] [0] [-]
+          var positionIcon = fnTransformPositionToIcon(arPartyPositions[j]);
+          var positionButton = fnTransformPositionToButton(arPartyPositions[j]);
+          var positionText = fnTransformPositionToText(arPartyPositions[j]);
 
-        tableContentResultsShort += `<div class='col col-4 col-md-2' id='partyPositionContainer${modulo}' role='cell'>
+          tableContentResultsShort += `<div class='col col-4 col-md-2' id='partyPositionContainer${modulo}' role='cell'>
                       <button type='button' class='btn ${positionButton} partyPositionToQuestion${modulo} btn-sm' disabled data-value="${arPartyPositions[j]}"
                               alt='${TEXT_ANSWER_PARTY} : ${positionText}' title='${TEXT_ANSWER_PARTY} : ${positionText}'>
                           ${positionIcon}
@@ -546,12 +547,13 @@ function generateSectionResults(arResults) {
                       <!-- die Beschreibung der Partei in einem VERSTECKTEN DIV -> ein Workaround für das Addon "Textfilter" (siehe /EXTRAS) :( -->
                   </div>
               </div> <!-- end: row Anzeige der Partei-Antworten -->`;
-      } // end: for-j
-      tableContentResultsShort += `</div> <!-- end col -->
+        } // end: for-j
+        tableContentResultsShort += `</div> <!-- end col -->
             </div> <!-- end row resultsByPartyAnswersToQuestion -->
           </span> <!-- end span resultsByPartyAnswersToQuestion -->
-          </div> <!-- end span resultsShortPartyDetails -->
-        </div> <!-- end: row .mow-row-striped + #resultsShortPartyClampX -->
+          </div> <!-- end span resultsShortPartyDetails -->`;
+      }
+      tableContentResultsShort += `</div> <!-- end: row .mow-row-striped + #resultsShortPartyClampX -->
     </div> <!-- row #resultsShortPartyX -->`;
     } // end for
     tableContentResultsShort += `</div>
@@ -562,20 +564,22 @@ function generateSectionResults(arResults) {
     document.querySelector("#resultsShort").innerHTML =
       tableContentResultsShort;
 
-    for (let i = 0; i < intParties; i++) {
-      const btnShowAnswersOfThisParty = document.querySelector(
-        `#resultsShortPartyClamp${i} .nonexpanded`
-      );
-      btnShowAnswersOfThisParty.addEventListener("click", () => {
-        $(`#resultsByPartyAnswersToQuestion${i}`).toggle(500);
-        btnShowAnswersOfThisParty.classList.toggle("expanded");
-        btnShowAnswersOfThisParty.classList.toggle("nonexpanded");
-        if (btnShowAnswersOfThisParty.classList.contains("expanded")) {
-          btnShowAnswersOfThisParty.innerHTML = TEXT_HIDE_PARTY_ANSWERS;
-        } else {
-          btnShowAnswersOfThisParty.innerHTML = TEXT_SHOW_PARTY_ANSWERS;
-        }
-      });
+    if (!HIDE_TABLE_resultsByPartyAnswers) {
+      for (let i = 0; i < intParties; i++) {
+        const btnShowAnswersOfThisParty = document.querySelector(
+          `#resultsShortPartyClamp${i} .nonexpanded`
+        );
+        btnShowAnswersOfThisParty.addEventListener("click", () => {
+          $(`#resultsByPartyAnswersToQuestion${i}`).toggle(500);
+          btnShowAnswersOfThisParty.classList.toggle("expanded");
+          btnShowAnswersOfThisParty.classList.toggle("nonexpanded");
+          if (btnShowAnswersOfThisParty.classList.contains("expanded")) {
+            btnShowAnswersOfThisParty.innerHTML = TEXT_HIDE_PARTY_ANSWERS;
+          } else {
+            btnShowAnswersOfThisParty.innerHTML = TEXT_SHOW_PARTY_ANSWERS;
+          }
+        });
+      }
     }
 
     // Funktion zur Berechnung der "Doppelten Wertung" aufrufen
@@ -583,26 +587,58 @@ function generateSectionResults(arResults) {
     fnReEvaluate();
 
     for (let i = 0; i < intParties; i++) {
-      const btnExpandDetailsForThisParty = document.querySelector(
+      const btnExpandDetails = document.querySelector(
         `#resultsShortPartyDescriptionButton${i}`
       );
-      btnExpandDetailsForThisParty.addEventListener("click", () => {
-        $(`#resultsShortPartyDetails${i}`).toggle(500);
-
-        btnExpandDetailsForThisParty.classList.toggle("expanded");
-
-        if (btnExpandDetailsForThisParty.classList.contains("expanded")) {
-          btnExpandDetailsForThisParty.innerHTML = TEXT_HIDE_PARTY_DESCRIPTION; // MINUS
+      btnExpandDetails.addEventListener("click", () => {
+        function handleFullscreenEventDetails() {
+          const clampResult = btnExpandDetails.parentNode.parentNode.parentNode;
+          if (btnExpandDetails.classList.contains("expanded")) {
+            clampResult.scrollIntoView({ behavior: "smooth" });
+            const wrapperDiv = document.createElement("div");
+            wrapperDiv.classList.add("fullscreen-result-details-overlay");
+            clampResult.classList.add("fullscreen-result-details-content");
+            setTimeout(() => {
+              clampResult.parentNode.insertBefore(wrapperDiv, clampResult);
+              wrapperDiv.appendChild(clampResult);
+              document.body.style.overflow = "hidden";
+              const btnClose = document.createElement("button");
+              btnClose.innerHTML = TEXT_BUTTON_CLOSE_FULLSCREEN_EVENT_DETAILS;
+              btnClose.addEventListener("click", () => {
+                btnExpandDetails.click();
+              });
+              clampResult.parentNode.appendChild(btnClose);
+              btnClose.classList.add(
+                "fullscreen-result-details-close",
+                "off-screen"
+              );
+              setTimeout(() => {
+                btnClose.classList.remove("off-screen");
+              }, 0);
+            }, 500); // Wait for the toggle animation to be finished
+          } else {
+            const wrapperDiv = clampResult.parentNode;
+            wrapperDiv.parentNode.insertBefore(clampResult, wrapperDiv);
+            wrapperDiv.remove();
+            clampResult.classList.remove("fullscreen-result-details-content");
+            document.body.style.overflow = "unset";
+            clampResult.scrollIntoView({ behavior: "smooth" });
+          }
+        }
+        $(`#resultsShortPartyDetails${i}`).toggle(450);
+        btnExpandDetails.classList.toggle("expanded");
+        if (btnExpandDetails.classList.contains("expanded")) {
+          btnExpandDetails.innerHTML = TEXT_HIDE_PARTY_DESCRIPTION; // MINUS
         } else {
-          btnExpandDetailsForThisParty.innerHTML = TEXT_SHOW_PARTY_DESCRIPTION; // PLUS
-
+          btnExpandDetails.innerHTML = TEXT_SHOW_PARTY_DESCRIPTION; // PLUS
           // If the details are closed and the answers were expanded, collapse the answers
-          const btnCollapseAnswersOfThisParty = document.querySelector(
+          const btnExpandAnswers = document.querySelector(
             `#resultsByPartyAnswers${i}collapse`
           );
-          if (btnCollapseAnswersOfThisParty.classList.contains("expanded"))
-            btnCollapseAnswersOfThisParty.click();
+          if (btnExpandAnswers?.classList.contains("expanded"))
+            btnExpandAnswers.click();
         }
+        if (window.innerWidth <= 767) handleFullscreenEventDetails();
       });
 
       $(`#resultsByPartyAnswersToQuestion${i}`).hide(500);
