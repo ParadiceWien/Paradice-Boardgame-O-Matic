@@ -420,3 +420,7 @@ i.bx-sm {
   transition: transform 3s;
   transform: translateY(0);
 }
+
+[id^="resultsByThesisQuestion"][id$="Container"] {
+  flex-direction: column;
+}

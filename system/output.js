@@ -592,7 +592,9 @@ function generateSectionResults(arResults) {
       );
       btnExpandDetails.addEventListener("click", () => {
         function handleFullscreenEventDetails() {
-          const clampResult = btnExpandDetails.parentNode.parentNode.parentNode;
+          const clampResult = document.querySelector(
+            `#resultsShortPartyClamp${i}`
+          );
           if (btnExpandDetails.classList.contains("expanded")) {
             clampResult.scrollIntoView({ behavior: "smooth" });
             const wrapperDiv = document.createElement("div");
@@ -638,7 +640,7 @@ function generateSectionResults(arResults) {
           if (btnExpandAnswers?.classList.contains("expanded"))
             btnExpandAnswers.click();
         }
-        if (window.innerWidth <= 767) handleFullscreenEventDetails();
+        if (window.innerWidth <= 768) handleFullscreenEventDetails();
       });
 
       $(`#resultsByPartyAnswersToQuestion${i}`).hide(500);
@@ -754,79 +756,77 @@ function generateSectionResults(arResults) {
       document
         .querySelector(`#resultsByThesisQuestion${i} .nonexpanded`)
         .addEventListener("click", () => {
-          $(`#resultsByThesisAnswersToQuestion${i}`).toggle(200);
-
-          function makePartyAnswerListFullscreenOnMobile() {
-            function addClosingButton() {
-              const btnClose = document.createElement("button");
-              btnClose.innerHTML = TEXT_BUTTON_CLOSE_FULLSCREEN_EVENT_DETAILS;
-              btnClose.addEventListener("click", () => {
-                btnExpand.click();
-              });
-              sectionQuestion.parentNode.appendChild(btnClose);
-              btnClose.classList.add(
-                "fullscreen-on-mobile-btn-close",
-                "fullscreen-on-mobile-btn-close-out-of-screen"
-              );
-              setTimeout(() => {
-                btnClose.classList.remove(
-                  "fullscreen-on-mobile-btn-close-out-of-screen"
-                );
-              }, 10);
-            }
-
-            sectionQuestion.scrollIntoView({ behavior: "smooth" });
-            const wrapperDiv = document.createElement("div");
-            wrapperDiv.classList.add("fullscreen-on-mobile-overlay");
-            sectionQuestion.classList.add("fullscreen-on-mobile-content");
-            questionTextContainer.classList.add("fullscreen-on-mobile-header");
-            const heightOfQuestionTextContainer = window.getComputedStyle(
-              questionTextContainer
-            ).height;
-            setTimeout(() => {
-              sectionQuestion.parentNode.insertBefore(
-                wrapperDiv,
-                sectionQuestion
-              );
-              wrapperDiv.appendChild(sectionQuestion);
-              document.body.style.overflow = "hidden";
-              questionTextContainer.nextElementSibling.style.margin = `${
-                +heightOfQuestionTextContainer.replace("px", "") + 10
-              }px auto 0 auto`;
-              addClosingButton();
-            }, 300);
-          }
-          function closeFullscreenPartyAnswerListOnMobile() {
-            const wrapperDiv = sectionQuestion.parentNode;
-            wrapperDiv.parentNode.insertBefore(sectionQuestion, wrapperDiv);
-            wrapperDiv.remove();
-            sectionQuestion.classList.remove("fullscreen-on-mobile-content");
-            questionTextContainer.classList.remove(
-              "fullscreen-on-mobile-header"
+          function handleFullscreenPartyAnswerList() {
+            const containerQuestion = document.querySelector(
+              `#resultsByThesisQuestion${i}Container`
             );
-            questionTextContainer.nextElementSibling.style.marginTop = "0";
-            document.body.style.overflow = "unset";
-            sectionQuestion.scrollIntoView({ behavior: "smooth" });
+            const questionTextContainer = document.querySelector(
+              `#resultsByThesisQuestion${i}`
+            );
+            if (btnExpand.classList.contains("expanded")) {
+              containerQuestion.scrollIntoView({ behavior: "smooth" });
+              const wrapperDiv = document.createElement("div");
+              wrapperDiv.classList.add("fullscreen-on-mobile-overlay");
+              containerQuestion.classList.add("fullscreen-on-mobile-content");
+              questionTextContainer.classList.add(
+                "fullscreen-on-mobile-header"
+              );
+
+              setTimeout(() => {
+                // Wait for toggle animation to be finished
+                containerQuestion.parentNode.insertBefore(
+                  wrapperDiv,
+                  containerQuestion
+                );
+                wrapperDiv.appendChild(containerQuestion);
+                document.body.style.overflow = "hidden";
+                // The questionTextContainer is fixed at the top; the answers list must be pushed down accordingly
+                const heightOfQuestionTextContainer = window.getComputedStyle(
+                  questionTextContainer
+                ).height;
+                questionTextContainer.nextElementSibling.style.marginTop = `${
+                  +heightOfQuestionTextContainer.replace("px", "") + 10
+                }px`;
+                const btnClose = document.createElement("button");
+                btnClose.innerHTML = TEXT_BUTTON_CLOSE_FULLSCREEN_EVENT_DETAILS;
+                btnClose.addEventListener("click", () => {
+                  btnExpand.click();
+                });
+                containerQuestion.parentNode.appendChild(btnClose);
+                btnClose.classList.add(
+                  "fullscreen-on-mobile-btn-close",
+                  "off-screen"
+                );
+                setTimeout(() => {
+                  btnClose.classList.remove("off-screen");
+                }, 0);
+              }, 450);
+            } else {
+              const wrapperDiv = containerQuestion.parentNode;
+              wrapperDiv.parentNode.insertBefore(containerQuestion, wrapperDiv);
+              wrapperDiv.remove();
+              containerQuestion.classList.remove(
+                "fullscreen-on-mobile-content"
+              );
+              questionTextContainer.classList.remove(
+                "fullscreen-on-mobile-header"
+              );
+              questionTextContainer.nextElementSibling.style.marginTop = "0";
+              document.body.style.overflow = "unset";
+              containerQuestion.scrollIntoView({ behavior: "smooth" });
+            }
           }
-          const sectionQuestion = document.querySelector(
-            `#resultsByThesisQuestion${i}Container`
-          );
           const btnExpand = document.querySelector(
             `#resultsByThesisQuestion${i} .nonexpanded`
           );
-          const questionTextContainer = document.querySelector(
-            `#resultsByThesisQuestion${i}`
-          );
+          $(`#resultsByThesisAnswersToQuestion${i}`).toggle(400);
           btnExpand.classList.toggle("expanded");
           if (btnExpand.classList.contains("expanded")) {
             btnExpand.innerHTML = TEXT_HIDE_THESIS_ANSWERS; // MINUS
-            if (window.innerWidth <= 768)
-              makePartyAnswerListFullscreenOnMobile();
           } else {
             btnExpand.innerHTML = TEXT_SHOW_THESIS_ANSWERS; // PLUS
-            if (window.innerWidth <= 768)
-              closeFullscreenPartyAnswerListOnMobile();
           }
+          if (window.innerWidth <= 768) handleFullscreenPartyAnswerList();
         });
 
       // am Anfang die Antworten ausblenden

@@ -155,7 +155,7 @@ if (isActivated("addon_contacts_in_results.js")) {
 if (isActivated("addon_limit_results.js")) {
   // Number of results displayed at first
   // Also the number of results added to the table with each press of the show more button
-  intPartiesShowAtEnd = 5;
+  intPartiesShowAtEnd = 10;
   TEXT_RESULTS_BUTTON_SHOW_MORE = "<strong>+</strong> Show more";
   TEXT_RESULTS_BUTTON_SHOW_LESS = "<strong>-</strong> Show less";
   TEXT_RESULTS_BUTTON_SHOW_ALL = "Show all";
