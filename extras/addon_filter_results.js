@@ -142,7 +142,9 @@ function createFilterHtml(filter) {
       <label class="checkbox-list-label" for="filter-checkbox-list-${
         filter.internalName
       }-option${i}">
-        <i class='bx bx-${isActive ? "check" : "x"} bx-sm bx-border'></i>
+        <i class='bx bx-${isActive ? "check" : "x"} bx-sm bx-border ${
+        isActive ? "bg-color-success" : "bg-color-danger"
+      }'></i>
         <span ${
           !isActive && filter.strikethroughOptionsThatGetHidden
             ? "class='line-through'"
@@ -177,8 +179,8 @@ function createFilterHtml(filter) {
       .forEach((checkbox) => {
         checkbox.addEventListener("change", () => {
           const icon = checkbox.nextElementSibling.querySelector("i");
-          ["bx-check", "bx-x", "color-success", "color-danger"].forEach((cls) =>
-            icon.classList.toggle(cls)
+          ["bx-check", "bx-x", "bg-color-success", "bg-color-danger"].forEach(
+            (cls) => icon.classList.toggle(cls)
           );
           if (filter.strikethroughOptionsThatGetHidden) {
             checkbox.nextElementSibling

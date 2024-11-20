@@ -105,6 +105,15 @@ i.bx-sm {
   color: var(--danger);
 }
 
+.bg-color-danger {
+  background-color: var(--danger);
+  color: var(--text-on-danger);
+}
+
+.bg-color-success {
+  background-color: var(--success);
+  color: var(--text-on-success);
+}
 .line-through {
   text-decoration: line-through;
 }
@@ -474,4 +483,9 @@ i.bx-sm {
   .highlightedTabBtn button {
     width: 100px !important;
   }
+}
+
+#internet-below-description a,
+#internet-above-description a {
+  width: max-content;
 }
