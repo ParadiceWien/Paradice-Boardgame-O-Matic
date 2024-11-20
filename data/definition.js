@@ -37,17 +37,17 @@ const matomoSiteId = "";
 
 // Logo in top left corner for branding (not recommended if embedded as iframe)
 const showMainLogoInTopLeftCorner = true;
-const mainLogoPath = "./demo-logo.jpeg";
+const mainLogoPath = "./Boardgame-O-Matic-Logo.png";
 const mainLogoHref = ""; // The link opens in a new tab
 const mainLogoTitle = "Demo logo"; // This is just used for the title attribute of the image, it is not displayed
 
 // Welcome and info screen before the first question
 const descriptionShowOnStart = true;
 // The title of the page, which is displayed in the browser tab, must be changed directly in the index.html (<title> and meta property "og:title")
-const descriptionHeading1 = "Demo Boardgame-O-Matic";
+const descriptionHeading1 = "Demo BoardGame-O-Matic";
 const descriptionHeading2 = "Playfully finding your matching board game";
 const descriptionExplanation =
-  "Answer the short questions to find out, which board games of our collection best match your preferences.</p><p><em>This example tool demonstrates, how the Boardgame-O-Matic works. You can setup your own version for free, see <a href='https://github.com/fenglisch/boardgame-o-matic' target='_blank'>https://github.com/fenglisch/boardgame-o-matic</a></em>";
+  "Answer the short questions to find out, which board games of our collection best match your preferences.</p><p><em>This example tool demonstrates, how the BoardGame-O-Matic works. You can setup your own version for free, see <a style='color: var(--warning); text-decoration: underline;' href='https://github.com/fenglisch/boardgame-o-matic' target='_blank'>https://github.com/fenglisch/boardgame-o-matic</a></em>";
 
 // Right to left slide animations when a new question is shown - OR - immediate cuts
 const animateQuestionsCard = true;
