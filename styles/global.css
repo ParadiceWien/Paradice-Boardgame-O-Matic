@@ -661,20 +661,6 @@ button[onclick^="fnToggleSelfPosition"] {
   }
 }
 
-/* Create a border around the answers to an expanded question in order to seperate it from the next question */
-[id^="resultsByThesisAnswersToQuestion"],
-[id^="resultsByThesisQuestionRow"] {
-  border: 1px solid var(--primary-color) !important;
-}
-
-[id^="resultsByThesisAnswersToQuestion"] {
-  border-top: none !important;
-}
-
-[id^="resultsByThesisQuestionRow"] {
-  border-bottom: none !important;
-}
-
 @media (hover: hover) {
   button:hover,
   .btn:hover {
@@ -931,12 +917,6 @@ button:active,
 
 #internet-below-description {
   display: var(--display-internet-below-description);
-}
-
-/* Create a border around the answers to an expanded question in order to seperate it from the next question */
-[id^="resultsByThesisAnswersToQuestion"],
-[id^="resultsByThesisQuestionRow"] {
-  border: 1px solid var(--primary-color) !important;
 }
 
 [id^="resultsShortPartyDescriptionButton"] {

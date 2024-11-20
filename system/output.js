@@ -627,6 +627,14 @@ function generateSectionResults(arResults) {
             clampResult.scrollIntoView({ behavior: "smooth" });
           }
         }
+        if (window.innerWidth > 768) {
+          // Close result details that are currently open
+          document
+            .querySelector(
+              `[id^="resultsShortPartyDescriptionButton"]:not(#resultsShortPartyDescriptionButton${i}).expanded`
+            )
+            ?.click();
+        }
         $(`#resultsShortPartyDetails${i}`).toggle(450);
         btnExpandDetails.classList.toggle("expanded");
         if (btnExpandDetails.classList.contains("expanded")) {
@@ -815,6 +823,14 @@ function generateSectionResults(arResults) {
               document.body.style.overflow = "unset";
               containerQuestion.scrollIntoView({ behavior: "smooth" });
             }
+          }
+          if (window.innerWidth > 768) {
+            // Close answer list that is currently open
+            document
+              .querySelector(
+                `#resultsByThesisTable .expanded:not(#resultsByThesisQuestion${i}collapse)`
+              )
+              ?.click();
           }
           const btnExpand = document.querySelector(
             `#resultsByThesisQuestion${i} .nonexpanded`
