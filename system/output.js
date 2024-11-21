@@ -959,7 +959,6 @@ function generateSectionResults(arResults) {
       });
       navigationBar.appendChild(tabBtnContainer);
     });
-    console.log(arTabsNavigationBar.length);
     if (
       highlightResultsTabBtnOfNavigationBar &&
       arTabsNavigationBar.length % 2 === 1

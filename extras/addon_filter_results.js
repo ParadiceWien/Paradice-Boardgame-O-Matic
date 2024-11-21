@@ -249,32 +249,29 @@ function addEventListenerToFilter(filter) {
 function showBtnGoToUpdatedResults() {
   if (
     !document.querySelector("#filters").classList.contains("activeTab") || // If the filters tab is not active, the filter was not manually changed, but this function was triggered initially at startup
-    document.querySelector("#btn-go-to-updated-results-after-filter")
+    document.querySelector("#btn-see-updated-results")
   )
     return;
-  const btnGoToUpdatedResults = document.createElement("button");
-  btnGoToUpdatedResults.setAttribute(
-    "id",
-    "btn-go-to-updated-results-after-filter"
-  );
-  btnGoToUpdatedResults.classList.add(
+  const btnSeeUpdatedResults = document.createElement("button");
+  btnSeeUpdatedResults.setAttribute("id", "btn-see-updated-results");
+  btnSeeUpdatedResults.classList.add(
     "btn",
     "flex-center",
     "off-screen",
     "btn-secondary"
   );
-  btnGoToUpdatedResults.innerHTML =
+  btnSeeUpdatedResults.innerHTML =
     "See updated results <i class='bx bx-chevron-right bx-sm'></i>";
-  document.querySelector("#filters").appendChild(btnGoToUpdatedResults);
+  document.querySelector("#sectionResults").appendChild(btnSeeUpdatedResults);
   setTimeout(() => {
-    btnGoToUpdatedResults.classList.remove("off-screen");
+    btnSeeUpdatedResults.classList.remove("off-screen");
   }, 0);
   const resultsTabBtn = document.querySelector("#resultsTabBtn");
-  btnGoToUpdatedResults.addEventListener("click", () => {
+  btnSeeUpdatedResults.addEventListener("click", () => {
     resultsTabBtn.click();
   });
   resultsTabBtn.addEventListener("click", () => {
-    btnGoToUpdatedResults.remove();
+    btnSeeUpdatedResults.remove();
   });
 }
 

@@ -97,58 +97,42 @@ function generateLinkWithCurrentUserAnswers() {
 
 function checkIfResultsChange() {
   function showOrHighlightBtnRefresh() {
-    let btnRefresh;
-    if (!isBtnRefreshShowingAlready) {
-      isBtnRefreshShowingAlready = true;
-      btnRefresh = document.createElement("button");
-      btnRefresh.setAttribute("id", "refresh-button");
-      btnRefresh.classList.add(
-        "btn",
-        "btn-secondary",
-        "flex-center",
-        "off-screen"
-      );
-      btnRefresh.innerHTML =
-        REFRESH_BUTTON_TEXT !== undefined
-          ? REFRESH_BUTTON_TEXT
-          : "&#8634; Ranking aktualisieren";
-      [btnRefresh, document.querySelector("#resultsTabBtn")].forEach(
-        (button) => {
-          button.addEventListener("click", () => {
-            window.open(generateLinkWithCurrentUserAnswers(), "_self");
-          });
-        }
-      );
-      document.querySelector("#finetuning").appendChild(btnRefresh);
-      setTimeout(() => {
-        btnRefresh.classList.remove("off-screen");
-      }, 0);
-      if (
-        addons.some((item) =>
-          item.includes("addon_check_iframe_resize_client.js")
-        )
-      ) {
-        // In iframe, the button is (re-)positioned whenever the parent window scrolls
-        // This must happen as soon as the button is created
-        // Message is listened to by addon_check_iframe_resize_host.js, sends scroll event with position values back
-        parent.postMessage(["triggerScrollEvent", null], "*");
-      }
-      // Animation: button glides in
-      btnRefresh.classList.add("show-refresh-button");
-      setTimeout(() => {
-        btnRefresh.classList.remove("show-refresh-button");
-      }, 400);
-    } else {
-      btnRefresh = document.querySelector("#refresh-button");
-      // Animation: button jumps
-      btnRefresh.classList.add("highlight-refresh-button");
-      setTimeout(() => {
-        btnRefresh.classList.remove("highlight-refresh-button");
-      }, 400);
+    document.querySelector("#resultsTabBtn").addEventListener("click", () => {
+      window.open(generateLinkWithCurrentUserAnswers(), "_self");
+    });
+    if (document.querySelector("#btn-see-updated-results")) return;
+    const btnRefresh = document.createElement("button");
+    btnRefresh.setAttribute("id", "btn-see-updated-results");
+    btnRefresh.classList.add(
+      "btn",
+      "btn-secondary",
+      "flex-center",
+      "off-screen",
+      "btn-above-navbar"
+    );
+    btnRefresh.innerHTML =
+      REFRESH_BUTTON_TEXT !== undefined
+        ? REFRESH_BUTTON_TEXT
+        : "&#8634; Ranking aktualisieren";
+    btnRefresh.addEventListener("click", () => {
+      document.querySelector("#resultsTabBtn").click();
+    });
+
+    document.querySelector("#sectionResults").appendChild(btnRefresh);
+    setTimeout(() => {
+      btnRefresh.classList.remove("off-screen");
+    }, 0);
+    if (
+      addons.some((item) =>
+        item.includes("addon_check_iframe_resize_client.js")
+      )
+    ) {
+      // In iframe, the button is (re-)positioned whenever the parent window scrolls
+      // This must happen as soon as the button is created
+      // Message is listened to by addon_check_iframe_resize_host.js, sends scroll event with position values back
+      parent.postMessage(["triggerScrollEvent", null], "*");
     }
   }
-
-  let isBtnRefreshShowingAlready = false;
 
   setTimeout(
     () => {
@@ -169,8 +153,11 @@ function checkIfResultsChange() {
   ) {
     // The addon_check_iframe_resize_host.js sends message with all required values from parent window whenever it's scrolled
     window.addEventListener("message", (event) => {
-      if (!isBtnRefreshShowingAlready || event.data.type !== "scroll") return;
-      const btnRefresh = document.querySelector("#refresh-button");
+      if (
+        !(btnRefresh = document.querySelector("#btn-see-updated-results")) ||
+        event.data.type !== "scroll"
+      )
+        return;
       btnRefresh.style.bottom = "unset"; // Without iframe, the button is positioned with "bottom"; here, we use "top"
       const scrollYRelativeToIframe =
         event.data.scrollY - event.data.distanceDocTopToIframe;

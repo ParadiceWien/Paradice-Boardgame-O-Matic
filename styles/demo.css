@@ -382,8 +382,7 @@ i.bx-sm {
   }
 }
 
-#btn-go-to-updated-results-after-filter,
-#refresh-button {
+#btn-see-updated-results {
   border: none;
   position: fixed;
   bottom: 70px;
@@ -488,4 +487,16 @@ i.bx-sm {
 #internet-below-description a,
 #internet-above-description a {
   width: max-content;
+}
+
+@media only screen and (min-width: 1024px) {
+  #btn-see-updated-results {
+    width: 600px;
+    left: calc(50% - 300px);
+    border-radius: 10px 10px 0 0 !important;
+    bottom: 60px;
+    padding-bottom: 20px;
+    height: 75px;
+    border: 2px solid #fff;
+  }
 }

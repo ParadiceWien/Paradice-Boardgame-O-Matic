@@ -1,4 +1,4 @@
-# Boardgame-O-Matic (German: Brettspiel-O-Mat)
+# BoardGame-O-Matic (German: Brettspiel-O-Mat)
 
 ### An online tool that suggests users matching board games from a given collection based on their preferences
 
@@ -16,7 +16,7 @@
 
 3. **Edit** the `CSV files` with the questions and the answers. Use [generate-csv-file-for-boardgame-o-matic](https://github.com/fenglisch/generate-csv-file-for-boardgame-o-matic) to generate the file with your board game data.
 
-5. **Test settings** using `INDEX.HTML` (works best on http://localhost/ or your private webspace)
+4. **Test settings** using `INDEX.HTML` (works best on http://localhost/ or your private webspace)
 
 **Optional:** You can find some **addons** in the folder `/extras`. It adds some more functionality to the program, if needed.
 
