@@ -147,10 +147,12 @@ function fnShowQuestionNumber(questionNumber) {
   // solange Fragen gestellt werden -> Anzeigen (sonst Auswertung)
   if (questionNumber < arQuestionsLong.length) {
     function appendQuestion(questionNumber) {
-      let questionTitle = "<h2>";
-      questionTitle += showQuestionNumberOnCard
-        ? `${questionNumber + 1}/${intQuestions}: `
-        : "";
+      let questionTitle = "<h2 class='flex-center'>";
+      if (showQuestionNumberOnCard) {
+        questionTitle += `${questionNumber + 1}/${intQuestions}: `;
+      } else {
+        questionTitle += `<i class="bx ${arQuestionsIcon[questionNumber]}"></i> `;
+      }
       questionTitle += arQuestionsShort[questionNumber];
       questionTitle += "</h2>";
       $("#showQuestionsHeader").empty().append(questionTitle);
@@ -674,7 +676,9 @@ function generateSectionResults(arResults) {
                   <div class='col' id='resultsByThesisQuestion${i}' role='cell'>
                   
                       <div id='resultsByThesisQuestion${i}Text'>
-                          <strong>${i + 1}. ${arQuestionsShort[i]}</strong>: ${
+                          <strong><i class="bx bx-fw ${
+                            arQuestionsIcon[i]
+                          }"></i> ${arQuestionsShort[i]}</strong>: ${
         arQuestionsLong[i]
       }
                       </div>
@@ -697,7 +701,7 @@ function generateSectionResults(arResults) {
                       </button>
                   </div>
 
-                      <button id='resultsByThesisQuestion${i}collapse' style='float: left;' class='nonexpanded btn btn-sm btn-outline-secondary flex-center' type='button'>
+                      <button id='resultsByThesisQuestion${i}collapse' style='float: left;' class='nonexpanded btn btn-sm flex-center' type='button'>
                           ${TEXT_SHOW_THESIS_ANSWERS}
                       </button>
                   </div>

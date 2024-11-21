@@ -399,7 +399,8 @@ i.bx-sm {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 5px;
+  gap: 7px;
+  width: max-content;
 }
 
 #navigationBar i {
@@ -484,11 +485,6 @@ i.bx-sm {
   }
 }
 
-#internet-below-description a,
-#internet-above-description a {
-  width: max-content;
-}
-
 @media only screen and (min-width: 1024px) {
   #btn-see-updated-results {
     width: 600px;
@@ -503,4 +499,25 @@ i.bx-sm {
 
 #resultsByThesis button[data-value="99"] + button[id^="doubleIcon"] {
   display: none;
+}
+
+[id$="collapse"]:active,
+.expanded,
+.expanded:hover {
+  background: var(--primary-color) !important;
+  color: var(--text-on-primary) !important;
+}
+
+.card-header i.bx {
+  font-size: 120%;
+}
+
+.list-answers-and-filter-values-in-result-details {
+  padding-left: 0;
+  list-style: none;
+  margin-top: 20px;
+}
+
+.list-answers-and-filter-values-in-result-details > li {
+  margin-top: 10px;
 }

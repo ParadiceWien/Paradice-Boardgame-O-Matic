@@ -8,6 +8,7 @@ var version = "0.6.0.10.20230420";
 // Globale Variablen
 var arQuestionsShort = new Array(); // Kurzform der Fragen: Atomkraft, Flughafenausbau, ...
 var arQuestionsLong = new Array(); // Langform der Frage: Soll der Flughafen ausgebaut werden?
+const arQuestionsIcon = [];
 
 var arPartyPositions = new Array(); // Position der Partei als Zahl aus den CSV-Dateien (1/0/-1)
 var arPartyOpinions = new Array(); // Begründung der Parteien aus den CSV-Dateien
@@ -264,11 +265,13 @@ function fnTransformCsvToArray(csvData, modus) {
     // console.log("i: "+i+" m: "+modus+" val0: "+arZeilen[i][0]+" val1: "+arZeilen[i][1] )
     valueOne = arZeilen[i][0];
     valueTwo = arZeilen[i][1];
+    valueThree = arZeilen[i][2];
 
     // FRAGEN in globales Array schreiben (z.B. aus FRAGEN.CSV)
     if (modus == 1) {
       arQuestionsShort.push(valueOne);
       arQuestionsLong.push(valueTwo);
+      arQuestionsIcon.push(valueThree);
     }
     // ANTWORTEN und Meinungen in globales Array schreiben (z.B. aus PARTEIEN.CSV)
     else {

@@ -1,6 +1,8 @@
 function setMutationObserverAnswersAndFilterValuesInResultDetails() {
   const target = document.querySelector("#resultsHeading");
-  var observer = new MutationObserver(dummyFunction);
+  var observer = new MutationObserver(
+    displayAnswersAndFilterValuesInResultDetails
+  );
   var config = {
     attributes: true,
     childList: true,
@@ -37,7 +39,7 @@ function createLookupTablesAnswersAndFilterValuesInResultDetails() {
   });
 }
 
-function dummyFunction() {
+function displayAnswersAndFilterValuesInResultDetails() {
   if (!document.querySelector("#resultsHeading").textContent) return;
   document
     .querySelectorAll("div[id^='resultsShortPartyDescription']")
@@ -46,7 +48,8 @@ function dummyFunction() {
         .getAttribute("id")
         .replace("resultsShortPartyDescription", "");
       const nodeAnswersAndFilterValues = document.createElement("div");
-      let divContent = "<ul>";
+      let divContent =
+        "<ul class='list-answers-and-filter-values-in-result-details'>";
       QUESTIONS_TO_BE_DISPLAYED.forEach((question) => {
         const answerIndex = resultNr * intQuestions + (question.questionNr - 1);
         const answerValue = arPartyPositions[answerIndex];
@@ -59,7 +62,9 @@ function dummyFunction() {
         else
           answerText =
             arIcons[answerValue === 1 ? "0" : answerValue === 0 ? "1" : "2"];
-        divContent += "<li>";
+        divContent += `<li class="flex-center"><i class="bx ${
+          arQuestionsIcon[question.questionNr - 1]
+        }"></i> `;
         if (question.displayQuestionHeading)
           divContent += `${arQuestionsShort[question.questionNr - 1]}: `;
         divContent += answerText;
@@ -76,8 +81,11 @@ function dummyFunction() {
           const textsForPresentFilterValues = presentFilterValues.map(
             (value) => window.lookupTableForFilters[filter.internalName][value]
           );
-          divContent += "<li>";
-          if (filter.label) divContent += `${filter.label}: `;
+          const icon = FILTERS.find(
+            (obj) => obj.internalName === filter.internalName
+          ).icon;
+          divContent += `<li><span class="flex-center"><i class="bx ${icon}"></i> `;
+          if (filter.label) divContent += `${filter.label}: </span>`;
           if (filter.bulletList) {
             divContent += "<ul>";
             textsForPresentFilterValues.forEach((text) => {

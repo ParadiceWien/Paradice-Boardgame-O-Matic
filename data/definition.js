@@ -414,6 +414,7 @@ if (addons.some((item) => item.includes("extras/addon_filter_results.js"))) {
     {
       internalName: "mechanisms",
       type: "checkbox-list",
+      icon: "bx-cog",
       heading:
         "All board games, which have at least one of the mechanics you disallow, are exluced from your results.",
       options: [
@@ -438,7 +439,7 @@ if (addons.some((item) => item.includes("extras/addon_filter_results.js"))) {
       displayInSharedModal: false,
       displayInIndividualModal: {
         isWanted: true,
-        iconButtonOpenModal: "bx-cog",
+        iconButtonOpenModal: "",
         textButtonOpenModal: "Filter by Mechanics",
         heading: "Filter by Mechanics",
         buttonShowResults: "Apply filter",
@@ -448,6 +449,7 @@ if (addons.some((item) => item.includes("extras/addon_filter_results.js"))) {
     {
       internalName: "themes",
       type: "checkbox-list",
+      icon: "bx-landscape",
       heading:
         "All board games, which have at least one of the themes you disallow, are exluced from your results.",
       options: [
@@ -471,7 +473,6 @@ if (addons.some((item) => item.includes("extras/addon_filter_results.js"))) {
       strikethroughOptionsThatGetHidden: true,
       displayInSharedModal: false,
       displayInIndividualModal: {
-        iconButtonOpenModal: "bx-landscape",
         isWanted: true,
         textButtonOpenModal: "Filter by Themes",
         heading: "Filter by Themes / Settings",
@@ -516,8 +517,8 @@ if (
     { questionNr: 5, displayQuestionHeading: false, isCustomQuestion: true },
   ];
   FILTERS_TO_BE_DISPLAYED = [
-    { internalName: "mechanisms", label: "Mechanics", bulletList: false },
-    { internalName: "themes", label: "Themes", bulletList: false },
+    { internalName: "mechanisms", label: "Mechanics", bulletList: true },
+    { internalName: "themes", label: "Themes", bulletList: true },
   ];
   HIDE_TABLE_resultsByPartyAnswers = true;
 }

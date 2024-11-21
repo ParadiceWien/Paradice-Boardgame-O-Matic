@@ -81,9 +81,12 @@ function mow_addon_limit_results_create_buttons() {
     // Inhalt der Buttons
     // Content of buttons
 
-    let buttonContent_Minus = `<button type="button" class="Buttons_showPartiesAtEnd_minus btn btn-outline-dark btn-sm btn-block">${TEXT_RESULTS_BUTTON_SHOW_LESS}</button>`;
+    // let buttonContent_Minus = `<button type="button" class="Buttons_showPartiesAtEnd_minus btn btn-sm btn-block">${TEXT_RESULTS_BUTTON_SHOW_LESS}</button>`;
+    let buttonContent_Minus = `<button type="button" class="Buttons_showPartiesAtEnd_minus btn btn-danger">${TEXT_RESULTS_BUTTON_SHOW_LESS}</button>`;
+
     // intParties wird dynamisch berechnet, kann also erst jetzt hinzugefügt werden
-    let buttonContent_Plus = `<button type="button" class="Buttons_showPartiesAtEnd_plus  btn btn-outline-dark btn-sm btn-block" >${TEXT_RESULTS_BUTTON_SHOW_MORE}</button>`;
+    // let buttonContent_Plus = `<button type="button" class="Buttons_showPartiesAtEnd_plus  btn btn-outline-dark btn-sm btn-block" >${TEXT_RESULTS_BUTTON_SHOW_MORE}</button>`;
+    let buttonContent_Plus = `<button type="button" class="Buttons_showPartiesAtEnd_plus  btn btn-success" >${TEXT_RESULTS_BUTTON_SHOW_MORE}</button>`;
 
     let buttonContent_All = `<button type="button" class="Buttons_showPartiesAtEnd_all"><small>${
       typeof TEXT_RESULTS_BUTTON_SHOW_ALL !== "undefined"

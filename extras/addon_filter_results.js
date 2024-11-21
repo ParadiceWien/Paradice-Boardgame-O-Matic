@@ -558,7 +558,7 @@ function createAndAppendIndividualFilterModal(nodeFilter, filter) {
     `container-button-open-individual-filter-modal-${filter.internalName}`
   );
   containerBtnOpenIndividualFilterModal.innerHTML = `
-  <i class="bx bx-fw ${filter.displayInIndividualModal.iconButtonOpenModal}"></i>
+  <i class="bx bx-fw ${filter.icon}"></i>
   <button id="button-open-individual-filter-modal-${filter.internalName}"  class="btn-open-filter-modal">
     ${filter.displayInIndividualModal.textButtonOpenModal}
   </button>`;
@@ -657,7 +657,7 @@ function setFiltersAtStart() {
       `card-to-set-filter-${filter.internalName}`
     );
     cardToSetFilter.style.cssText = "margin: 1rem 15px 0 15px;";
-    let divContent = `<div class="card-header"><h2>${filter.setAtStart.cardHeading}</h2></div>
+    let divContent = `<div class="card-header"><h2 class="flex-center"><i class="bx ${filter.icon}"></i>${filter.setAtStart.cardHeading}</h2></div>
             <hr>
             <div class="card-body">
               <p class="card-text lead">${filter.setAtStart.cardBody}</p>
