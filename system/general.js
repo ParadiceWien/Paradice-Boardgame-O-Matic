@@ -320,7 +320,7 @@ function fnTransformPositionToButton(position) {
 // ersetzt die Position (-1, 0, 1) mit dem passenden Icon
 function fnTransformPositionToIcon(position) {
   var arIcons = new Array("&#x2716;", "&#x25EF;", "&#x2714;");
-  var positionIcon = "&#x21B7;";
+  var positionIcon = ICON_SKIPPED;
   for (z = -1; z <= 1; z++) {
     if (z == position) {
       positionIcon = arIcons[z + 1];

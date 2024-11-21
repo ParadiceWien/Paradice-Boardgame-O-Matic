@@ -100,7 +100,7 @@ function createInitialCustomPositionButtons() {
       if (index === -1) {
         newBtn.style.backgroundColor = "transparent";
         newBtn.style.color = "#000";
-        newBtn.innerHTML = "↷";
+        newBtn.innerHTML = ICON_SKIPPED;
         btnTitleAndAltText = obj.arButtonAltTexts[index] ?? TEXT_VOTING_SKIP;
       } else {
         newBtn.style.backgroundColor =
@@ -188,7 +188,7 @@ function toggleSelfPositionOfCustomQuestion(i) {
     btn.setAttribute("data-value", newPosition);
     btn.innerHTML = obj.arPositionIcons[indexOfNewPosition];
     if (btn.innerHTML === "undefined") {
-      btn.innerHTML = "↷";
+      btn.innerHTML = ICON_SKIPPED;
       btn.style.backgroundColor = "transparent";
       btn.style.color = "#000";
       btn.setAttribute("alt", `${TEXT_ANSWER_USER}: ${TEXT_VOTING_SKIP}`);

@@ -500,3 +500,7 @@ i.bx-sm {
     border: 2px solid #fff;
   }
 }
+
+#resultsByThesis button[data-value="99"] + button[id^="doubleIcon"] {
+  display: none;
+}
