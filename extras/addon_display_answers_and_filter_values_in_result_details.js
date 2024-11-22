@@ -33,7 +33,8 @@ function createLookupTablesAnswersAndFilterValuesInResultDetails() {
     );
     const lookupTableEntry = {};
     objFilter.options.forEach((option) => {
-      lookupTableEntry[option.value] = option.label;
+      lookupTableEntry[option.value] =
+        objFilter.type === "dropdown" ? option.text : option.label;
     });
     lookupTableForFilters[filter.internalName] = lookupTableEntry;
   });
@@ -84,8 +85,8 @@ function displayAnswersAndFilterValuesInResultDetails() {
           const icon = FILTERS.find(
             (obj) => obj.internalName === filter.internalName
           ).icon;
-          divContent += `<li><span class="flex-center"><i class="bx ${icon}"></i> `;
-          if (filter.label) divContent += `${filter.label}: </span>`;
+          divContent += `<li><span class="flex-center" style="display: inline-flex"><i class="bx ${icon}"></i> `;
+          if (filter.label) divContent += `${filter.label}:</span> `;
           if (filter.bulletList) {
             divContent += "<ul>";
             textsForPresentFilterValues.forEach((text) => {

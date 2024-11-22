@@ -109,7 +109,7 @@ const TEXT_BUTTON_CLOSE_FULLSCREEN_EVENT_DETAILS =
 const addons = [
   "extras/addon_limit_results.js",
   "extras/addon_filter_results.js",
-  "extras/addon_tooltips.js",
+  // "extras/addon_tooltips.js",
   "extras/addon_custom_voting_buttons.js",
   // "extras/addon_show_first_results.js",
   // "extras/addon_make_questions_optional.js",
@@ -517,6 +517,11 @@ if (
     { questionNr: 5, displayQuestionHeading: false, isCustomQuestion: true },
   ];
   FILTERS_TO_BE_DISPLAYED = [
+    {
+      internalName: "player-number",
+      label: "Player number",
+      bulletList: false,
+    },
     { internalName: "mechanisms", label: "Mechanics", bulletList: true },
     { internalName: "themes", label: "Themes", bulletList: true },
   ];

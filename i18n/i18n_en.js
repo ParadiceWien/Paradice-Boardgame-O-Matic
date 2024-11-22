@@ -38,10 +38,10 @@ const TEXT_RESULTS_HEADING = "Your Top Matches";
 const TEXT_RESULTS_SUBHEADING =
   "With these board games you have the highest match";
 const TEXT_LINK_TO_EXTERNAL_PAGE =
-  "View at BoardGameGeek <i class='bx bx-link-external' ></i>";
+  "<i class='bx bx-link-external' ></i> View at BoardGameGeek";
 const TEXT_FINETUNING_HEADING = "Finetuning";
 const TEXT_FINETUNING_SUBHEADING =
-  "<ul style='text-align: left; font-size: 80%;'><li>Change your answers or weights</li><li>Check out the values of your matching board games for each question</li></ul>";
+  "<ul style='text-align: left; font-size: 80%;'><li>Click on the buttons to change your answers and weights</li><li>Check out the values of your matching board games for each question</li></ul>";
 const TEXT_SHOW_PARTY_DESCRIPTION = `Show details <i class='bx bx-chevron-down bx-sm' ></i>`;
 const TEXT_HIDE_PARTY_DESCRIPTION = `Hide details <i class='bx bx-chevron-up bx-sm' ></i>`;
 const TEXT_SHOW_PARTY_ANSWERS = `Compare answers <i class='bx bx-chevron-down bx-sm' ></i>`;

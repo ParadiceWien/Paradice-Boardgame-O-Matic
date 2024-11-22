@@ -521,3 +521,7 @@ i.bx-sm {
 .list-answers-and-filter-values-in-result-details > li {
   margin-top: 10px;
 }
+
+.card-header h2 {
+  width: 100%;
+}
