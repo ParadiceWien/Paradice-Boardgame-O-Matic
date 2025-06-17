@@ -92,7 +92,7 @@ a:hover {
    /* Explanation of voting double button, if present in text */
    font-size: 0.9rem;
    line-height: 1.8rem;
-   font-style: italic;
+   font-style: normal;
 }
 
 #votingDoubleMockup {
@@ -613,14 +613,14 @@ button[onclick^="fnToggleSelfPosition"] {
    #selfPositionContainer0::before {
       content: var(--text-your-answer);
       white-space: pre;
-      font-style: italic;
+      font-style: normal;
       font-size: 0.85rem;
    }
 
    #partyPositionContainer0::before {
       content: var(--text-party-answer);
       white-space: pre;
-      font-style: italic;
+      font-style: normal;
       font-size: 0.85rem;
    }
 }
@@ -635,13 +635,13 @@ button[onclick^="fnToggleSelfPosition"] {
    [id^="selfPositionContainer"]::before {
       content: var(--text-your-answer);
       white-space: pre;
-      font-style: italic;
+      font-style: normal;
    }
 
    [id^="partyPositionContainer"]::before {
       content: var(--text-party-answer);
       white-space: pre;
-      font-style: italic;
+      font-style: normal;
    }
    /* Make question cover full width of table cell */
    [id^="resultsByPartyAnswersToQuestion"] .col-10,
@@ -1109,7 +1109,7 @@ div[id^="resultsShortPartyDescription"] {
 
 /* Short description already showing before details of result are opened */
 .tagline {
-   font-style: italic;
+   font-style: normal;
 }
 
 #separator-results-sections {
