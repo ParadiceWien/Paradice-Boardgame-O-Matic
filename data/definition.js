@@ -48,13 +48,13 @@ const showMainLogoInTopLeftCorner = true;
 const mainLogoPath = "./Kopie von Paradice_Sticker.png";
 const mainLogoWriting =
    language === "de"
-      ? "Brettspiel<br><span class='stretch-text-de'>-O-Mat</span>&nbsp;<small>(beta)</small>"
-      : "BoardGame<br><span class='stretch-text-en'>-O-Matic</span>&nbsp;<small>(beta)</small>";
+      ? "Paradice<br><span class='stretch-text-de'>Brettspiel-O-Mat</span>&nbsp"
+      : "Paradice<br><span class='stretch-text-en'>Boardgame-O-Matic</span>&nbsp";
 
 const mainLogoHref =
    language === "de"
-      ? "https://brettspiel-o-mat.de"
-      : "https://boardgame-o-matic.com"; // The link opens in a new tab
+      ? "https://paradice.info"
+      : "https://paradice.wien"; // The link opens in a new tab
 const mainLogoTitle =
    language === "de" ? "Brettspiel-O-Mat Logo" : "BoardGame-O-Matic Logo"; // This is just used for the title attribute of the image, it is not displayed
 
