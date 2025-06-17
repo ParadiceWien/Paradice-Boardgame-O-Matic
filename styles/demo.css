@@ -31,9 +31,9 @@
    --text-on-primary: #fff;
    --link-color: #f2c840; /* Usually same as main-color. Must be dark enough to be readable on white background. */
    --secondary-color: #2b388f; /* Color of the start button, the "agree to statistics" and resultsByThesis/Parties buttons. Good contrast to main color. Maybe a green tone? */
-   --text-on-secondary: #000;
+   --text-on-secondary: #fff;
    --success: #2b388f; /* For ranking bar and answer buttons. Ideally dark enough to read white text on it */
-   --text-on-success: #000;
+   --text-on-success: #fff;
    --mix-success-warning: #2b388f; /* For ranking bar and answer buttons. Ideally dark enough to read white text on it */
    --text-on-mix-success-warning: #000;
    --warning: #2b388f;
