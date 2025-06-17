@@ -45,7 +45,7 @@ const matomoSiteId = "";
 
 // Logo in top left corner for branding (not recommended if embedded as iframe)
 const showMainLogoInTopLeftCorner = true;
-const mainLogoPath = "./Brettspiel-O-Mat-Logo_transparent_cropped-min.png";
+const mainLogoPath = "./Kopie von Paradice_Sticker.png";
 const mainLogoWriting =
    language === "de"
       ? "Brettspiel<br><span class='stretch-text-de'>-O-Mat</span>&nbsp;<small>(beta)</small>"
