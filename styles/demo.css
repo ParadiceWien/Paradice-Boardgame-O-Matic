@@ -29,7 +29,7 @@
    --heading-font: "LexendDeca";
    --primary-color: #2b388f; /* Color of the card and some buttons. Should be rather dark. Main color of the website fits well. */
    --text-on-primary: #fff;
-   --link-color: #2b388f; /* Usually same as main-color. Must be dark enough to be readable on white background. */
+   --link-color: #f2c840; /* Usually same as main-color. Must be dark enough to be readable on white background. */
    --secondary-color: #2b388f; /* Color of the start button, the "agree to statistics" and resultsByThesis/Parties buttons. Good contrast to main color. Maybe a green tone? */
    --text-on-secondary: #000;
    --success: #2b388f; /* For ranking bar and answer buttons. Ideally dark enough to read white text on it */
