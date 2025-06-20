@@ -5,7 +5,7 @@ const language = window.origin === "https://paradice.info" ? "de" : "en";
 // If possible, all adjustments should be made through variables in this file
 
 const title =
-   language === "de" ? "Brettspiel-O-Mat (beta)" : "BoardGame-O-Matic (beta)";
+   language === "de" ? "Paradice Brettspiel-O-Mat" : "Paradice BoardGame-O-Matic";
 
 const metaDescription =
    language === "de"
@@ -45,7 +45,7 @@ const matomoSiteId = "";
 
 // Logo in top left corner for branding (not recommended if embedded as iframe)
 const showMainLogoInTopLeftCorner = true;
-const mainLogoPath = "./Kopie von Paradice_Sticker.png";
+const mainLogoPath = "./Paradice_Logo.png";
 const mainLogoWriting =
    language === "de"
       ? "Paradice<br><span class='stretch-text-de'>Brettspiel-O-Mat</span>&nbsp"
@@ -56,13 +56,13 @@ const mainLogoHref =
       ? "https://paradice.info"
       : "https://paradice.wien"; // The link opens in a new tab
 const mainLogoTitle =
-   language === "de" ? "Brettspiel-O-Mat Logo" : "BoardGame-O-Matic Logo"; // This is just used for the title attribute of the image, it is not displayed
+   language === "de" ? "Paradice Brettspiel-O-Mat Logo" : "Paradice BoardGame-O-Matic Logo"; // This is just used for the title attribute of the image, it is not displayed
 
 // Welcome and info screen before the first question
 const descriptionShowOnStart = true;
 // The title of the page, which is displayed in the browser tab, must be changed directly in the index.html (<title> and meta property "og:title")
 const descriptionHeading1 =
-   language === "de" ? "Brettspiel-O-Mat" : "BoardGame-O-Matic";
+   language === "de" ? "Paradice Brettspiel-O-Mat" : "Paradice BoardGame-O-Matic";
 const descriptionHeading2 =
    language === "de"
       ? "Spielerisch passende Brettspiele finden"
@@ -87,8 +87,8 @@ const showQuestionNumberOnCard = false;
 const showInfoBoxAboveResultsShortTable = true;
 const textInfoBox =
    language === "de"
-      ? "Alle Infos findest du unter <a href='https://brettspiel-o-mat.de/#faq' target='_blank'>https://brettspiel-o-mat.de/#faq</a>"
-      : "Find all information under <a href='https://boardgame-o-matic.com/#faq' target='_blank'>https://boardgame-o-matic.com/#faq</a>";
+      ? "Dieser Brettspiel-O-Mat basiert auf der Version von Felix Englisch - Alle Infos findest du unter <a href='https://brettspiel-o-mat.de/#faq' target='_blank'>https://brettspiel-o-mat.de/#faq</a>"
+      : "This Boardgame-O-Matic is based on the Version from Felix Englisch - Find out more: <a href='https://boardgame-o-matic.com/#faq' target='_blank'>https://boardgame-o-matic.com/#faq</a>";
 // "This demo tool is not based on a real board game collection. Instead, the matching simply uses the BoardGameGeek Top 200 games (as of March 2024).";
 
 // Save anonymous data about how users answered the questions and which results they got?
@@ -103,11 +103,11 @@ const aboutLink = "https://brettspiel-o-mat.de/#faq";
 // URL of imprint
 // If tool is embedded as iframe in a page which links to the imprint in its footer, the tool itself must not link to imprint as well
 // In this case, leave empty and set --display-imprint in the CSS file to "none"
-const imprintLink = "https://brettspiel-o-mat.de/impressum";
+const imprintLink = "https://paradice.wien/impressum";
 
 // See comment to imprintLink
 const privacyExternalPageLink =
-   "https://brettspiel-o-mat.de/datenschutzerklarung/";
+   "https://www.paradice.wien/datenschutz";
 
 // Instead of linking to a privacy policy page, you can also create on
 // If privacyExternalPageLink is falsy, the privacy button will open open a full screen modal
