@@ -1,5 +1,5 @@
 // Defines which i18n/i18n_xx.js file is used
-const language = window.origin === "https://brettspiel-o-mat.de" ? "de" : "en";
+const language = window.origin === "https://paradice.info" ? "de" : "en";
 
 // This is the central configuration file of the Boardgame-O-Matic
 // If possible, all adjustments should be made through variables in this file
