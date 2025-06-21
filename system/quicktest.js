@@ -9,7 +9,7 @@ function fnTestStart()
 	fnReadCsv("data/"+fileQuestions+"",fnTestReadQuestions)
 
 	// PARTEIEN und ANTWORTEN in Arrays einlesen
-	fnReadCsv("data/"+fileAnswers+"",fnTestReadPositions)
+	fnReadCsv(fileAnswers, fnReadPositions);
 
 /*
 	// bis v 0.5 - mehrere Partei-CSV-Dateien
