@@ -124,7 +124,7 @@ function fnStart() {
    fnReadCsv(`data/${fileQuestions}`, fnShowQuestions);
 
    // (b) Antworten der Parteien und Partei-Informationen
-   fnReadCsv(`data/${fileAnswers}`, fnReadPositions);
+   fnReadCsv(fileAnswers, fnReadPositions);
 
    // Wenn "descriptionShowOnStart = 0" in DEFINITION.JS, dann gleich die Fragen anzeigen
    if (!descriptionShowOnStart) {
