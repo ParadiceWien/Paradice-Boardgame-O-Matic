@@ -1,5 +1,5 @@
 // Defines which i18n/i18n_xx.js file is used
-const language = window.origin === "https://paradice.info" ? "de" : "en";
+const language = "de";
 
 // This is the central configuration file of the Boardgame-O-Matic
 // If possible, all adjustments should be made through variables in this file
@@ -22,7 +22,7 @@ const fileQuestions = `questions-${language}.csv`;
 const intQuestions = 6;
 
 // Name of the CSV file with the board games in the /data directory
-const fileAnswers = `games-${language}.csv`;
+const fileAnswers = "https://api.paradice.info/Games-de.csv";
 
 // File paths to system and CSS files
 // If you have several instances of this tool running, you can use absolute references to global files (therefore, these are not hardcoded)=
