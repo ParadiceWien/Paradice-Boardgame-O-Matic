@@ -524,6 +524,7 @@ function addContentToResultsTab() {
    if (!document.querySelector("#resultsHeading").textContent)
       document.querySelector("#resultsHeading").innerHTML =
          `<h1>${TEXT_RESULTS_HEADING}</h1><h2>${TEXT_RESULTS_SUBHEADING}</h2>`;
+}
 
    (function addButtonsAboveResultsShort() {
       const buttonsContainer = document.createElement("div");
