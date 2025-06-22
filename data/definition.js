@@ -16,7 +16,7 @@ const metaDescription =
 const separator = ";";
 
 // Name of the CSV file with the questions in the /data directory
-const fileQuestions = `questions-${language}.csv`;
+const fileQuestions = `questions-de.csv`;
 
 // Number of questions
 const intQuestions = 6;
