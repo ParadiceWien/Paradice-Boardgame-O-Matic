@@ -121,7 +121,7 @@ function fnStart() {
 
    // FRAGEN UND ANTWORTEN in Arrays einlesen und Folgefunktionen aufrufen
    // (a) Fragen
-   fnReadCsv(`data/${fileQuestions}`, fnShowQuestions);
+   fnReadCsv(fileQuestions, fnShowQuestions);
 
    // (b) Antworten der Parteien und Partei-Informationen
    fnReadCsv(fileAnswers, fnReadPositions);
