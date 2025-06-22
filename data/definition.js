@@ -15,6 +15,9 @@ const metaDescription =
 // Separator used in CSV files
 const separator = ";";
 
+let fileQuestions = "data/questions.csv";
+let fileAnswers = "https://api.paradice.info/Games-de.csv";
+
 // Name of the CSV file with the questions in the /data directory
 const fileQuestions = `questions-de.csv`;
 
