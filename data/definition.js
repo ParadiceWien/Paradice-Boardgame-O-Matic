@@ -23,6 +23,10 @@ const intQuestions = 6;
 
 // Name of the CSV file with the board games in the /data directory
 const fileAnswers = "https://api.paradice.info/Games-de.csv";
+// Fallback für lokalen Test
+if (window.location.hostname === "localhost") {
+   fileAnswers = "Games-de.csv"; // lokale Datei im /data Ordner
+}
 
 // File paths to system and CSS files
 // If you have several instances of this tool running, you can use absolute references to global files (therefore, these are not hardcoded)=
