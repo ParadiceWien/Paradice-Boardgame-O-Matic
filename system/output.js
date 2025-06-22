@@ -119,6 +119,9 @@ function fnStart() {
    //////////////////////////////////////////////////////////////////
    // Anzahl der Parteien berechnen
 
+   let fileQuestions = "data/questions.csv";
+   let fileAnswers = "https://api.paradice.info/Games-de.csv";
+   
    // FRAGEN UND ANTWORTEN in Arrays einlesen und Folgefunktionen aufrufen
    // (a) Fragen
    fnReadCsv(fileQuestions, fnShowQuestions);
