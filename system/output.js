@@ -521,7 +521,7 @@ function fnJumpToQuestionNumber(questionNumber) {
 // Anzeige der Ergebnisse - zusammengefasst (Prozentwerte) - nur Parteien
 // Array arResults kommt von fnEvaluation
 function addContentToResultsTab() {
-   if (!document.querySelector("#resultsHeading").textContent)
+   if (!document.querySelector("#resultsHeading").textContent) {
       document.querySelector("#resultsHeading").innerHTML =
          `<h1>${TEXT_RESULTS_HEADING}</h1><h2>${TEXT_RESULTS_SUBHEADING}</h2>`;
 }
@@ -547,6 +547,7 @@ function addContentToResultsTab() {
          .querySelector("#buttonsAboveResultsShort")
          .appendChild(buttonsContainer);
    })();
+}
    //Anzahl der Maximalpunkte ermitteln
    const maxPoints = calculateMaxPoints();
 
