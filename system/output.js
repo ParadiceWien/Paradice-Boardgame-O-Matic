@@ -657,42 +657,44 @@ function addContentToResultsTab() {
                 </div>`;
 
             // 3./4 Zellen - Icons für Postion der Parteien [+] [0] [-]
+            // 1 Hole den Bild-Link aus dem CSV-Array
+            var imgURL = arPartyLogosImg[j];
+            
+            // 2 Debug: prüfe im Browser
+            console.log("Party:", arPartyNamesShort[j], "Logo:", imgURL);
+            
+            // 3 Hole Position & Styles wie bisher
             var positionIcon = fnTransformPositionToIcon(
                arPartyPositions[j],
                "party"
             );
-            var positionButton = fnTransformPositionToButton(
+            var positionButton = fnTransformPositionToButton(   
                arPartyPositions[j]
             );
             var positionText = fnTransformPositionToText(
                arPartyPositions[j],
                "party"
             );
-
-            tableContentResultsShort += `<div class='col col-4 col-md-2' id='partyPositionContainer${modulo}' role='cell'>
-                    <button type='button' class='btn ${positionButton} partyPositionToQuestion${modulo} btn-sm' disabled data-value="${arPartyPositions[j]}"
-                            alt='${TEXT_ANSWER_PARTY} : ${positionText}' title='${TEXT_ANSWER_PARTY} : ${positionText}'>
-                        ${positionIcon}
-                    </button>
-                </div>
-                <div class='col col-6 col-md-3' role='cell' headers='resultsByPartyHeading${i}'>
-                    ${arPartyOpinions[j]}
-                    <!-- die Beschreibung der Partei in einem VERSTECKTEN DIV -> ein Workaround für das Addon "Textfilter" (siehe /EXTRAS) :( -->
-                </div>
+            
+            // 4 Baue den HTML-Block — JETZT MIT <img>
+            tableContentResultsShort += `
+            <div class='col col-4 col-md-2' id='partyLogoContainer${modulo}' role='cell'>
+            <img src="${imgURL}" alt="${arPartyNamesShort[j]}" style="max-width: 100px;">
+            </div>
+            
+            <div class='col col-4 col-md-2' id='partyPositionContainer${modulo}' role='cell'>
+            <button type='button' class='btn ${positionButton} partyPositionToQuestion${modulo} btn-sm' disabled data-value="${arPartyPositions[j]}"
+            alt='${TEXT_ANSWER_PARTY} : ${positionText}' title='${TEXT_ANSWER_PARTY} : ${positionText}'>
+            ${positionIcon}
+            </button>
+            </div>
+            
+            <div class='col col-6 col-md-3' role='cell' headers='resultsByPartyHeading${i}'>
+            ${arPartyOpinions[j]}
+            <!-- die Beschreibung der Partei in einem VERSTECKTEN DIV -> ein Workaround für das Addon "Textfilter" (siehe /EXTRAS) :( -->
+            </div>
             </div> <!-- end: row Anzeige der Partei-Antworten -->`;
-         } // end: for-j
-         tableContentResultsShort += `</div> <!-- end col -->
-          </div> <!-- end row resultsByPartyAnswersToQuestion -->
-        </span> <!-- end span resultsByPartyAnswersToQuestion -->
-        </div> <!-- end span resultsShortPartyDetails -->`;
-      }
-      tableContentResultsShort += `</div> <!-- end: row .mow-row-striped + #resultsShortPartyClampX -->
-  </div> <!-- row #resultsShortPartyX -->`;
-   } // end for
-   tableContentResultsShort += `</div>
-</div> <!-- end: col (resultsShortTable) -->
-</div> <!-- end: row (resultsShortTable) -->`;
-
+            
    // Daten in Browser schreiben
    console.log("Ergebnis wird eingefügt:", tableContentResultsShort);
    document.querySelector("#resultsShort").innerHTML = tableContentResultsShort;
