@@ -228,78 +228,56 @@ function fnPercentage(value, max) {
 
 // v.0.3 NEU
 // CSV-Daten in Array einlesen (aus fnShowQuestions() und fnReadPositions())
-var autoSeparator = ",";
-if (csvData.indexOf("\t") !== -1) {
-  autoSeparator = "\t";
-} else if (csvData.indexOf(";") !== -1) {
-  autoSeparator = ";";
-}
+function fnTransformCsvToArray(csvData, modus) {
 
-arZeilen = $.csv.toArrays(csvData, { separator: autoSeparator });
-console.log("CSV-Separator erkannt:", autoSeparator);
-console.log("Erste Zeilen:", arZeilen.slice(0, 5));
+  var autoSeparator = ",";
+  if (csvData.indexOf("\t") !== -1) {
+    autoSeparator = "\t";
+  } else if (csvData.indexOf(";") !== -1) {
+    autoSeparator = ";";
+  }
 
-   //	console.log(arZeilen.length+ " Part "+intParties+" quest: "+intQuestions )
+  arZeilen = $.csv.toArrays(csvData, { separator: autoSeparator });
+  console.log("CSV-Separator erkannt:", autoSeparator);
+  console.log("Erste Zeilen:", arZeilen.slice(0, 5));
 
-   // Number of lines per party for MODULO-Operation on the ANSWERS-file
-   // There are five (5) lines with information on the party + "intQuestions" lines + an empty line
-   // Example "Obsthausen"/"Fruitville" = 5 + 6 + 1 = 12
-   // Example "Springfield" = 5 + 15 + 1 = 21
-   var numberOfLines = 6 + intQuestions;
+  var numberOfLines = 6 + intQuestions;
 
-   if (modus == 1) {
-      // Fragen / Questions
-      lastLine = intQuestions;
-   } else {
-      lastLine = (5 + intQuestions + 1) * intParties - 1;
-   } // Partien und Antworten / Parties and answers
+  if (modus == 1) {
+    lastLine = intQuestions;
+  } else {
+    lastLine = (5 + intQuestions + 1) * intParties - 1;
+  }
 
-   //	for(i = 0; i <= arZeilen.length-1; i++)
-   for (i = 0; i <= lastLine - 1; i++) {
-      // console.log("i: "+i+" m: "+modus+" val0: "+arZeilen[i][0]+" val1: "+arZeilen[i][1] )
+  for (i = 0; i <= lastLine - 1; i++) {
+    valueOne = arZeilen[i][0];
+    valueTwo = arZeilen[i][1];
+    valueThree = arZeilen[i][2];
 
-      valueOne = arZeilen[i][0];
-      valueTwo = arZeilen[i][1];
-      valueThree = arZeilen[i][2];
+    if (modus == 1) {
+      arQuestionsShort.push(valueOne);
+      arQuestionsLong.push(valueTwo);
+      arQuestionsIcon.push(valueThree);
+    } else {
+      modulo = i % numberOfLines;
 
-      // FRAGEN in globales Array schreiben (z.B. aus FRAGEN.CSV)
-      if (modus == 1) {
-         arQuestionsShort.push(valueOne);
-         arQuestionsLong.push(valueTwo);
-         arQuestionsIcon.push(valueThree);
+      if (modulo == 0 && valueTwo != "undefined") {
+        arPartyNamesShort.push(valueTwo);
+      } else if (modulo == 1 && valueTwo != "undefined") {
+        arPartyNamesLong.push(valueTwo);
+      } else if (modulo == 2 && valueTwo != "undefined") {
+        arPartyDescription.push(valueTwo);
+      } else if (modulo == 3 && valueTwo != "undefined") {
+        arPartyInternet.push(valueTwo);
+      } else if (modulo == 4 && valueTwo != "undefined") {
+        arPartyLogosImg.push(valueTwo);
+      } else if (modulo > 4 && modulo <= intQuestions + 4) {
+        arPartyPositions.push(valueOne);
+        arPartyOpinions.push(valueTwo);
       }
-      // ANTWORTEN und Meinungen in globales Array schreiben (z.B. aus PARTEIEN.CSV)
-      else {
-         // v.0.5 NEU
-         // ALLE Partei-Informationen in einer CSV-Datei
-         modulo = i % numberOfLines;
-
-         if (modulo == 0 && valueTwo != "undefined") {
-            // Parteinamen - kurz
-            arPartyNamesShort.push(valueTwo);
-         } else if (modulo == 1 && valueTwo != "undefined") {
-            // Parteinamen - lang
-            arPartyNamesLong.push(valueTwo);
-         } else if (modulo == 2 && valueTwo != "undefined") {
-            // Beschreibung der Partei (optional)
-            arPartyDescription.push(valueTwo);
-            //				console.log("i: "+i+ " value: "+valueTwo)
-         } else if (modulo == 3 && valueTwo != "undefined") {
-            // Webseite der Partei
-            arPartyInternet.push(valueTwo);
-         } else if (modulo == 4 && valueTwo != "undefined") {
-            // Logo der Partei
-            arPartyLogosImg.push(valueTwo);
-         } else if (modulo > 4 && modulo <= intQuestions + 4) {
-            // Positionen und Erklärungen
-            arPartyPositions.push(valueOne); // -1,0,1
-            arPartyOpinions.push(valueTwo); // Erklärung zur Zahl
-         } else {
-            // nothing to do. Just empty lines in the CSV-file
-         }
-      } // end: if-else modus == 1
-   } // end: for
-} // end: function
+    }
+  }
+}
 
 // v.0.3 NEU
 // ersetzt die Position (-1, 0, 1) mit dem passenden Button
