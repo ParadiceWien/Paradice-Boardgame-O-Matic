@@ -228,9 +228,16 @@ function fnPercentage(value, max) {
 
 // v.0.3 NEU
 // CSV-Daten in Array einlesen (aus fnShowQuestions() und fnReadPositions())
-function fnTransformCsvToArray(csvData, modus) {
-   // benutzt externe jquery-csv-Bibliothek
-   arZeilen = $.csv.toArrays(csvData, {separator: "" + separator + ""});
+var autoSeparator = ",";
+if (csvData.indexOf("\t") !== -1) {
+  autoSeparator = "\t";
+} else if (csvData.indexOf(";") !== -1) {
+  autoSeparator = ";";
+}
+
+arZeilen = $.csv.toArrays(csvData, { separator: autoSeparator });
+console.log("CSV-Separator erkannt:", autoSeparator);
+console.log("Erste Zeilen:", arZeilen.slice(0, 5));
 
    //	console.log(arZeilen.length+ " Part "+intParties+" quest: "+intQuestions )
 
