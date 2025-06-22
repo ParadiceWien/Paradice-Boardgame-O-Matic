@@ -622,6 +622,7 @@ function addContentToResultsTab() {
 
          // Anzeige der Partei-Antworten
          for (j = jStart; j <= jEnd; j++) {
+         }
             // 1./4 Zellen - Frage
             modulo = j % intQuestions; // z.B. arPartyPositions[11] % 5 Fragen = 1 -> arQuestionsShort[1] = 2. Frage
 
