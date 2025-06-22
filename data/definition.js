@@ -18,8 +18,8 @@ const separator = ";";
 
 
 // Name of the CSV file with the questions in the /data directory
-let fileQuestions = "data/questions.csv";
-// ALT const fileQuestions = `questions-de.csv`;
+// let fileQuestions = "data/questions.csv";
+const fileQuestions = `questions-de.csv`;
 
 // Number of questions
 const intQuestions = 6;
