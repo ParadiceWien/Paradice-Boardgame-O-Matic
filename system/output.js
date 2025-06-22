@@ -694,6 +694,7 @@ function addContentToResultsTab() {
 </div> <!-- end: row (resultsShortTable) -->`;
 
    // Daten in Browser schreiben
+   console.log("Ergebnis wird eingefügt:", tableContentResultsShort);
    document.querySelector("#resultsShort").innerHTML = tableContentResultsShort;
    document.querySelectorAll("#resultsShort");
 
