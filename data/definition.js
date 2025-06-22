@@ -25,7 +25,7 @@ const intQuestions = 6;
 const fileAnswers = "https://api.paradice.info/Games-de.csv";
 // Fallback für lokalen Test
 if (window.location.hostname === "localhost") {
-   fileAnswers = "Games-de.csv"; // lokale Datei im /data Ordner
+   fileAnswers = "games-de.csv"; // lokale Datei im /data Ordner
 }
 
 // File paths to system and CSS files
